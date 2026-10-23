@@ -1,0 +1,10 @@
+<main>
+  <h1>Hello World</h1>
+  @if (hello.hasValue()) {
+    <p class="api">From the Python API: <strong>{{ hello.value().message }}</strong></p>
+  } @else if (hello.error()) {
+    <p class="api error">The Python API is not reachable.</p>
+  } @else {
+    <p class="api">Calling the Python API…</p>
+  }
+</main>
