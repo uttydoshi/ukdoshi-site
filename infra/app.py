@@ -19,6 +19,7 @@ dns = DnsStack(app, "UkdoshiDns", domain_name=DOMAIN_NAME, env=env)
 SiteStack(app, "UkdoshiSite", domain_name=DOMAIN_NAME, zone=dns.zone, env=env)
 
 # Deployed by hand, once: lets GitHub Actions deploy the two stacks above on every push to main.
-GithubDeployStack(app, "UkdoshiGithubDeploy", repo="uttydoshi/ukdoshi-site", branch="main", env=env)
+# GitHub's token names the repo as owner@id/repo@id, so a renamed or recreated repo can't deploy.
+GithubDeployStack(app, "UkdoshiGithubDeploy", repo="uttydoshi@83499703/ukdoshi-site@1431046389", branch="main", env=env)
 
 app.synth()

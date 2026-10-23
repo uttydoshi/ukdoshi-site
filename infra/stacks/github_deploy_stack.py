@@ -33,7 +33,7 @@ class GithubDeployStack(Stack):
                     },
                 },
             ),
-            description=f"GitHub Actions deploys from {repo}@{branch}",
+            description=f"GitHub Actions deploys from {repo}, branch {branch}",
         )
         role.add_to_policy(
             iam.PolicyStatement(

@@ -52,7 +52,7 @@ jobs:
           python -m venv .venv
           .venv/bin/pip install -r requirements.txt
 
-      - uses: aws-actions/configure-aws-credentials@v5
+      - uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: arn:aws:iam::652284808153:role/ukdoshi-github-deploy
           aws-region: us-east-1
