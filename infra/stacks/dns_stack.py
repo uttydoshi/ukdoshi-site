@@ -10,7 +10,7 @@ PROTON_DKIM = (
     "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDOXdwxOdm1VHe/Cd0OoAoKDsU6nP64xIP46qY0CmIVZAd4lI6DLp1KL"
     "+nxMjSGGxRbAeUM18PzKfr+OkxHAHZfPHdF5YSc862xqRUMK//KN1R/sR8kt/hdy5uzAvk/sklS0TaquBaA6T2qAo3/TU6LdqXn1F+ReVn/ZGGWVXVrsQIDAQAB"
 )
-DMARC = "v=DMARC1; p=none; rua=mailto:address@yourdomain.com"
+DMARC = "v=DMARC1; p=none; rua=mailto:utty@ukdoshi.com"
 
 
 class DnsStack(Stack):
