@@ -1,1 +1,44 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --text: #1a1a2e;
+  --muted: #5b5f77;
+  --card: rgb(255 255 255 / 0.7);
+  --border: rgb(26 26 46 / 0.08);
+  --shadow: rgb(60 50 120 / 0.35);
+  --pill: rgb(26 26 46 / 0.05);
+  --accent-1: #6d28d9;
+  --accent-2: #0ea5e9;
+  --ok: #16a34a;
+  --pending: #d97706;
+  --error: #b91c1c;
+  --bg: radial-gradient(circle at 20% 15%, #ede9fe, transparent 45%),
+    radial-gradient(circle at 85% 85%, #e0f2fe, transparent 45%), #f8fafc;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #f1f5f9;
+    --muted: #a3a8c3;
+    --card: rgb(22 22 40 / 0.7);
+    --border: rgb(255 255 255 / 0.08);
+    --shadow: rgb(0 0 0 / 0.6);
+    --pill: rgb(255 255 255 / 0.06);
+    --accent-1: #a78bfa;
+    --accent-2: #38bdf8;
+    --ok: #4ade80;
+    --pending: #fbbf24;
+    --error: #f87171;
+    --bg: radial-gradient(circle at 20% 15%, #2e1065, transparent 45%),
+      radial-gradient(circle at 85% 85%, #0c4a6e, transparent 45%), #0b0b16;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}

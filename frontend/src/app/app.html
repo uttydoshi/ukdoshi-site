@@ -1,10 +1,16 @@
 <main>
-  <h1>Hello World</h1>
-  @if (hello.hasValue()) {
-    <p class="api">From the Python API: <strong>{{ hello.value().message }}</strong></p>
-  } @else if (hello.error()) {
-    <p class="api error">The Python API is not reachable.</p>
-  } @else {
-    <p class="api">Calling the Python API…</p>
-  }
+  <section class="card">
+    <p class="domain">ukdoshi.com</p>
+    <h1>Hello World</h1>
+
+    @if (hello.hasValue()) {
+      <p class="api ok"><span class="dot"></span>From the Python API: <strong>{{ hello.value().message }}</strong></p>
+    } @else if (hello.error()) {
+      <p class="api error"><span class="dot"></span>The Python API is not reachable.</p>
+    } @else {
+      <p class="api pending"><span class="dot"></span>Calling the Python API…</p>
+    }
+  </section>
+
+  <footer>Angular · FastAPI · AWS</footer>
 </main>
