@@ -1,0 +1,62 @@
+name: Deploy
+
+# Every push to main tests, builds and deploys ukdoshi.com.
+# "Run workflow" on the Actions tab redeploys main by hand.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# One deploy at a time; a newer push waits for the running one instead of cancelling it mid-deploy.
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+permissions:
+  id-token: write # lets the job log in to AWS via OIDC
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Test backend
+        working-directory: backend
+        run: |
+          pip install -r requirements-dev.txt
+          python -m pytest
+
+      - name: Build frontend
+        working-directory: frontend
+        run: |
+          npm ci
+          npm run build
+
+      - name: Install CDK
+        working-directory: infra
+        run: |
+          npm install -g aws-cdk@2.1146.1
+          python -m venv .venv
+          .venv/bin/pip install -r requirements.txt
+
+      - uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: arn:aws:iam::652284808153:role/ukdoshi-github-deploy
+          aws-region: us-east-1
+
+      - name: Deploy
+        working-directory: infra
+        run: cdk deploy UkdoshiDns UkdoshiSite --require-approval never

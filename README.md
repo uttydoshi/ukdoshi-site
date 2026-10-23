@@ -56,7 +56,17 @@ First deploy (DNS handover from GoDaddy):
    *I'll use my own nameservers* → enter the four values (without trailing dots).
 3. Wait until `dig NS ukdoshi.com +short` shows the AWS nameservers.
 
-Every deploy after that:
+Every deploy after that happens automatically: pushing to `main` runs
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which tests the backend, builds the
+frontend and runs `cdk deploy UkdoshiDns UkdoshiSite`. Watch it on the repo's **Actions** tab; use
+**Run workflow** there to redeploy by hand. GitHub logs in to AWS via OIDC (no stored keys), using
+the role from the `UkdoshiGithubDeploy` stack, which is deployed by hand once:
+
+```bash
+cd infra && cdk deploy UkdoshiGithubDeploy
+```
+
+To deploy from your machine instead:
 
 ```bash
 cd frontend && npm run build
