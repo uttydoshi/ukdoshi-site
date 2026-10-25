@@ -11,7 +11,7 @@ import { AuthService } from '../../auth/auth.service';
       @if (error()) {
         <h1>Sign-in failed</h1>
         <p>{{ error() }}</p>
-        <p><a routerLink="/restricted">Try again</a></p>
+        <p><a routerLink="/inner-circle">Try again</a></p>
       } @else {
         <p>Signing you in…</p>
       }

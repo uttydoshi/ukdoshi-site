@@ -14,13 +14,13 @@ def hello():
 
 @app.get("/api/me")
 def me(user: User = Depends(current_user)):
-    """Who is signed in, and whether they may see the Restricted Area."""
+    """Who is signed in, and whether they may see the Inner Circle."""
     return {**user.model_dump(), "approved": approvals.is_approved(user.email)}
 
 
 @app.get("/api/restricted/welcome")
 def restricted_welcome(user: User = Depends(approvals.approved_user)):
-    return {"message": f"Welcome to the Restricted Area, {user.name or user.email}."}
+    return {"message": f"Welcome to the Inner Circle, {user.name or user.email}."}
 
 
 # Entry point for AWS Lambda (API Gateway HTTP API events -> ASGI).

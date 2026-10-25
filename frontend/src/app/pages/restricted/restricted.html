@@ -3,10 +3,10 @@
     <rect x="4" y="11" width="16" height="10" rx="2" />
     <path d="M8 11V7a4 4 0 0 1 8 0v4" />
   </svg>
-  <h1>Restricted Area</h1>
+  <h1>Inner Circle</h1>
 
   @if (!auth.signedIn()) {
-    <p>This area is for approved members. Sign in with Google or your email address to continue.</p>
+    <p>A more personal corner of the site, for people who'd like to know me a bit better. Sign in with Google or your email address to continue.</p>
     <button type="button" class="button" (click)="auth.signIn()">Sign in</button>
   } @else if (me.error()) {
     <p>Your sign-in has expired or something went wrong.</p>
@@ -16,13 +16,13 @@
       @if (welcome.hasValue()) {
         <p class="welcome">{{ welcome.value().message }}</p>
       } @else if (welcome.error()) {
-        <p>The restricted content couldn't be loaded. Please try again later.</p>
+        <p>This page couldn't be loaded. Please try again later.</p>
       } @else {
         <p>Loading…</p>
       }
     } @else {
       <p>
-        You're signed in, but you don't have access yet. To ask for access, email
+        You're signed in, but you're not in the Inner Circle yet. To ask to join, email
         <a href="mailto:utty@ukdoshi.com">utty&#64;ukdoshi.com</a> from the address below.
       </p>
     }

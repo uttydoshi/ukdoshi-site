@@ -51,7 +51,7 @@ describe('App', () => {
     const links = Array.from(panel.querySelectorAll('a')).map((a) => [a.textContent?.trim(), a.getAttribute('href')]);
     expect(links).toEqual([
       ['About me', '/about'],
-      ['Restricted Area', '/restricted'],
+      ['Inner Circle', '/inner-circle'],
     ]);
   });
 

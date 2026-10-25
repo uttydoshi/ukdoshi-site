@@ -75,3 +75,16 @@ cd ../infra && cdk deploy UkdoshiSite
 ```
 
 The first `UkdoshiSite` deploy takes ~5–15 minutes (certificate validation + CloudFront).
+
+## Inner Circle access
+
+`/inner-circle` is for approved people only. The API checks each signed-in email against the
+`ukdoshi-approved` DynamoDB table. Nobody can create an account with a password: anyone can sign in
+with Google, but email-code sign-in only works for addresses you've added.
+
+```bash
+aws sso login --profile ukdoshi
+scripts/approve.sh add someone@example.com "How I know them"   # approve + create their account
+scripts/approve.sh remove someone@example.com                  # take access away
+scripts/approve.sh list
+```

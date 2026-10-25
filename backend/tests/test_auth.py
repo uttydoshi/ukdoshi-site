@@ -95,7 +95,7 @@ def test_rejects_unverified_email(verified):
 def test_restricted_content_for_approved_user():
     response = get("/api/restricted/welcome", make_token())
     assert response.status_code == 200
-    assert response.json() == {"message": "Welcome to the Restricted Area, Test User."}
+    assert response.json() == {"message": "Welcome to the Inner Circle, Test User."}
 
 
 def test_restricted_content_refused_when_not_approved():

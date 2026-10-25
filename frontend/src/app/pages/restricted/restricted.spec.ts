@@ -47,7 +47,7 @@ describe('Restricted', () => {
     http.expectOne('/api/me').flush({ email: 'stranger@example.com', name: null, approved: false });
     await settle(fixture);
 
-    expect(root.textContent).toContain("you don't have access yet");
+    expect(root.textContent).toContain("you're not in the Inner Circle yet");
     expect(root.textContent).toContain('stranger@example.com');
     http.expectNone('/api/restricted/welcome');
   });
@@ -57,10 +57,10 @@ describe('Restricted', () => {
     const { fixture, root, http } = render();
     http.expectOne('/api/me').flush({ email: 'me@example.com', name: 'Me', approved: true });
     await settle(fixture);
-    http.expectOne('/api/restricted/welcome').flush({ message: 'Welcome to the Restricted Area, Me.' });
+    http.expectOne('/api/restricted/welcome').flush({ message: 'Welcome to the Inner Circle, Me.' });
     await settle(fixture);
 
-    expect(root.querySelector('.welcome')?.textContent).toContain('Welcome to the Restricted Area, Me.');
+    expect(root.querySelector('.welcome')?.textContent).toContain('Welcome to the Inner Circle, Me.');
     root.querySelector<HTMLButtonElement>('.link-button')!.click();
     expect(auth.signOut).toHaveBeenCalled();
   });

@@ -91,7 +91,7 @@ class SiteStack(Stack):
         super().__init__(scope, construct_id, **kwargs)
         www_name = f"www.{domain_name}"
 
-        # --- Approved list: email addresses allowed into the Restricted Area ---
+        # --- Approved list: email addresses allowed into the Inner Circle ---
         approved = dynamodb.TableV2(
             self,
             "ApprovedTable",

@@ -44,7 +44,9 @@ class AuthStack(Stack):
             user_pool_name="ukdoshi",
             # Essentials is the cheapest plan with email-code (passwordless) sign-in.
             feature_plan=cognito.FeaturePlan.ESSENTIALS,
-            self_sign_up_enabled=True,
+            # No self sign-up: the hosted sign-up page always asks for a password. Email users are
+            # created without one by scripts/approve.sh; Google users still sign in on their own.
+            self_sign_up_enabled=False,
             sign_in_aliases=cognito.SignInAliases(email=True),
             auto_verify=cognito.AutoVerifiedAttrs(email=True),
             standard_attributes=cognito.StandardAttributes(
