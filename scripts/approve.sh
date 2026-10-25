@@ -1,19 +1,25 @@
 #!/usr/bin/env bash
 # Who may enter the Inner Circle.
 #
-#   scripts/approve.sh add EMAIL [NOTE]   approve EMAIL and create its password-free account
-#   scripts/approve.sh remove EMAIL       take access away and delete that account
-#   scripts/approve.sh list               show everyone approved
+#   scripts/approve.sh [--staging] add EMAIL [NOTE]   approve EMAIL and create its password-free account
+#   scripts/approve.sh [--staging] remove EMAIL       take access away and delete that account
+#   scripts/approve.sh [--staging] list               show everyone approved
 #
+# Live (ukdoshi.com) by default; --staging for staging.ukdoshi.com, which has its own list.
 # The approved table is what the API checks. The account is what lets someone sign in with an
 # emailed code (the site has no sign-up page); Google users get theirs automatically.
 set -euo pipefail
 
 export AWS_PROFILE="${AWS_PROFILE:-ukdoshi}" AWS_REGION="${AWS_REGION:-us-east-1}"
-USER_POOL_ID=us-east-1_8jSxw7TJO
-TABLE=ukdoshi-approved
-
 usage() { sed -n '4,6p' "$0" | sed 's/^# *//'; exit 1; }
+
+if [[ "${1:-}" == --staging ]]; then
+  shift; AUTH_STACK=UkdoshiStagingAuth TABLE=ukdoshi-staging-approved
+else
+  AUTH_STACK=UkdoshiAuth TABLE=ukdoshi-approved
+fi
+USER_POOL_ID="$(aws cloudformation describe-stacks --stack-name "$AUTH_STACK" \
+  --query "Stacks[0].Outputs[?OutputKey=='UserPoolId'].OutputValue" --output text)"
 
 cmd="${1:-}"
 email="$(printf '%s' "${2:-}" | tr '[:upper:]' '[:lower:]')"

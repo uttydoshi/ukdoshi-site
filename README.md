@@ -18,7 +18,7 @@ Angular frontend + Python (FastAPI) backend, hosted on AWS, defined with AWS CDK
 |-------------|----------------------------------------|
 | `frontend/` | Angular app                            |
 | `backend/`  | FastAPI app (`app/main.py`) + tests    |
-| `infra/`    | CDK app: `UkdoshiDns` and `UkdoshiSite` stacks |
+| `infra/`    | CDK app: DNS, plus sign-in and site stacks for live and staging |
 
 ## Local development
 
@@ -57,10 +57,27 @@ First deploy (DNS handover from GoDaddy):
    *I'll use my own nameservers* → enter the four values (without trailing dots).
 3. Wait until `dig NS ukdoshi.com +short` shows the AWS nameservers.
 
-Every deploy after that happens automatically: pushing to `main` runs
+Every deploy after that happens automatically. A push runs
 [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which tests the backend, builds the
-frontend and runs `cdk deploy UkdoshiDns UkdoshiAuth UkdoshiSite`. Watch it on the repo's **Actions** tab; use
-**Run workflow** there to redeploy by hand. GitHub logs in to AWS via OIDC (no stored keys), using
+frontend and deploys it:
+
+| Branch    | Site                        | Stacks                                   |
+|-----------|-----------------------------|------------------------------------------|
+| `staging` | https://staging.ukdoshi.com | `UkdoshiStagingAuth`, `UkdoshiStagingSite` |
+| `main`    | https://ukdoshi.com         | `UkdoshiDns`, `UkdoshiAuth`, `UkdoshiSite` |
+
+Staging is a full, separate copy (own sign-in at auth-staging.ukdoshi.com, own approved list, own API)
+that anyone can open, but search engines are asked not to list it. The usual flow:
+
+```bash
+git switch staging && git merge main     # start from what's live
+# ...make changes, commit...
+git push                                 # -> staging.ukdoshi.com; send the link to testers
+git switch main && git merge staging && git push   # -> ukdoshi.com
+```
+
+Small fixes can still go straight to `main`. Watch deploys on the repo's **Actions** tab; use
+**Run workflow** there to redeploy a branch by hand. GitHub logs in to AWS via OIDC (no stored keys), using
 the role from the `UkdoshiGithubDeploy` stack, which is deployed by hand once:
 
 ```bash
@@ -87,4 +104,5 @@ aws sso login --profile ukdoshi
 scripts/approve.sh add someone@example.com "How I know them"   # approve + create their account
 scripts/approve.sh remove someone@example.com                  # take access away
 scripts/approve.sh list
+scripts/approve.sh --staging add tester@example.com "Testing"  # staging has its own list
 ```

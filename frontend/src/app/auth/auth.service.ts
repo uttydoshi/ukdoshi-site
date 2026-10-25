@@ -1,8 +1,10 @@
 import { computed, Injectable, signal } from '@angular/core';
 
-// Cognito's login page and the website's client (from the UkdoshiAuth stack). Neither is secret.
-const AUTH_DOMAIN = 'https://auth.ukdoshi.com';
-const CLIENT_ID = '6kiv6va120pk34ud3isunm9lte';
+// Cognito's login page and the website's client, per copy of the site (from the UkdoshiAuth and
+// UkdoshiStagingAuth stacks). Neither is secret. Anything else, like localhost, signs in to live.
+const LIVE = { domain: 'https://auth.ukdoshi.com', clientId: '6kiv6va120pk34ud3isunm9lte' };
+const STAGING = { domain: 'https://auth-staging.ukdoshi.com', clientId: 'mell2hvqapdr1dn2c3dtqht3d' };
+const { domain: AUTH_DOMAIN, clientId: CLIENT_ID } = location.hostname === 'staging.ukdoshi.com' ? STAGING : LIVE;
 const SCOPES = 'openid email profile';
 
 const TOKENS_KEY = 'auth.tokens';

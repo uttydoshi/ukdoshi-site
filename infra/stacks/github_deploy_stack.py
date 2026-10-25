@@ -6,11 +6,11 @@ from constructs import Construct
 class GithubDeployStack(Stack):
     """Lets GitHub Actions deploy via OIDC, with no long-lived AWS keys stored in GitHub.
 
-    Only pushes to `branch` of `repo` can assume the role, and the role can only assume the
+    Only pushes to `branches` of `repo` can assume the role, and the role can only assume the
     CDK bootstrap roles (cdk-*), which is all `cdk deploy` needs.
     """
 
-    def __init__(self, scope: Construct, construct_id: str, *, repo: str, branch: str, **kwargs) -> None:
+    def __init__(self, scope: Construct, construct_id: str, *, repo: str, branches: list[str], **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         provider = iam.OidcProviderNative(
@@ -29,11 +29,11 @@ class GithubDeployStack(Stack):
                 conditions={
                     "StringEquals": {
                         "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
-                        "token.actions.githubusercontent.com:sub": f"repo:{repo}:ref:refs/heads/{branch}",
+                        "token.actions.githubusercontent.com:sub": [f"repo:{repo}:ref:refs/heads/{b}" for b in branches],
                     },
                 },
             ),
-            description=f"GitHub Actions deploys from {repo}, branch {branch}",
+            description=f"GitHub Actions deploys from {repo}, branches {", ".join(branches)}",
         )
         role.add_to_policy(
             iam.PolicyStatement(

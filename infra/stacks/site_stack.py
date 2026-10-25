@@ -26,6 +26,8 @@ from aws_cdk import aws_s3 as s3
 from aws_cdk import aws_s3_deployment as s3deploy
 from constructs import Construct
 
+from stacks.stage import Stage
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 BACKEND_DIR = REPO_ROOT / "backend"
 FRONTEND_DIST = REPO_ROOT / "frontend" / "dist" / "frontend" / "browser"
@@ -82,23 +84,23 @@ class SiteStack(Stack):
         scope: Construct,
         construct_id: str,
         *,
-        domain_name: str,
+        stage: Stage,
         zone: route53.IHostedZone,
         user_pool_id: str,
         user_pool_client_id: str,
         **kwargs,
     ) -> None:
         super().__init__(scope, construct_id, **kwargs)
-        www_name = f"www.{domain_name}"
+        domain_name, *aliases = stage.site_names
 
         # --- Approved list: email addresses allowed into the Inner Circle ---
         approved = dynamodb.TableV2(
             self,
             "ApprovedTable",
-            table_name="ukdoshi-approved",
+            table_name=stage.approved_table,
             partition_key=dynamodb.Attribute(name="email", type=dynamodb.AttributeType.STRING),
-            deletion_protection=True,
-            removal_policy=RemovalPolicy.RETAIN,
+            deletion_protection=stage.protect,
+            removal_policy=RemovalPolicy.RETAIN if stage.protect else RemovalPolicy.DESTROY,
         )
 
         # --- Backend: FastAPI on Lambda behind an HTTP API ---
@@ -151,7 +153,7 @@ class SiteStack(Stack):
             self,
             "Certificate",
             domain_name=domain_name,
-            subject_alternative_names=[www_name],
+            subject_alternative_names=aliases or None,
             validation=acm.CertificateValidation.from_dns(zone),
         )
 
@@ -162,15 +164,29 @@ class SiteStack(Stack):
             code=cloudfront.FunctionCode.from_inline(SPA_REWRITE_JS),
         )
 
+        # Staging is public (so others can test it) but asks search engines not to list it.
+        hide_from_search = None
+        if not stage.search_engines:
+            hide_from_search = cloudfront.ResponseHeadersPolicy(
+                self,
+                "NoIndex",
+                custom_headers_behavior=cloudfront.ResponseCustomHeadersBehavior(
+                    custom_headers=[
+                        cloudfront.ResponseCustomHeader(header="X-Robots-Tag", value="noindex", override=True),
+                    ]
+                ),
+            )
+
         distribution = cloudfront.Distribution(
             self,
             "Distribution",
-            domain_names=[domain_name, www_name],
+            domain_names=stage.site_names,
             certificate=certificate,
             default_root_object="index.html",
             default_behavior=cloudfront.BehaviorOptions(
                 origin=origins.S3BucketOrigin.with_origin_access_control(bucket),
                 viewer_protocol_policy=cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+                response_headers_policy=hide_from_search,
                 function_associations=[
                     cloudfront.FunctionAssociation(
                         function=spa_rewrite,
@@ -184,6 +200,7 @@ class SiteStack(Stack):
                         f"{http_api.api_id}.execute-api.{self.region}.amazonaws.com"
                     ),
                     viewer_protocol_policy=cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+                    response_headers_policy=hide_from_search,
                     allowed_methods=cloudfront.AllowedMethods.ALLOW_ALL,
                     cache_policy=cloudfront.CachePolicy.CACHING_DISABLED,
                     origin_request_policy=cloudfront.OriginRequestPolicy.ALL_VIEWER_EXCEPT_HOST_HEADER,
@@ -205,9 +222,9 @@ class SiteStack(Stack):
                 f"{FRONTEND_DIST} not found; run `npm run build` in frontend/ before deploying the site."
             )
 
-        # --- DNS: apex and www both alias to CloudFront (IPv4 + IPv6) ---
+        # --- DNS: the site's name (and www, for live) alias to CloudFront (IPv4 + IPv6) ---
         cf_target = route53.RecordTarget.from_alias(targets.CloudFrontTarget(distribution))
-        for record_id, record_name in (("Apex", None), ("Www", "www")):
+        for record_id, record_name in zip(("Apex", "Www"), stage.site_names):
             route53.ARecord(self, f"{record_id}A", zone=zone, record_name=record_name, target=cf_target)
             route53.AaaaRecord(self, f"{record_id}Aaaa", zone=zone, record_name=record_name, target=cf_target)
 

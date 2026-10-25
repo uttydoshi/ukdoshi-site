@@ -1,15 +1,15 @@
 name: Deploy
 
-# Every push to main tests, builds and deploys ukdoshi.com.
-# "Run workflow" on the Actions tab redeploys main by hand.
+# Every push tests, builds and deploys: staging -> staging.ukdoshi.com, main -> ukdoshi.com.
+# "Run workflow" on the Actions tab redeploys a branch by hand.
 on:
   push:
-    branches: [main]
+    branches: [main, staging]
   workflow_dispatch:
 
-# One deploy at a time; a newer push waits for the running one instead of cancelling it mid-deploy.
+# One deploy per site at a time; a newer push waits for the running one instead of cancelling it mid-deploy.
 concurrency:
-  group: deploy
+  group: deploy-${{ github.ref_name }}
   cancel-in-progress: false
 
 permissions:
@@ -57,6 +57,13 @@ jobs:
           role-to-assume: arn:aws:iam::652284808153:role/ukdoshi-github-deploy
           aws-region: us-east-1
 
-      - name: Deploy
+      - name: Deploy ukdoshi.com
+        if: github.ref_name == 'main'
         working-directory: infra
         run: cdk deploy UkdoshiDns UkdoshiAuth UkdoshiSite --require-approval never
+
+      # --exclusively: staging only reads the shared DNS zone; changes to it ship with main.
+      - name: Deploy staging.ukdoshi.com
+        if: github.ref_name == 'staging'
+        working-directory: infra
+        run: cdk deploy UkdoshiStagingAuth UkdoshiStagingSite --exclusively --require-approval never

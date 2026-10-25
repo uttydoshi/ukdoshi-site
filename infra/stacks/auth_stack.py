@@ -9,6 +9,8 @@ from aws_cdk import aws_route53 as route53
 from aws_cdk import aws_route53_targets as targets
 from constructs import Construct
 
+from stacks.stage import Stage
+
 # From Google Cloud -> Google Auth Platform -> Clients -> "Cognito". The ID is public; the secret
 # lives only in Secrets Manager (stored by hand, never in code).
 GOOGLE_CLIENT_ID = "105063670735-m4oqtkphn5u1eikdj5el2ceb8he46f5e.apps.googleusercontent.com"
@@ -30,18 +32,19 @@ class AuthStack(Stack):
         scope: Construct,
         construct_id: str,
         *,
-        domain_name: str,
+        stage: Stage,
         zone: route53.IHostedZone,
         **kwargs,
     ) -> None:
         super().__init__(scope, construct_id, **kwargs)
-        auth_domain = f"auth.{domain_name}"
-        site_urls = [f"https://{domain_name}", f"https://www.{domain_name}", "http://localhost:4200"]
+        auth_domain = stage.auth_domain
+        site_urls = stage.site_urls
+        removal_policy = RemovalPolicy.RETAIN if stage.protect else RemovalPolicy.DESTROY
 
         self.user_pool = cognito.UserPool(
             self,
             "UserPool",
-            user_pool_name="ukdoshi",
+            user_pool_name=stage.user_pool_name,
             # Essentials is the cheapest plan with email-code (passwordless) sign-in.
             feature_plan=cognito.FeaturePlan.ESSENTIALS,
             # No self sign-up: the hosted sign-up page always asks for a password. Email users are
@@ -58,14 +61,14 @@ class AuthStack(Stack):
             ),
             account_recovery=cognito.AccountRecovery.EMAIL_ONLY,
             email=cognito.UserPoolEmail.with_ses(
-                from_email=f"no-reply@{domain_name}",
-                from_name=domain_name,
+                from_email=f"no-reply@{zone.zone_name}",
+                from_name=stage.site_domain,
                 ses_region=self.region,
-                ses_verified_domain=domain_name,
+                ses_verified_domain=zone.zone_name,
             ),
-            # Deleting the pool would delete every account; both guards must be lifted by hand first.
-            deletion_protection=True,
-            removal_policy=RemovalPolicy.RETAIN,
+            # Deleting the live pool would delete every account; both guards must be lifted by hand first.
+            deletion_protection=stage.protect,
+            removal_policy=removal_policy,
         )
 
         google = cognito.UserPoolIdentityProviderGoogle(
@@ -122,7 +125,7 @@ class AuthStack(Stack):
             self,
             "DomainRecord",
             zone=zone,
-            record_name="auth",
+            record_name=auth_domain,
             target=route53.RecordTarget.from_alias(targets.UserPoolDomainTarget(domain)),
         )
         # Style the login page like the site: plain background, dark buttons, the UD logo.
