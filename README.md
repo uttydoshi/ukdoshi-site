@@ -32,6 +32,7 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt
 # Frontend: http://localhost:4200  (proxies /api to :8000)
 cd frontend
 npm install
+npm test -- --watch=false
 npm start
 ```
 
