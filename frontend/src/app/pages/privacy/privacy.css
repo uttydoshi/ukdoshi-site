@@ -1,8 +1,3 @@
-/* A reading page: wider than the other cards, left-aligned. */
-.card {
-  max-width: 44rem;
-}
-
 .updated {
   margin-top: -1rem;
   font-size: 0.85rem;

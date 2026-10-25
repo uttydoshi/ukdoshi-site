@@ -12,6 +12,7 @@
   --bar: #fff;
   --heading: #d97757; /* Claude-logo orange */
   --font-heading: 'Source Serif 4 Variable', Georgia, serif;
+  --page-width: 90rem; /* header bar and page cards share this cap */
   --accent-1: #6d28d9;
   --accent-2: #0ea5e9;
   --ok: #16a34a;
@@ -64,12 +65,18 @@ h6 {
   letter-spacing: -0.015em;
 }
 
+/* The routed page fills the row, so its card can grow to --page-width. */
+main > :not(router-outlet) {
+  width: 100%;
+}
+
 /* Shared by every page: content sits in a frosted card under an orange heading. */
 .card {
   width: 100%;
-  max-width: 32rem;
+  margin: 0 auto;
+  max-width: var(--page-width);
   box-sizing: border-box;
-  padding: 3rem 2rem;
+  padding: 3rem clamp(2rem, 5vw, 4.5rem);
   border: 1px solid var(--border);
   border-radius: 1.5rem;
   background: var(--card);
