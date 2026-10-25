@@ -1,0 +1,29 @@
+/* A reading page: wider than the other cards, left-aligned. */
+.card {
+  max-width: 44rem;
+}
+
+.updated {
+  margin-top: -1rem;
+  font-size: 0.85rem;
+}
+
+h2 {
+  margin: 2rem 0 0.5rem;
+  font-size: 1.4rem;
+  color: var(--text);
+}
+
+ul {
+  margin: 0 0 1rem;
+  padding-left: 1.25rem;
+  color: var(--muted);
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+a {
+  color: var(--text);
+}

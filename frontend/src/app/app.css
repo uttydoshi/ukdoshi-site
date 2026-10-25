@@ -220,6 +220,14 @@ footer {
   color: var(--muted);
 }
 
+footer a {
+  color: inherit;
+}
+
+footer a:hover {
+  color: var(--text);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .icon-button,
   .menu-button span,
