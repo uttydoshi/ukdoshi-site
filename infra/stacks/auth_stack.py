@@ -1,3 +1,7 @@
+import base64
+import json
+from pathlib import Path
+
 from aws_cdk import CfnOutput, Duration, RemovalPolicy, SecretValue, Stack
 from aws_cdk import aws_certificatemanager as acm
 from aws_cdk import aws_cognito as cognito
@@ -9,6 +13,9 @@ from constructs import Construct
 # lives only in Secrets Manager (stored by hand, never in code).
 GOOGLE_CLIENT_ID = "105063670735-m4oqtkphn5u1eikdj5el2ceb8he46f5e.apps.googleusercontent.com"
 GOOGLE_CLIENT_SECRET_NAME = "ukdoshi/google-client-secret"
+
+# Login page look: colors in branding.json (only what differs from Cognito's defaults), plus logo and icon.
+LOGIN_ASSETS = Path(__file__).resolve().parents[1] / "assets" / "login"
 
 
 class AuthStack(Stack):
@@ -116,15 +123,28 @@ class AuthStack(Stack):
             record_name="auth",
             target=route53.RecordTarget.from_alias(targets.UserPoolDomainTarget(domain)),
         )
-        # The new login page needs a style to show; start from Cognito's defaults.
+        # Style the login page like the site: plain background, dark buttons, the UD logo.
         cognito.CfnManagedLoginBranding(
             self,
             "Branding",
             user_pool_id=self.user_pool.user_pool_id,
             client_id=self.client.user_pool_client_id,
-            use_cognito_provided_values=True,
+            settings=json.loads((LOGIN_ASSETS / "branding.json").read_text()),
+            assets=[
+                login_asset("FORM_LOGO", "logo.svg"),
+                login_asset("FAVICON_SVG", "favicon.svg"),
+            ],
         )
 
         CfnOutput(self, "UserPoolId", value=self.user_pool.user_pool_id)
         CfnOutput(self, "ClientId", value=self.client.user_pool_client_id)
         CfnOutput(self, "LoginUrl", value=f"https://{auth_domain}")
+
+
+def login_asset(category: str, file_name: str) -> cognito.CfnManagedLoginBranding.AssetTypeProperty:
+    return cognito.CfnManagedLoginBranding.AssetTypeProperty(
+        category=category,
+        color_mode="LIGHT",
+        extension="SVG",
+        bytes=base64.b64encode((LOGIN_ASSETS / file_name).read_bytes()).decode(),
+    )
