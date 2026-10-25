@@ -1,3 +1,6 @@
+/* Headings: Source Serif 4, bundled with the site (no Google requests). */
+@import '@fontsource-variable/source-serif-4/opsz.css';
+
 /* <html data-theme="light|dark"> is set before first paint by index.html and toggled by app.ts. */
 :root {
   --text: #1a1a2e;
@@ -6,6 +9,8 @@
   --border: rgb(26 26 46 / 0.08);
   --shadow: rgb(60 50 120 / 0.35);
   --pill: rgb(26 26 46 / 0.05);
+  --heading: #d97757; /* Claude-logo orange */
+  --font-heading: 'Source Serif 4 Variable', Georgia, serif;
   --accent-1: #6d28d9;
   --accent-2: #0ea5e9;
   --ok: #16a34a;
@@ -23,6 +28,7 @@
   --border: rgb(255 255 255 / 0.08);
   --shadow: rgb(0 0 0 / 0.6);
   --pill: rgb(255 255 255 / 0.06);
+  --heading: #d97757;
   --accent-1: #a78bfa;
   --accent-2: #38bdf8;
   --ok: #4ade80;
@@ -39,11 +45,24 @@ body {
   background: var(--bg);
   background-attachment: fixed;
   color: var(--text);
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: Verdana, Geneva, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Shared by every page: content sits in a frosted card under a gradient heading. */
+/* Every heading, present and future, uses the serif; body text stays Verdana. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-variation-settings: 'opsz' 32; /* between the text and display designs: sturdy but narrow */
+  letter-spacing: -0.015em;
+}
+
+/* Shared by every page: content sits in a frosted card under an orange heading. */
 .card {
   width: 100%;
   max-width: 32rem;
@@ -61,13 +80,8 @@ body {
 .card h1 {
   margin: 0 0 1.75rem;
   font-size: clamp(2.5rem, 9vw, 4rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
   line-height: 1.05;
-  background: linear-gradient(120deg, var(--accent-1), var(--accent-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--heading);
 }
 
 .card p {

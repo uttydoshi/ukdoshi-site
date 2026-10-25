@@ -10,9 +10,13 @@
     // Apply the theme before first paint so the page never flashes the wrong one.
     // A choice saved by the toggle wins; otherwise follow the device setting.
     (function () {
+      // Dark mode is switched off for now: the site is always light. To bring it back,
+      // set this to true here AND DARK_MODE_ENABLED in src/app/app.ts.
+      var DARK_MODE_ENABLED = false;
       var saved = null;
       try { saved = localStorage.getItem('theme'); } catch (e) {}
-      var dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      var dark = DARK_MODE_ENABLED &&
+        (saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches);
       document.documentElement.dataset['theme'] = dark ? 'dark' : 'light';
     })();
   </script>

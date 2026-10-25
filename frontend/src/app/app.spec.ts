@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideRouter, Router } from '@angular/router';
-import { App } from './app';
+import { App, DARK_MODE_ENABLED } from './app';
 import { routes } from './app.routes';
 
 describe('App', () => {
@@ -23,7 +23,12 @@ describe('App', () => {
     return { fixture, root, menuButton, panel };
   }
 
-  it('should toggle the theme and remember the choice', () => {
+  it.skipIf(DARK_MODE_ENABLED)('should hide the theme toggle while dark mode is switched off', () => {
+    const { root } = setup();
+    expect(root.querySelector('.theme-toggle')).toBeNull();
+  });
+
+  it.skipIf(!DARK_MODE_ENABLED)('should toggle the theme and remember the choice', () => {
     document.documentElement.dataset['theme'] = 'light';
     localStorage.removeItem('theme');
     const { fixture, root } = setup();

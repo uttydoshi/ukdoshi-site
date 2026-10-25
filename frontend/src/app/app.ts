@@ -7,6 +7,10 @@ type Theme = 'light' | 'dark';
 
 const THEME_KEY = 'theme';
 
+// Dark mode is switched off for now: the site is always light and the toggle is hidden.
+// To bring it back, set this to true AND DARK_MODE_ENABLED in src/index.html.
+export const DARK_MODE_ENABLED = false;
+
 @Component({
   imports: [RouterLink, RouterLinkActive, RouterOutlet],
   selector: 'app-root',
@@ -18,6 +22,7 @@ const THEME_KEY = 'theme';
   },
 })
 export class App {
+  protected readonly darkModeEnabled = DARK_MODE_ENABLED;
   protected readonly menuOpen = signal(false);
   private readonly menu = viewChild.required<ElementRef<HTMLElement>>('menu');
 
@@ -34,6 +39,10 @@ export class App {
         takeUntilDestroyed(),
       )
       .subscribe(() => this.closeMenu());
+
+    if (!DARK_MODE_ENABLED) {
+      return;
+    }
 
     // Until the visitor picks a theme, follow the device when its setting changes.
     const deviceDark = window.matchMedia?.('(prefers-color-scheme: dark)');
