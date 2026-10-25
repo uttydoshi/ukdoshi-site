@@ -1,5 +1,6 @@
 from aws_cdk import CfnOutput, Duration, Fn, RemovalPolicy, Stack
 from aws_cdk import aws_route53 as route53
+from aws_cdk import aws_ses as ses
 from constructs import Construct
 
 # Proton Mail records, copied from the previous GoDaddy DNS. Keep these in sync with
@@ -40,6 +41,10 @@ class DnsStack(Stack):
             self, "ProtonDkim", zone=self.zone, record_name="protonmail._domainkey", values=[PROTON_DKIM], ttl=ttl
         )
         route53.TxtRecord(self, "Dmarc", zone=self.zone, record_name="_dmarc", values=[DMARC], ttl=ttl)
+
+        # --- Outgoing email (Amazon SES), e.g. sign-in codes from no-reply@ukdoshi.com ---
+        # CDK adds SES's DKIM records to the zone. Their names differ from Proton's, so the two coexist.
+        ses.EmailIdentity(self, "SesIdentity", identity=ses.Identity.public_hosted_zone(self.zone))
 
         CfnOutput(
             self,
