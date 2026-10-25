@@ -19,7 +19,7 @@ describe('App', () => {
     fixture.detectChanges();
     const root = fixture.nativeElement as HTMLElement;
     const menuButton = root.querySelector<HTMLButtonElement>('.menu-button')!;
-    const panel = root.querySelector<HTMLElement>('.menu-panel')!;
+    const panel = root.querySelector<HTMLElement>('.site-nav')!;
     return { fixture, root, menuButton, panel };
   }
 

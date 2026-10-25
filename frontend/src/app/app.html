@@ -1,4 +1,4 @@
-<header class="site-header">
+<header class="site-header" #menu>
   <a class="brand" routerLink="/">
     <!-- UD monogram in a hexagon badge: the U's right stem doubles as the D's stem -->
     <svg class="brand-mark" viewBox="0 0 200 200" aria-hidden="true">
@@ -10,6 +10,11 @@
     </svg>
     ukdoshi.com
   </a>
+
+  <nav id="site-menu" class="site-nav" [class.open]="menuOpen()" aria-label="Site">
+    <a routerLink="/about" routerLinkActive="active" ariaCurrentWhenActive="page">About me</a>
+    <a routerLink="/restricted" routerLinkActive="active" ariaCurrentWhenActive="page">Restricted Area</a>
+  </nav>
 
   <div class="actions">
     @if (darkModeEnabled) {
@@ -35,26 +40,20 @@
       </button>
     }
 
-    <div class="menu" #menu>
-      <button
-        type="button"
-        class="icon-button menu-button"
-        [class.open]="menuOpen()"
-        (click)="toggleMenu()"
-        aria-controls="site-menu"
-        [attr.aria-expanded]="menuOpen()"
-        [attr.aria-label]="menuOpen() ? 'Close menu' : 'Open menu'"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
-      <nav id="site-menu" class="menu-panel" [class.open]="menuOpen()" aria-label="Site">
-        <a routerLink="/about" routerLinkActive="active" ariaCurrentWhenActive="page">About me</a>
-        <a routerLink="/restricted" routerLinkActive="active" ariaCurrentWhenActive="page">Restricted Area</a>
-      </nav>
-    </div>
+    <!-- Phones only: on wider screens the links sit in the bar and this button is hidden. -->
+    <button
+      type="button"
+      class="icon-button menu-button"
+      [class.open]="menuOpen()"
+      (click)="toggleMenu()"
+      aria-controls="site-menu"
+      [attr.aria-expanded]="menuOpen()"
+      [attr.aria-label]="menuOpen() ? 'Close menu' : 'Open menu'"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
 </header>
 

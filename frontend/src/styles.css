@@ -9,6 +9,7 @@
   --border: rgb(26 26 46 / 0.08);
   --shadow: rgb(60 50 120 / 0.35);
   --pill: rgb(26 26 46 / 0.05);
+  --bar: #fff;
   --heading: #d97757; /* Claude-logo orange */
   --font-heading: 'Source Serif 4 Variable', Georgia, serif;
   --accent-1: #6d28d9;
@@ -28,6 +29,7 @@
   --border: rgb(255 255 255 / 0.08);
   --shadow: rgb(0 0 0 / 0.6);
   --pill: rgb(255 255 255 / 0.06);
+  --bar: #16162a;
   --heading: #d97757;
   --accent-1: #a78bfa;
   --accent-2: #38bdf8;
