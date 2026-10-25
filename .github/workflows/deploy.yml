@@ -59,4 +59,4 @@ jobs:
 
       - name: Deploy
         working-directory: infra
-        run: cdk deploy UkdoshiDns UkdoshiSite --require-approval never
+        run: cdk deploy UkdoshiDns UkdoshiAuth UkdoshiSite --require-approval never

@@ -18,6 +18,7 @@ from aws_cdk import aws_apigatewayv2_integrations as integrations
 from aws_cdk import aws_certificatemanager as acm
 from aws_cdk import aws_cloudfront as cloudfront
 from aws_cdk import aws_cloudfront_origins as origins
+from aws_cdk import aws_dynamodb as dynamodb
 from aws_cdk import aws_lambda as lambda_
 from aws_cdk import aws_route53 as route53
 from aws_cdk import aws_route53_targets as targets
@@ -83,10 +84,22 @@ class SiteStack(Stack):
         *,
         domain_name: str,
         zone: route53.IHostedZone,
+        user_pool_id: str,
+        user_pool_client_id: str,
         **kwargs,
     ) -> None:
         super().__init__(scope, construct_id, **kwargs)
         www_name = f"www.{domain_name}"
+
+        # --- Approved list: email addresses allowed into the Restricted Area ---
+        approved = dynamodb.TableV2(
+            self,
+            "ApprovedTable",
+            table_name="ukdoshi-approved",
+            partition_key=dynamodb.Attribute(name="email", type=dynamodb.AttributeType.STRING),
+            deletion_protection=True,
+            removal_policy=RemovalPolicy.RETAIN,
+        )
 
         # --- Backend: FastAPI on Lambda behind an HTTP API ---
         api_fn = lambda_.Function(
@@ -110,7 +123,13 @@ class SiteStack(Stack):
             ),
             memory_size=512,
             timeout=Duration.seconds(10),
+            environment={
+                "COGNITO_USER_POOL_ID": user_pool_id,
+                "COGNITO_CLIENT_ID": user_pool_client_id,
+                "APPROVED_TABLE": approved.table_name,
+            },
         )
+        approved.grant_read_data(api_fn)
 
         http_api = apigw.HttpApi(
             self,

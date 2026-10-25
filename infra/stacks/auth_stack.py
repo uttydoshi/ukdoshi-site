@@ -29,7 +29,7 @@ class AuthStack(Stack):
     ) -> None:
         super().__init__(scope, construct_id, **kwargs)
         auth_domain = f"auth.{domain_name}"
-        site_urls = [f"https://{domain_name}", "http://localhost:4200"]
+        site_urls = [f"https://{domain_name}", f"https://www.{domain_name}", "http://localhost:4200"]
 
         self.user_pool = cognito.UserPool(
             self,

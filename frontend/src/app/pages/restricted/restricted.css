@@ -7,20 +7,55 @@
   height: 2.5rem;
   margin-bottom: 1rem;
   fill: none;
-  stroke: var(--accent-1);
+  stroke: var(--heading);
   stroke-width: 1.75;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-.back {
-  display: inline-block;
-  margin-top: 0.5rem;
-  color: var(--accent-1);
-  font-weight: 600;
-  text-decoration: none;
+.welcome {
+  color: var(--text);
+  font-size: 1.1rem;
 }
 
-.back:hover {
+a {
+  color: var(--text);
+}
+
+.button {
+  margin-top: 0.5rem;
+  padding: 0.75rem 2rem;
+  border: 0;
+  border-radius: 0.6rem;
+  background: var(--text);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.button:hover {
+  opacity: 0.85;
+}
+
+.signed-in-as {
+  margin: 1.5rem 0 0;
+  font-size: 0.85rem;
+}
+
+.link-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
   text-decoration: underline;
+  cursor: pointer;
+}
+
+.button:focus-visible,
+.link-button:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 2px;
 }

@@ -4,6 +4,33 @@
     <path d="M8 11V7a4 4 0 0 1 8 0v4" />
   </svg>
   <h1>Restricted Area</h1>
-  <p>This area will be for members only. Signing in is coming soon.</p>
-  <a class="back" routerLink="/">← Back home</a>
+
+  @if (!auth.signedIn()) {
+    <p>This area is for approved members. Sign in with Google or your email address to continue.</p>
+    <button type="button" class="button" (click)="auth.signIn()">Sign in</button>
+  } @else if (me.error()) {
+    <p>Your sign-in has expired or something went wrong.</p>
+    <button type="button" class="button" (click)="signInAgain()">Sign in again</button>
+  } @else if (me.hasValue()) {
+    @if (me.value().approved) {
+      @if (welcome.hasValue()) {
+        <p class="welcome">{{ welcome.value().message }}</p>
+      } @else if (welcome.error()) {
+        <p>The restricted content couldn't be loaded. Please try again later.</p>
+      } @else {
+        <p>Loading…</p>
+      }
+    } @else {
+      <p>
+        You're signed in, but you don't have access yet. To ask for access, email
+        <a href="mailto:utty@ukdoshi.com">utty&#64;ukdoshi.com</a> from the address below.
+      </p>
+    }
+    <p class="signed-in-as">
+      Signed in as <strong>{{ me.value().email }}</strong> ·
+      <button type="button" class="link-button" (click)="auth.signOut()">Sign out</button>
+    </p>
+  } @else {
+    <p>Checking your access…</p>
+  }
 </section>
