@@ -1,16 +1,60 @@
+<header class="site-header">
+  <a class="brand" routerLink="/">
+    <!-- UD monogram: the U's right stem doubles as the D's stem -->
+    <svg class="brand-mark" viewBox="0 0 200 200" aria-hidden="true">
+      <path d="M40 40 V130 A30 30 0 0 0 100 130 V40" />
+      <path d="M100 40 V160 A60 60 0 0 0 100 40 Z" />
+    </svg>
+    ukdoshi.com
+  </a>
+
+  <div class="actions">
+    <button
+      type="button"
+      class="icon-button theme-toggle"
+      (click)="toggleTheme()"
+      [attr.aria-label]="theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+      [title]="theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+    >
+      @if (theme() === 'dark') {
+        <!-- Sun -->
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+        </svg>
+      } @else {
+        <!-- Moon -->
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      }
+    </button>
+
+    <div class="menu" #menu>
+      <button
+        type="button"
+        class="icon-button menu-button"
+        [class.open]="menuOpen()"
+        (click)="toggleMenu()"
+        aria-controls="site-menu"
+        [attr.aria-expanded]="menuOpen()"
+        [attr.aria-label]="menuOpen() ? 'Close menu' : 'Open menu'"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav id="site-menu" class="menu-panel" [class.open]="menuOpen()" aria-label="Site">
+        <a routerLink="/about" routerLinkActive="active" ariaCurrentWhenActive="page">About me</a>
+        <a routerLink="/restricted" routerLinkActive="active" ariaCurrentWhenActive="page">Restricted Area</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
 <main>
-  <section class="card">
-    <p class="domain">ukdoshi.com</p>
-    <h1>Hello World</h1>
-
-    @if (hello.hasValue()) {
-      <p class="api ok"><span class="dot"></span>From the Python API: <strong>{{ hello.value().message }}</strong></p>
-    } @else if (hello.error()) {
-      <p class="api error"><span class="dot"></span>The Python API is not reachable.</p>
-    } @else {
-      <p class="api pending"><span class="dot"></span>Calling the Python API…</p>
-    }
-  </section>
-
-  <footer>Angular · FastAPI · AWS</footer>
+  <router-outlet />
 </main>
+
+<footer>Angular · FastAPI · AWS</footer>

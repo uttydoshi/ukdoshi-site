@@ -1,30 +1,93 @@
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideRouter, Router } from '@angular/router';
 import { App } from './app';
+import { routes } from './app.routes';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
-      providers: [provideHttpClient(), provideHttpClientTesting()],
+      providers: [provideHttpClient(), provideHttpClientTesting(), provideRouter(routes)],
     })
       .compileComponents();
   });
 
-  it('should render Hello World', () => {
+  function setup() {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello World');
+    const root = fixture.nativeElement as HTMLElement;
+    const menuButton = root.querySelector<HTMLButtonElement>('.menu-button')!;
+    const panel = root.querySelector<HTMLElement>('.menu-panel')!;
+    return { fixture, root, menuButton, panel };
+  }
+
+  it('should toggle the theme and remember the choice', () => {
+    document.documentElement.dataset['theme'] = 'light';
+    localStorage.removeItem('theme');
+    const { fixture, root } = setup();
+    const button = root.querySelector<HTMLButtonElement>('.theme-toggle')!;
+    expect(button.getAttribute('aria-label')).toBe('Switch to dark mode');
+
+    button.click();
+    fixture.detectChanges();
+    expect(document.documentElement.dataset['theme']).toBe('dark');
+    expect(localStorage.getItem('theme')).toBe('dark');
+    expect(button.getAttribute('aria-label')).toBe('Switch to light mode');
+
+    button.click();
+    expect(document.documentElement.dataset['theme']).toBe('light');
+    expect(localStorage.getItem('theme')).toBe('light');
   });
 
-  it('should show the message from the API', async () => {
-    const fixture = TestBed.createComponent(App);
+  it('should list the pages in the menu', () => {
+    const { panel } = setup();
+    const links = Array.from(panel.querySelectorAll('a')).map((a) => [a.textContent?.trim(), a.getAttribute('href')]);
+    expect(links).toEqual([
+      ['About me', '/about'],
+      ['Restricted Area', '/restricted'],
+    ]);
+  });
+
+  it('should open and close the menu with its button', () => {
+    const { fixture, menuButton, panel } = setup();
+    expect(menuButton.getAttribute('aria-expanded')).toBe('false');
+
+    menuButton.click();
     fixture.detectChanges();
-    TestBed.inject(HttpTestingController).expectOne('/api/hello').flush({ message: 'Hello World' });
-    await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.api')?.textContent).toContain('From the Python API: Hello World');
+    expect(menuButton.getAttribute('aria-expanded')).toBe('true');
+    expect(panel.classList).toContain('open');
+
+    menuButton.click();
+    fixture.detectChanges();
+    expect(panel.classList).not.toContain('open');
+  });
+
+  it('should close the menu on Escape and on a click outside it', () => {
+    const { fixture, root, menuButton, panel } = setup();
+
+    menuButton.click();
+    fixture.detectChanges();
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    fixture.detectChanges();
+    expect(panel.classList).not.toContain('open');
+
+    menuButton.click();
+    fixture.detectChanges();
+    root.querySelector<HTMLElement>('footer')!.click();
+    fixture.detectChanges();
+    expect(panel.classList).not.toContain('open');
+  });
+
+  it('should close the menu after navigating', async () => {
+    const { fixture, menuButton, panel } = setup();
+    menuButton.click();
+    fixture.detectChanges();
+
+    await TestBed.inject(Router).navigateByUrl('/about');
+    fixture.detectChanges();
+    expect(panel.classList).not.toContain('open');
+    expect((fixture.nativeElement as HTMLElement).querySelector('h1')?.textContent).toContain('About me');
   });
 });

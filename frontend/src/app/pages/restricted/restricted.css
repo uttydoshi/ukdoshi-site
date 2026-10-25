@@ -1,0 +1,26 @@
+.card {
+  text-align: center;
+}
+
+.lock {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: 1rem;
+  fill: none;
+  stroke: var(--accent-1);
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.back {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: var(--accent-1);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.back:hover {
+  text-decoration: underline;
+}

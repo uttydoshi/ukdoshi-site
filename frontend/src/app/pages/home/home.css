@@ -1,0 +1,54 @@
+.card {
+  text-align: center;
+}
+
+/* Status pill: the dot's color shows whether the Python API answered. */
+.api {
+  display: inline-block;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: var(--pill);
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.api strong {
+  color: var(--text);
+}
+
+.dot {
+  display: inline-block;
+  margin-right: 0.5rem;
+  vertical-align: 0.1em;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.ok .dot {
+  background: var(--ok);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ok) 25%, transparent);
+}
+
+.pending .dot {
+  background: var(--pending);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.error {
+  color: var(--error);
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pending .dot {
+    animation: none;
+  }
+}

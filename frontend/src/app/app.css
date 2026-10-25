@@ -1,115 +1,212 @@
-main {
-  min-height: 100vh;
-  box-sizing: border-box;
-  padding: 1.5rem 1rem;
+:host {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+}
+
+/* --- Header: brand on the left; theme toggle and menu on the right --- */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 10;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 2rem;
-  text-align: center;
+  justify-content: space-between;
+  padding: 1rem;
 }
 
-.card {
-  width: 100%;
-  max-width: 32rem;
-  box-sizing: border-box;
-  padding: 3rem 2rem;
-  border: 1px solid var(--border);
-  border-radius: 1.5rem;
-  background: var(--card);
-  box-shadow: 0 1.5rem 3rem -1.5rem var(--shadow);
-  backdrop-filter: blur(12px);
-  animation: rise 0.6s ease-out both;
-}
-
-@media (max-width: 480px) {
-  .card {
-    padding: 2.5rem 1.25rem;
-  }
-}
-
-.domain {
-  margin: 0 0 0.75rem;
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--muted);
+  text-decoration: none;
 }
 
-h1 {
-  margin: 0 0 1.75rem;
-  font-size: clamp(2.5rem, 9vw, 4rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-  background: linear-gradient(120deg, var(--accent-1), var(--accent-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* Status pill: the dot's color shows whether the Python API answered. */
-.api {
-  display: inline-block;
-  margin: 0;
-  padding: 0.5rem 1rem;
-  border-radius: 999px;
-  background: var(--pill);
-  font-size: 0.95rem;
-  color: var(--muted);
-}
-
-.api strong {
+.brand:hover {
   color: var(--text);
 }
 
-.dot {
-  display: inline-block;
-  margin-right: 0.5rem;
-  vertical-align: 0.1em;
-  width: 0.5rem;
-  height: 0.5rem;
+.brand-mark {
+  width: 1.75rem;
+  height: 1.75rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 14;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.icon-button {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid var(--border);
   border-radius: 50%;
+  background: var(--card);
+  color: var(--muted);
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  transition:
+    color 0.2s,
+    transform 0.2s;
+}
+
+.icon-button:hover {
+  color: var(--text);
+}
+
+.brand:focus-visible,
+.icon-button:focus-visible,
+.menu-panel a:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 2px;
+}
+
+.theme-toggle:hover {
+  transform: rotate(15deg);
+}
+
+.theme-toggle svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* --- Hamburger: three bars that fold into an X when open --- */
+.menu {
+  position: relative;
+}
+
+.menu-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.menu-button span {
+  display: block;
+  width: 1.1rem;
+  height: 2px;
+  border-radius: 1px;
   background: currentColor;
+  transition:
+    transform 0.25s,
+    opacity 0.2s;
 }
 
-.ok .dot {
-  background: var(--ok);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ok) 25%, transparent);
+.menu-button.open span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
 }
 
-.pending .dot {
-  background: var(--pending);
-  animation: pulse 1s ease-in-out infinite;
+.menu-button.open span:nth-child(2) {
+  opacity: 0;
 }
 
-.error {
-  color: var(--error);
+.menu-button.open span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* Desktop: a dropdown under the button. Phones: a full-width panel (see media query). */
+.menu-panel {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 13rem;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--card);
+  box-shadow: 0 1rem 2rem -1rem var(--shadow);
+  backdrop-filter: blur(16px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-0.5rem);
+  transition:
+    opacity 0.2s,
+    transform 0.2s,
+    visibility 0.2s;
+}
+
+.menu-panel.open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.menu-panel a {
+  padding: 0.75rem 1rem;
+  border-radius: 0.6rem;
+  color: var(--text);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.menu-panel a:hover {
+  background: var(--pill);
+}
+
+.menu-panel a.active {
+  color: var(--accent-1);
+  background: var(--pill);
+}
+
+@media (max-width: 480px) {
+  .menu {
+    position: static;
+  }
+
+  .menu-panel {
+    top: calc(100% - 0.25rem);
+    left: 1rem;
+    right: 1rem;
+  }
+
+  .menu-panel a {
+    padding: 1rem;
+    font-size: 1.05rem;
+  }
+}
+
+/* --- Page area and footer --- */
+main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 1rem 2rem;
 }
 
 footer {
+  padding: 0 1rem 1.5rem;
+  text-align: center;
   font-size: 0.85rem;
   color: var(--muted);
 }
 
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(1rem);
-  }
-}
-
-@keyframes pulse {
-  50% {
-    opacity: 0.3;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .card,
-  .pending .dot {
-    animation: none;
+  .icon-button,
+  .menu-button span,
+  .menu-panel {
+    transition: none;
   }
 }

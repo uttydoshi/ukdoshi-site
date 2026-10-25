@@ -1,3 +1,4 @@
+/* <html data-theme="light|dark"> is set before first paint by index.html and toggled by app.ts. */
 :root {
   --text: #1a1a2e;
   --muted: #5b5f77;
@@ -12,25 +13,24 @@
   --error: #b91c1c;
   --bg: radial-gradient(circle at 20% 15%, #ede9fe, transparent 45%),
     radial-gradient(circle at 85% 85%, #e0f2fe, transparent 45%), #f8fafc;
-  color-scheme: light dark;
+  color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #f1f5f9;
-    --muted: #a3a8c3;
-    --card: rgb(22 22 40 / 0.7);
-    --border: rgb(255 255 255 / 0.08);
-    --shadow: rgb(0 0 0 / 0.6);
-    --pill: rgb(255 255 255 / 0.06);
-    --accent-1: #a78bfa;
-    --accent-2: #38bdf8;
-    --ok: #4ade80;
-    --pending: #fbbf24;
-    --error: #f87171;
-    --bg: radial-gradient(circle at 20% 15%, #2e1065, transparent 45%),
-      radial-gradient(circle at 85% 85%, #0c4a6e, transparent 45%), #0b0b16;
-  }
+:root[data-theme='dark'] {
+  --text: #f1f5f9;
+  --muted: #a3a8c3;
+  --card: rgb(22 22 40 / 0.7);
+  --border: rgb(255 255 255 / 0.08);
+  --shadow: rgb(0 0 0 / 0.6);
+  --pill: rgb(255 255 255 / 0.06);
+  --accent-1: #a78bfa;
+  --accent-2: #38bdf8;
+  --ok: #4ade80;
+  --pending: #fbbf24;
+  --error: #f87171;
+  --bg: radial-gradient(circle at 20% 15%, #2e1065, transparent 45%),
+    radial-gradient(circle at 85% 85%, #0c4a6e, transparent 45%), #0b0b16;
+  color-scheme: dark;
 }
 
 body {
@@ -41,4 +41,55 @@ body {
   color: var(--text);
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Shared by every page: content sits in a frosted card under a gradient heading. */
+.card {
+  width: 100%;
+  max-width: 32rem;
+  box-sizing: border-box;
+  padding: 3rem 2rem;
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  background: var(--card);
+  box-shadow: 0 1.5rem 3rem -1.5rem var(--shadow);
+  backdrop-filter: blur(12px);
+  line-height: 1.6;
+  animation: rise 0.6s ease-out both;
+}
+
+.card h1 {
+  margin: 0 0 1.75rem;
+  font-size: clamp(2.5rem, 9vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  background: linear-gradient(120deg, var(--accent-1), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.card p {
+  margin: 0 0 1rem;
+  color: var(--muted);
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 2.5rem 1.25rem;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    animation: none;
+  }
 }
