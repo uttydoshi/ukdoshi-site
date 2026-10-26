@@ -21,7 +21,9 @@
     <h3 class="worked-label">Where I've worked</h3>
     <ul class="logos">
       @for (company of companies; track company.name) {
-        <li><img [src]="company.logo" [alt]="company.name" [title]="company.name" loading="lazy" /></li>
+        <li [style.--logo-scale]="company.scale ?? 1">
+          <img [src]="company.logo" [alt]="company.name" [title]="company.name" loading="lazy" />
+        </li>
       }
     </ul>
   </section>
