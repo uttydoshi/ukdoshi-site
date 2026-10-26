@@ -117,10 +117,16 @@ h2 svg {
   color: var(--heading);
 }
 
+.circles-figure {
+  margin: 0;
+}
+
 .credit {
-  margin-top: 1rem !important;
+  margin-top: 0.5rem;
+  text-align: center;
   font-size: 0.75rem;
   font-style: italic;
+  color: var(--muted);
 }
 
 @media (max-width: 640px) {
@@ -128,7 +134,7 @@ h2 svg {
     grid-template-columns: 1fr;
   }
 
-  .circles {
+  .circles-figure {
     max-width: 15rem;
     margin: 0 auto;
   }
