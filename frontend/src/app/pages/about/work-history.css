@@ -1,0 +1,175 @@
+:host {
+  position: relative;
+  display: block;
+}
+
+/* The strip: clipped at the sides, which fade out, so logos glide in and out of view. */
+.viewport {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  margin: 0;
+  padding: 0.5rem 0;
+  list-style: none;
+  animation: scroll 32s linear infinite;
+}
+
+/* Two identical copies side by side: moving by half the strip lands exactly where it started. */
+@keyframes scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Stop while a mouse is over the strip, or while a card is open (taps on phones). */
+.viewport:hover .track,
+.track.paused {
+  animation-play-state: paused;
+}
+
+.track li {
+  padding: 0 1.4rem; /* spacing as padding, not gap, so both copies are exactly the same width */
+}
+
+.track button {
+  display: block;
+  padding: 0.35rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: none;
+  cursor: pointer;
+}
+
+.track button:focus-visible {
+  outline: 2px solid var(--heading);
+  outline-offset: 2px;
+}
+
+.track img {
+  display: block;
+  height: calc(1.75rem * var(--logo-scale));
+  width: auto;
+  filter: grayscale(1);
+  opacity: 0.55;
+  transition: filter 0.25s, opacity 0.25s;
+}
+
+.track button:hover img,
+.track button.active img {
+  filter: none;
+  opacity: 1;
+}
+
+/* The card under the strip, with a small pointer up at the logo. */
+.card {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  z-index: 5;
+  box-sizing: border-box;
+  width: min(22rem, 100%);
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 1px 2px rgb(26 26 46 / 0.06), 0 12px 32px rgb(26 26 46 / 0.16);
+  animation: pop 0.15s ease-out;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: calc(var(--arrow) - 6px);
+  width: 12px;
+  height: 12px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  background: #fff;
+  transform: rotate(45deg);
+}
+
+/* Slide only, no fade: the card is fully readable from its very first frame. */
+@keyframes pop {
+  from {
+    transform: translateY(-4px);
+  }
+}
+
+.card h4 {
+  margin: 0;
+  font-size: 1.15rem;
+  color: var(--text);
+}
+
+.card .note {
+  margin: 0.1rem 0 0;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--muted);
+}
+
+.roles {
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.85rem;
+}
+
+.roles li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0 0.75rem;
+  color: var(--text);
+}
+
+.roles li + li {
+  margin-top: 0.2rem;
+}
+
+.roles span {
+  color: var(--muted);
+}
+
+.highlight {
+  margin: 0.7rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+@media (max-width: 480px) {
+  .track li {
+    padding: 0 1rem;
+  }
+
+  .track img {
+    height: calc(1.4rem * var(--logo-scale));
+  }
+}
+
+/* Visitors who ask for less motion get a still, wrapping row instead. */
+@media (prefers-reduced-motion: reduce) {
+  .viewport {
+    mask-image: none;
+  }
+
+  .track {
+    flex-wrap: wrap;
+    width: auto;
+    animation: none;
+  }
+
+  .track li.copy {
+    display: none;
+  }
+
+  .card {
+    animation: none;
+  }
+}

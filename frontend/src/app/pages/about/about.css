@@ -203,7 +203,7 @@ h2 svg {
   }
 }
 
-/* "Where I've worked": a row of company logos, wrapping on phones. */
+/* "Where I've worked" label; the scrolling logos live in work-history. */
 .worked-label {
   margin: 1.75rem 0 0.9rem;
   font-family: inherit;
@@ -212,30 +212,4 @@ h2 svg {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
-}
-
-.logos {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1.25rem 2.5rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.logos img {
-  display: block;
-  height: calc(1.75rem * var(--logo-scale));
-  width: auto;
-}
-
-@media (max-width: 480px) {
-  .logos {
-    gap: 1rem 1.75rem;
-  }
-
-  .logos img {
-    height: calc(1.4rem * var(--logo-scale));
-  }
 }

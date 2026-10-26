@@ -1,0 +1,40 @@
+<div class="viewport">
+  <ul class="track" [class.paused]="open()">
+    @for (copy of copies; track copy) {
+      @for (company of companies; track company.name) {
+        <li [style.--logo-scale]="company.scale ?? 1" [attr.aria-hidden]="copy === 1 ? 'true' : null" [class.copy]="copy === 1">
+          <button
+            #logo
+            type="button"
+            [class.active]="open()?.logo === logo"
+            [attr.tabindex]="copy === 1 ? -1 : null"
+            [attr.aria-expanded]="copy === 0 ? open()?.company === company : null"
+            aria-controls="work-card"
+            (mouseenter)="show(company, logo)"
+            (click)="show(company, logo)"
+            (focus)="show(company, logo)"
+          >
+            <img [src]="company.logo" [alt]="company.name" loading="lazy" />
+          </button>
+        </li>
+      }
+    }
+  </ul>
+</div>
+
+@if (open(); as card) {
+  <div id="work-card" class="card" role="region" [attr.aria-label]="card.company.name" [style.left.px]="card.left" [style.--arrow.px]="card.arrow">
+    <h4>{{ card.company.name }}</h4>
+    @if (card.company.note) {
+      <p class="note">{{ card.company.note }}</p>
+    }
+    <ul class="roles">
+      @for (role of card.company.roles; track role.title) {
+        <li><strong>{{ role.title }}</strong> <span>{{ role.dates }}</span></li>
+      }
+    </ul>
+    @if (card.company.highlight) {
+      <p class="highlight">{{ card.company.highlight }}</p>
+    }
+  </div>
+}
