@@ -95,14 +95,19 @@ def test_rejects_unverified_email(verified):
 def test_restricted_content_for_approved_user():
     response = get("/api/restricted/welcome", make_token())
     assert response.status_code == 200
-    assert response.json() == {"message": "Welcome to the Inner Circle, Test User."}
+    assert response.json()["message"] == "Welcome to the Inner Circle, Test User."
+    assert [tile["title"] for tile in response.json()["tiles"]] == ["My Story", "Some Clicks"]
+    assert response.headers["Cache-Control"] == "no-store"
 
 
 def test_restricted_content_refused_when_not_approved():
     response = get("/api/restricted/welcome", make_token(email="stranger@example.com"))
     assert response.status_code == 403
     assert response.json() == {"detail": "You don't have access yet"}
+    assert "My Story" not in response.text
 
 
 def test_restricted_content_requires_sign_in():
-    assert get("/api/restricted/welcome").status_code == 401
+    response = get("/api/restricted/welcome")
+    assert response.status_code == 401
+    assert "My Story" not in response.text

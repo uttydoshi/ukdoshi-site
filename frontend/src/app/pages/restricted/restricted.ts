@@ -8,8 +8,15 @@ interface Me {
   approved: boolean;
 }
 
+interface Tile {
+  id: string;
+  title: string;
+}
+
+// The tiles come from the API, never from this code: the site's code is public, the API isn't.
 interface Welcome {
   message: string;
+  tiles: Tile[];
 }
 
 // Signing in only proves who the visitor is; the API decides whether they're approved.

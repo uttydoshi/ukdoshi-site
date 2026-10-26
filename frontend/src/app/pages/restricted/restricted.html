@@ -15,6 +15,14 @@
     @if (me.value().approved) {
       @if (welcome.hasValue()) {
         <p class="welcome">{{ welcome.value().message }}</p>
+        <ul class="tiles">
+          @for (tile of welcome.value().tiles; track tile.id) {
+            <li class="tile">
+              <h2>{{ tile.title }}</h2>
+              <p>Coming soon</p>
+            </li>
+          }
+        </ul>
       } @else if (welcome.error()) {
         <p>This page couldn't be loaded. Please try again later.</p>
       } @else {

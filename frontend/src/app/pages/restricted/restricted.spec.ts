@@ -39,6 +39,7 @@ describe('Restricted', () => {
     root.querySelector<HTMLButtonElement>('.button')!.click();
     expect(auth.signIn).toHaveBeenCalled();
     http.expectNone('/api/me');
+    expect(root.querySelector('.tiles')).toBeNull();
   });
 
   it('tells signed-in visitors who are not approved how to ask for access', async () => {
@@ -57,12 +58,36 @@ describe('Restricted', () => {
     const { fixture, root, http } = render();
     http.expectOne('/api/me').flush({ email: 'me@example.com', name: 'Me', approved: true });
     await settle(fixture);
-    http.expectOne('/api/restricted/welcome').flush({ message: 'Welcome to the Inner Circle, Me.' });
+    http.expectOne('/api/restricted/welcome').flush({
+      message: 'Welcome to the Inner Circle, Me.',
+      tiles: [
+        { id: 'a', title: 'Tile A' },
+        { id: 'b', title: 'Tile B' },
+      ],
+    });
     await settle(fixture);
 
     expect(root.querySelector('.welcome')?.textContent).toContain('Welcome to the Inner Circle, Me.');
+    expect(Array.from(root.querySelectorAll('.tile h2')).map((h) => h.textContent)).toEqual(['Tile A', 'Tile B']);
     root.querySelector<HTMLButtonElement>('.link-button')!.click();
     expect(auth.signOut).toHaveBeenCalled();
+  });
+
+  it('hides the tiles as soon as the visitor is signed out', async () => {
+    signedIn.set(true);
+    const { fixture, root, http } = render();
+    http.expectOne('/api/me').flush({ email: 'me@example.com', name: 'Me', approved: true });
+    await settle(fixture);
+    http.expectOne('/api/restricted/welcome').flush({ message: 'Welcome', tiles: [{ id: 'a', title: 'Tile A' }] });
+    await settle(fixture);
+    expect(root.querySelector('.tiles')).not.toBeNull();
+
+    signedIn.set(false);
+    await settle(fixture);
+
+    expect(root.querySelector('.tiles')).toBeNull();
+    expect(root.textContent).not.toContain('Tile A');
+    expect(root.textContent).toContain('Sign in with Google or your email address');
   });
 
   it('offers to sign in again when the API rejects the sign-in', async () => {

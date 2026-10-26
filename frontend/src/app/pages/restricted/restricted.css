@@ -18,6 +18,34 @@
   font-size: 1.1rem;
 }
 
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tile {
+  padding: 2rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 1px 2px rgb(26 26 46 / 0.04), 0 6px 20px rgb(26 26 46 / 0.06);
+}
+
+.tile h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.6rem;
+  color: var(--text);
+}
+
+.tile p {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
 a {
   color: var(--text);
 }
