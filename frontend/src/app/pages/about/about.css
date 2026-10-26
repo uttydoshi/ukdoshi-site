@@ -100,6 +100,19 @@ h2 svg {
   color: var(--muted);
 }
 
+.layers ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.layers li + li {
+  margin-top: 0.25rem;
+}
+
+.layers li::marker {
+  color: var(--heading);
+}
+
 .credit {
   margin-top: 1rem !important;
   font-size: 0.75rem;
