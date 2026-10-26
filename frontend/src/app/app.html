@@ -10,6 +10,9 @@
     </svg>
     ukdoshi.com
   </a>
+  @if (isStaging) {
+    <span class="staging-badge" title="This is the test copy of the site, not ukdoshi.com">Staging</span>
+  }
 
   <nav id="site-menu" class="site-nav" [class.open]="menuOpen()" aria-label="Site">
     <a routerLink="/about" routerLinkActive="active" ariaCurrentWhenActive="page">About me</a>
@@ -61,4 +64,17 @@
   <router-outlet />
 </main>
 
-<footer>Angular · FastAPI · AWS · <a routerLink="/privacy">Privacy</a></footer>
+<footer>
+  Angular · FastAPI · AWS · <a routerLink="/privacy">Privacy</a>
+  @if (isStaging) {
+    <!-- Lets testers say exactly which version they saw. -->
+    <div class="build">
+      Staging ·
+      @if (build) {
+        built from {{ build.commit }} · {{ build.time | date: 'd MMM, HH:mm' }}
+      } @else {
+        local build
+      }
+    </div>
+  }
+</footer>

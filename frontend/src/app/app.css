@@ -53,6 +53,20 @@
   stroke-linejoin: miter;
 }
 
+/* Staging only: an amber pill beside the brand, so the test copy is never mistaken for live. */
+.staging-badge {
+  padding: 0.2rem 0.55rem;
+  border: 1px solid #fcd34d;
+  border-radius: 999px;
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 /* Wider screens: links sit inline in the bar. Phones: a dropdown panel (see media query). */
 .site-nav {
   display: flex;
@@ -226,6 +240,11 @@ footer a {
 
 footer a:hover {
   color: var(--text);
+}
+
+footer .build {
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

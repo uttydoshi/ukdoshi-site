@@ -41,9 +41,10 @@ jobs:
 
       - name: Build frontend
         working-directory: frontend
+        # The commit and time show in the staging footer, so testers can say which version they saw.
         run: |
           npm ci
-          npm run build
+          npm run build -- --define "BUILD_COMMIT='${GITHUB_SHA::7}'" --define "BUILD_TIME='$(date -u +%Y-%m-%dT%H:%M:%SZ)'"
 
       - name: Install CDK
         working-directory: infra
