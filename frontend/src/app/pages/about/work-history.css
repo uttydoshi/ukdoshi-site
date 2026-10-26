@@ -15,10 +15,7 @@
 }
 
 .logos button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.45rem;
+  display: block;
   padding: 0.35rem;
   border: 0;
   border-radius: 0.5rem;
@@ -31,7 +28,7 @@
   outline-offset: 2px;
 }
 
-/* Same height for every logo's slot, so the years underneath line up whatever the logo's size. */
+/* Same height for every logo's slot, so the row stays even whatever each logo's size. */
 .mark {
   display: flex;
   align-items: center;
@@ -51,14 +48,6 @@
 .logos button.active img {
   filter: none;
   opacity: 1;
-}
-
-.years {
-  font-family: inherit;
-  font-size: 0.7rem;
-  letter-spacing: 0.04em;
-  color: var(--muted);
-  white-space: nowrap;
 }
 
 /* The card just under the chosen logo, with a small pointer up at it. */
