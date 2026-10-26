@@ -7,6 +7,7 @@ interface Role {
 
 interface Company {
   name: string;
+  years: string; // shown under the logo, so the strip reads as a timeline
   note?: string;
   logo: string;
   scale?: number; // evens out heavy logos
@@ -18,22 +19,25 @@ interface Company {
 const COMPANIES: Company[] = [
   {
     name: 'Culture Amp',
+    years: '2021 – 2026',
     logo: 'logos/culture-amp.png',
     roles: [{ title: 'Engineering Manager', dates: 'Aug 2021 – Oct 2026' }],
     highlight:
-      'Led the AI Platform team (5 AI engineers, 3 data scientists) that let ~6 product teams ship ~10 AI ' +
-      'features to ~6,000 customers. Built an LLM gateway that cut AI feature build time by ~85%.',
+      'Led the team that built and ran Culture Amp’s AI Platform, so product teams could ship AI features ' +
+      'quickly and safely: an LLM gateway, tracing, model evaluation and de-identification of customer data.',
   },
   {
     name: 'Coles Group',
+    years: '2020 – 2021',
     logo: 'logos/coles.svg',
     roles: [{ title: 'Engineering Manager', dates: 'Oct 2020 – Aug 2021' }],
     highlight:
-      'Built the Enterprise Services team from scratch and launched Coles’ first cloud SFTP service for ' +
-      '1,500 suppliers.',
+      'Built the Enterprise Services team from scratch and launched Coles’ first cloud-based file transfer ' +
+      'service for its suppliers.',
   },
   {
     name: 'MYOB',
+    years: '2016 – 2020',
     logo: 'logos/myob.png',
     roles: [
       { title: 'Delivery Manager', dates: 'May – Sep 2020' },
@@ -41,23 +45,26 @@ const COMPANIES: Company[] = [
       { title: 'Business Analyst', dates: 'Apr 2016 – Jul 2017' },
     ],
     highlight:
-      'Led DevOps and developer experience for 70+ teams: cut deployment times by 25–30% and saved ' +
-      '~$600K a year on AWS.',
+      'Led DevOps and developer experience across MYOB: rolled out a new CI/CD platform, brought AWS costs ' +
+      'down and gave teams a secure, friction-free path to production.',
   },
   {
     name: 'JB Hi-Fi',
+    years: '2015 – 2016',
     logo: 'logos/jb-hi-fi.png',
     scale: 0.8,
     roles: [{ title: 'Technical Business Analyst', dates: 'Nov 2015 – Apr 2016' }],
   },
   {
     name: 'UHG',
+    years: '2013 – 2015',
     note: 'Unified Healthcare Group',
     logo: 'logos/uhg.svg',
     roles: [{ title: 'Business Analyst', dates: 'Oct 2013 – Nov 2015' }],
   },
   {
     name: 'Racing Australia',
+    years: '2009 – 2013',
     note: 'then Racing Information Services Australia (RISA)',
     logo: 'logos/racing-australia.png',
     roles: [

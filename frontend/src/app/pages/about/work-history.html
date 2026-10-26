@@ -14,10 +14,13 @@
             (click)="show(company, logo)"
             (focus)="show(company, logo)"
           >
-            <img [src]="company.logo" [alt]="company.name" loading="lazy" />
+            <span class="mark"><img [src]="company.logo" [alt]="company.name" loading="lazy" /></span>
+            <span class="years">{{ company.years }}</span>
           </button>
         </li>
       }
+      <!-- Where the loop starts over (back to the most recent), so the jump isn't read as a career step. -->
+      <li class="restart" aria-hidden="true" [class.copy]="copy === 1"></li>
     }
   </ul>
 </div>

@@ -11,7 +11,7 @@ describe('WorkHistory', () => {
   it('repeats the logos for a seamless loop, hiding the copy from screen readers and the keyboard', () => {
     const { root } = render();
     const copies = root.querySelectorAll('li.copy');
-    expect(copies.length).toBe(6);
+    expect(copies.length).toBe(7); // six logos and the restart marker
     copies.forEach((li) => expect(li.getAttribute('aria-hidden')).toBe('true'));
     expect(root.querySelector('li.copy button')?.getAttribute('tabindex')).toBe('-1');
   });
