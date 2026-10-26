@@ -1,4 +1,4 @@
-/* Photo beside the greeting on wide screens; stacked and centred on phones. */
+/* Photo beside the greeting on wide screens; stacked on phones, left-aligned like the rest of the page. */
 .hero {
   display: flex;
   align-items: center;
@@ -38,7 +38,7 @@ app-about {
 @media (max-width: 640px) {
   .hero {
     flex-direction: column;
-    text-align: center;
+    align-items: flex-start;
     gap: 1.5rem;
   }
 
