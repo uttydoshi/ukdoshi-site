@@ -50,7 +50,6 @@ describe('App', () => {
     const { panel } = setup();
     const links = Array.from(panel.querySelectorAll('a')).map((a) => [a.textContent?.trim(), a.getAttribute('href')]);
     expect(links).toEqual([
-      ['About me', '/about'],
       ['Inner Circle', '/inner-circle'],
     ]);
   });
@@ -90,9 +89,9 @@ describe('App', () => {
     menuButton.click();
     fixture.detectChanges();
 
-    await TestBed.inject(Router).navigateByUrl('/about');
+    await TestBed.inject(Router).navigateByUrl('/privacy');
     fixture.detectChanges();
     expect(panel.classList).not.toContain('open');
-    expect((fixture.nativeElement as HTMLElement).querySelector('h1')?.textContent).toContain('About me');
+    expect((fixture.nativeElement as HTMLElement).querySelector('h1')?.textContent).toContain('Privacy policy');
   });
 });

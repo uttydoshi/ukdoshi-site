@@ -1,11 +1,11 @@
-<section class="card">
-  <h1>Hello World</h1>
-
-  @if (hello.hasValue()) {
-    <p class="api ok"><span class="dot"></span>From the Python API: <strong>{{ hello.value().message }}</strong></p>
-  } @else if (hello.error()) {
-    <p class="api error"><span class="dot"></span>The Python API is not reachable.</p>
-  } @else {
-    <p class="api pending"><span class="dot"></span>Calling the Python API…</p>
-  }
+<section class="card hero">
+  <img class="portrait" src="photos/utty.webp" alt="Utty smiling, in glasses and a black leather jacket" />
+  <div class="intro">
+    <h1>Hi, I'm Utty</h1>
+    <p class="full-name">Utkarsh Doshi</p>
+    <p class="tagline">Engineering Manager · Enabler · Dad</p>
+    <a class="button" routerLink="/inner-circle">Inner Circle</a>
+  </div>
 </section>
+
+<app-about />
