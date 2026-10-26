@@ -193,11 +193,6 @@ h2 svg {
 }
 
 @media (max-width: 640px) {
-  /* On phones the welcome section above is centred, so this title is too. */
-  .page-title {
-    text-align: center;
-  }
-
   .golden-circle {
     grid-template-columns: 1fr;
   }
