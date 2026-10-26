@@ -7,7 +7,7 @@ interface Role {
 
 interface Company {
   name: string;
-  years: string; // shown under the logo, so the strip reads as a timeline
+  years: string; // shown under the logo, so the row reads as a timeline
   note?: string;
   logo: string;
   scale?: number; // evens out heavy logos
@@ -77,8 +77,8 @@ const COMPANIES: Company[] = [
 const CARD_WIDTH_PX = 352; // 22rem, kept in sync with work-history.css
 
 /**
- * "Where I've worked": grey logos scrolling right to left. Hovering (or tapping, or tabbing to) a logo
- * stops the strip, colours the logo and opens a card with my roles there.
+ * "Where I've worked": a row of grey logos. Hovering (or tapping, or tabbing to) a logo colours it and
+ * opens a card with my roles there.
  */
 @Component({
   selector: 'app-work-history',
@@ -92,19 +92,23 @@ const CARD_WIDTH_PX = 352; // 22rem, kept in sync with work-history.css
 })
 export class WorkHistory {
   protected readonly companies = COMPANIES;
-  // The strip holds two copies of the logos so it can loop seamlessly; only the first is interactive.
-  protected readonly copies = [0, 1];
-  protected readonly open = signal<{ company: Company; logo: HTMLElement; left: number; arrow: number } | null>(null);
+  protected readonly open = signal<{
+    company: Company;
+    logo: HTMLElement;
+    top: number;
+    left: number;
+    arrow: number;
+  } | null>(null);
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
 
-  /** Opens the card under this logo, kept within the section's width, with its pointer at the logo. */
+  /** Opens the card just under this logo, kept within the section's width, with its pointer at the logo. */
   protected show(company: Company, logo: HTMLElement): void {
     const box = this.host.nativeElement.getBoundingClientRect();
     const target = logo.getBoundingClientRect();
     const width = Math.min(CARD_WIDTH_PX, box.width);
     const centre = target.left + target.width / 2 - box.left;
     const left = Math.max(0, Math.min(centre - width / 2, box.width - width));
-    this.open.set({ company, logo, left, arrow: centre - left });
+    this.open.set({ company, logo, top: target.bottom - box.top, left, arrow: centre - left });
   }
 
   protected close(): void {

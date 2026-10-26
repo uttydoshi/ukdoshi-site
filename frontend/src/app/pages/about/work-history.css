@@ -3,50 +3,18 @@
   display: block;
 }
 
-/* The strip: clipped at the sides, which fade out, so logos glide in and out of view. */
-.viewport {
-  container-type: inline-size; /* lets each set size itself against the strip's width */
-  overflow: hidden;
-  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
-}
-
-.track {
+/* A still row of logos, wrapping on narrow screens. */
+.logos {
   display: flex;
-  width: max-content;
-  padding: 0.5rem 0;
-  animation: scroll 36s linear infinite;
-}
-
-/* Each set spreads its logos out to be wider than the strip (plus room for the widest logo), so by the
-   time the next set's first logo scrolls in, the same logo in this set has already scrolled out. */
-.set {
-  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-around;
-  min-width: calc(100cqw + 14rem);
+  gap: 0.75rem 1.75rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* Two identical copies side by side: moving by half the strip lands exactly where it started. */
-@keyframes scroll {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-/* Stop while a mouse is over the strip, or while a card is open (taps on phones). */
-.viewport:hover .track,
-.track.paused {
-  animation-play-state: paused;
-}
-
-.set li {
-  padding: 0 1.4rem; /* spacing as padding, not gap, so both sets are exactly the same width */
-}
-
-.track button {
+.logos button {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -58,7 +26,7 @@
   cursor: pointer;
 }
 
-.track button:focus-visible {
+.logos button:focus-visible {
   outline: 2px solid var(--heading);
   outline-offset: 2px;
 }
@@ -70,7 +38,7 @@
   height: 1.75rem;
 }
 
-.track img {
+.logos img {
   display: block;
   height: calc(1.75rem * var(--logo-scale));
   width: auto;
@@ -79,8 +47,8 @@
   transition: filter 0.25s, opacity 0.25s;
 }
 
-.track button:hover img,
-.track button.active img {
+.logos button:hover img,
+.logos button.active img {
   filter: none;
   opacity: 1;
 }
@@ -93,21 +61,10 @@
   white-space: nowrap;
 }
 
-.restart {
-  align-self: flex-start;
-  margin-top: 1.25rem;
-  width: 6px;
-  height: 6px;
-  padding: 0 !important;
-  border-radius: 50%;
-  background: var(--heading);
-  opacity: 0.6;
-}
-
-/* The card under the strip, with a small pointer up at the logo. */
+/* The card just under the chosen logo, with a small pointer up at it. */
 .card {
   position: absolute;
-  top: calc(100% + 0.6rem);
+  margin-top: 0.6rem;
   z-index: 5;
   box-sizing: border-box;
   width: min(22rem, 100%);
@@ -183,42 +140,25 @@
 }
 
 @media (max-width: 480px) {
-  .set li {
-    padding: 0 1rem;
+  .logos {
+    gap: 0.5rem 1rem;
   }
 
   .mark {
     height: 1.4rem;
   }
 
-  .track img {
+  .logos img {
     height: calc(1.4rem * var(--logo-scale));
   }
 }
 
-/* Visitors who ask for less motion get a still, wrapping row instead. */
 @media (prefers-reduced-motion: reduce) {
-  .viewport {
-    mask-image: none;
-  }
-
-  .track {
-    width: auto;
-    animation: none;
-  }
-
-  .set {
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    min-width: 0;
-  }
-
-  .set.copy,
-  .set .restart {
-    display: none;
-  }
-
   .card {
     animation: none;
+  }
+
+  .logos img {
+    transition: none;
   }
 }
