@@ -17,6 +17,13 @@
       engineering, DevOps, and AI platform teams, I have owned delivery end to end, from roadmap to
       production.
     </p>
+
+    <h3 class="worked-label">Where I've worked</h3>
+    <ul class="logos">
+      @for (company of companies; track company.name) {
+        <li><img [src]="company.logo" [alt]="company.name" [title]="company.name" loading="lazy" /></li>
+      }
+    </ul>
   </section>
 
   <section class="section">
