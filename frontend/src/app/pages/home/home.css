@@ -26,23 +26,8 @@
 }
 
 .tagline {
-  margin: 0 0 1.5rem !important;
+  margin: 0 !important;
   letter-spacing: 0.02em;
-}
-
-.button {
-  display: inline-block;
-  padding: 0.7rem 1.6rem;
-  border-radius: 0.6rem;
-  background: var(--text);
-  color: #fff;
-  font-weight: 700;
-  text-decoration: none;
-  transition: opacity 0.2s;
-}
-
-.button:hover {
-  opacity: 0.85;
 }
 
 app-about {
