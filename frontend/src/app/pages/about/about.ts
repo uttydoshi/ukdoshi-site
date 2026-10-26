@@ -15,4 +15,10 @@ export class About {
     { name: 'UHG (Unified Healthcare Group)', logo: 'logos/uhg.svg' },
     { name: 'Racing Australia (formerly Racing Information Services Australia)', logo: 'logos/racing-australia.png' },
   ];
+
+  // My own photos from public/photos, stripped of metadata (no location) and resized for the web.
+  protected readonly photos = [
+    { src: 'photos/lake-sunset.webp', alt: 'Sunset over a still lake, with a bench by the water' },
+    { src: 'photos/mountain-view.webp', alt: 'View from a mountain top over a river winding through hills' },
+  ];
 }

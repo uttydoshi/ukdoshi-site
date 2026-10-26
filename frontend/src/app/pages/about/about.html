@@ -145,5 +145,11 @@
         Staying fit
       </li>
     </ul>
+
+    <ul class="photos">
+      @for (photo of photos; track photo.src) {
+        <li><img [src]="photo.src" [alt]="photo.alt" loading="lazy" /></li>
+      }
+    </ul>
   </section>
 </section>
