@@ -5,18 +5,28 @@
 
 /* The strip: clipped at the sides, which fade out, so logos glide in and out of view. */
 .viewport {
+  container-type: inline-size; /* lets each set size itself against the strip's width */
   overflow: hidden;
   mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
 }
 
 .track {
   display: flex;
-  align-items: center;
   width: max-content;
-  margin: 0;
   padding: 0.5rem 0;
+  animation: scroll 36s linear infinite;
+}
+
+/* Each set spreads its logos out to be wider than the strip (plus room for the widest logo), so by the
+   time the next set's first logo scrolls in, the same logo in this set has already scrolled out. */
+.set {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  min-width: calc(100cqw + 14rem);
+  margin: 0;
+  padding: 0;
   list-style: none;
-  animation: scroll 32s linear infinite;
 }
 
 /* Two identical copies side by side: moving by half the strip lands exactly where it started. */
@@ -32,8 +42,8 @@
   animation-play-state: paused;
 }
 
-.track li {
-  padding: 0 1.4rem; /* spacing as padding, not gap, so both copies are exactly the same width */
+.set li {
+  padding: 0 1.4rem; /* spacing as padding, not gap, so both sets are exactly the same width */
 }
 
 .track button {
@@ -173,7 +183,7 @@
 }
 
 @media (max-width: 480px) {
-  .track li {
+  .set li {
     padding: 0 1rem;
   }
 
@@ -193,13 +203,18 @@
   }
 
   .track {
-    flex-wrap: wrap;
     width: auto;
     animation: none;
   }
 
-  .track li.copy,
-  .track li.restart {
+  .set {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    min-width: 0;
+  }
+
+  .set.copy,
+  .set .restart {
     display: none;
   }
 

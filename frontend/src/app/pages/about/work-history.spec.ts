@@ -10,15 +10,15 @@ describe('WorkHistory', () => {
 
   it('repeats the logos for a seamless loop, hiding the copy from screen readers and the keyboard', () => {
     const { root } = render();
-    const copies = root.querySelectorAll('li.copy');
-    expect(copies.length).toBe(7); // six logos and the restart marker
-    copies.forEach((li) => expect(li.getAttribute('aria-hidden')).toBe('true'));
-    expect(root.querySelector('li.copy button')?.getAttribute('tabindex')).toBe('-1');
+    const copy = root.querySelector('ul.set.copy')!;
+    expect(copy.getAttribute('aria-hidden')).toBe('true');
+    expect(copy.querySelectorAll('button').length).toBe(6);
+    copy.querySelectorAll('button').forEach((button) => expect(button.getAttribute('tabindex')).toBe('-1'));
   });
 
   it('opens a card with the roles at a company, and closes it with Escape', () => {
     const { fixture, root } = render();
-    const myob = root.querySelector<HTMLButtonElement>('li:not(.copy) img[alt="MYOB"]')!.closest('button')!;
+    const myob = root.querySelector<HTMLButtonElement>('ul.set:not(.copy) img[alt="MYOB"]')!.closest('button')!;
     myob.click();
     fixture.detectChanges();
 

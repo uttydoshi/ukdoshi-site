@@ -1,28 +1,31 @@
 <div class="viewport">
-  <ul class="track" [class.paused]="open()">
+  <div class="track" [class.paused]="open()">
+    <!-- Two identical sets, each at least as wide as the strip, so no logo is ever on screen twice. -->
     @for (copy of copies; track copy) {
-      @for (company of companies; track company.name) {
-        <li [style.--logo-scale]="company.scale ?? 1" [attr.aria-hidden]="copy === 1 ? 'true' : null" [class.copy]="copy === 1">
-          <button
-            #logo
-            type="button"
-            [class.active]="open()?.logo === logo"
-            [attr.tabindex]="copy === 1 ? -1 : null"
-            [attr.aria-expanded]="copy === 0 ? open()?.company === company : null"
-            aria-controls="work-card"
-            (mouseenter)="show(company, logo)"
-            (click)="show(company, logo)"
-            (focus)="show(company, logo)"
-          >
-            <span class="mark"><img [src]="company.logo" [alt]="company.name" loading="lazy" /></span>
-            <span class="years">{{ company.years }}</span>
-          </button>
-        </li>
-      }
-      <!-- Where the loop starts over (back to the most recent), so the jump isn't read as a career step. -->
-      <li class="restart" aria-hidden="true" [class.copy]="copy === 1"></li>
+      <ul class="set" [class.copy]="copy === 1" [attr.aria-hidden]="copy === 1 ? 'true' : null">
+        @for (company of companies; track company.name) {
+          <li [style.--logo-scale]="company.scale ?? 1">
+            <button
+              #logo
+              type="button"
+              [class.active]="open()?.logo === logo"
+              [attr.tabindex]="copy === 1 ? -1 : null"
+              [attr.aria-expanded]="copy === 0 ? open()?.company === company : null"
+              aria-controls="work-card"
+              (mouseenter)="show(company, logo)"
+              (click)="show(company, logo)"
+              (focus)="show(company, logo)"
+            >
+              <span class="mark"><img [src]="company.logo" [alt]="company.name" loading="lazy" /></span>
+              <span class="years">{{ company.years }}</span>
+            </button>
+          </li>
+        }
+        <!-- Where the loop starts over (back to the most recent), so the jump isn't read as a career step. -->
+        <li class="restart" aria-hidden="true"></li>
+      </ul>
     }
-  </ul>
+  </div>
 </div>
 
 @if (open(); as card) {
