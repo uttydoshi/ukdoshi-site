@@ -149,11 +149,12 @@ h2 svg {
   color: var(--text);
 }
 
+/* A touch smaller than the section-title badge (3rem), so the title still leads. */
 .activities svg {
   box-sizing: border-box;
-  width: 4rem;
-  height: 4rem;
-  padding: 1rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0.65rem;
   border-radius: 50%;
   background: rgb(217 119 87 / 0.12);
   fill: none;
