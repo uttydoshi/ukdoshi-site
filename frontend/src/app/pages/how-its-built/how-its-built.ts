@@ -205,7 +205,99 @@ const SHIP_NARROW: DiagramLayout = {
   ],
 };
 
-/** How ukdoshi.com works and ships: two diagrams and the main decisions behind them. */
+// --- Decisions, each with an icon (24 x 24 line drawings, like the About me activity icons) ---
+
+interface Decision {
+  title: string;
+  detail: string;
+  icon: string[]; // SVG path data
+}
+
+const DECISIONS: Decision[] = [
+  {
+    title: 'Serverless, pay for what’s used',
+    detail: 'No servers to patch or keep running, and a quiet personal site costs very little.',
+    icon: ['M7 18a4.5 4.5 0 0 1-.5-9 6 6 0 0 1 11.4 1.6A3.75 3.75 0 0 1 17.5 18z'], // cloud
+  },
+  {
+    title: 'One address for the site and its API',
+    detail: 'CloudFront sends /api calls to the API, so the browser never talks to a second domain.',
+    icon: ['M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0', 'M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18'], // globe
+  },
+  {
+    title: 'No passwords',
+    detail: 'Google or a one-time email code, so there are no passwords to forget, reuse or leak.',
+    icon: ['M4 15a4 4 0 1 0 8 0a4 4 0 1 0-8 0', 'M10.8 12.2 20 3M16 7l3 3M14 9l2 2'], // key
+  },
+  {
+    title: 'Signing in isn’t access',
+    detail: 'The API checks every token itself, then an approved list decides who sees the Inner Circle.',
+    icon: ['M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z', 'M8.5 12l2.5 2.5 4.5-5'], // shield with a tick
+  },
+  {
+    title: 'No cloud keys stored anywhere',
+    detail: 'GitHub logs in to AWS with short-lived tokens (OIDC), limited to this repository’s branches.',
+    icon: ['M7 11h10a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z', 'M8 11V7a4 4 0 0 1 8 0v4'], // padlock
+  },
+  {
+    title: 'Infrastructure as code',
+    detail: 'The AWS setup is Python (AWS CDK), so staging and live are built from one definition.',
+    icon: ['M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 6l-3 12'], // </>
+  },
+  {
+    title: 'Staging before live',
+    detail: 'Every change runs on a full, separate copy of the site first, where it can be shared and tested.',
+    icon: ['M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3', 'M7.5 15h9'], // test flask
+  },
+  {
+    title: 'Private by default',
+    detail: 'No analytics or trackers, and personal API answers are never kept in the browser’s cache.',
+    icon: [
+      'M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8',
+      'M9.9 5.1A9.7 9.7 0 0 1 12 5c6 0 9.5 7 9.5 7a17 17 0 0 1-2.9 3.9',
+      'M6.6 6.6C3.9 8.3 2.5 12 2.5 12S6 19 12 19c1.8 0 3.4-.6 4.7-1.4',
+    ], // eye with a line through it
+  },
+];
+
+// --- Glossary: every acronym and AWS name on the page, A to Z, in plain English ---
+
+interface Term {
+  term: string;
+  full?: string;
+  meaning: string;
+}
+
+const GLOSSARY: Term[] = [
+  { term: 'Angular', meaning: 'Google’s framework for building web apps. The pages of this site are an Angular app.' },
+  { term: 'API', full: 'Application Programming Interface', meaning: 'How the site’s pages ask the server for information, such as whether you’re signed in.' },
+  { term: 'API Gateway', meaning: 'An AWS service that receives API requests and passes them on to the code that answers them.' },
+  { term: 'AWS', full: 'Amazon Web Services', meaning: 'Amazon’s cloud platform, where everything on this site runs.' },
+  { term: 'CDK', full: 'Cloud Development Kit', meaning: 'An AWS tool for describing cloud resources in code. Here it’s written in Python.' },
+  { term: 'CDN', full: 'Content Delivery Network', meaning: 'Servers around the world that deliver a website from somewhere close to each visitor, so it loads fast.' },
+  { term: 'CI/CD', full: 'Continuous Integration / Continuous Delivery', meaning: 'Testing and releasing every change automatically, instead of by hand.' },
+  { term: 'Claude Code', meaning: 'Anthropic’s AI coding assistant, which I used to design and build this site.' },
+  { term: 'CloudFormation', meaning: 'The AWS service that creates and updates the cloud resources that CDK describes.' },
+  { term: 'CloudFront', meaning: 'AWS’s CDN. It’s the site’s front door.' },
+  { term: 'Cognito', meaning: 'AWS’s sign-in service. It handles Google sign-in and one-time email codes.' },
+  { term: 'DNS', full: 'Domain Name System', meaning: 'The internet’s address book: it turns a name like ukdoshi.com into the address of a server.' },
+  { term: 'DynamoDB', meaning: 'An AWS database. It holds the list of people approved for the Inner Circle.' },
+  { term: 'FastAPI', meaning: 'A Python framework for building APIs. The site’s API is written with it.' },
+  { term: 'GitHub', meaning: 'Where the site’s code and its full history are stored.' },
+  { term: 'GitHub Actions', meaning: 'GitHub’s automation. It tests, builds and deploys every change.' },
+  { term: 'HTTPS', full: 'Hypertext Transfer Protocol Secure', meaning: 'The encrypted way browsers and websites talk: the padlock in the address bar.' },
+  { term: 'Infrastructure as code', meaning: 'Defining servers, databases and networks in code, rather than by clicking around a console.' },
+  { term: 'Lambda', meaning: 'An AWS service that runs code only when it’s needed, with no servers to manage.' },
+  { term: 'OIDC', full: 'OpenID Connect', meaning: 'A standard way for one system to prove who it is to another, using short-lived tokens instead of passwords or keys.' },
+  { term: 'Route 53', meaning: 'AWS’s DNS service.' },
+  { term: 'S3', full: 'Simple Storage Service', meaning: 'AWS’s file storage. It holds the website’s files.' },
+  { term: 'Serverless', meaning: 'Running on cloud services that scale automatically and charge only for what’s used, with no servers to look after.' },
+  { term: 'SES', full: 'Simple Email Service', meaning: 'AWS’s email sending service. It sends the one-time sign-in codes.' },
+  { term: 'Staging', meaning: 'A full test copy of the site, where changes are checked before they go live.' },
+  { term: 'Token', meaning: 'A signed, short-lived proof of who you are, given to your browser when you sign in.' },
+];
+
+/** How ukdoshi.com works and ships: two diagrams, the main decisions behind them, and a glossary. */
 @Component({
   imports: [Diagram],
   selector: 'app-how-its-built',
@@ -215,4 +307,6 @@ const SHIP_NARROW: DiagramLayout = {
 export class HowItsBuilt {
   protected readonly visit = { nodes: VISIT_NODES, wide: VISIT_WIDE, narrow: VISIT_NARROW };
   protected readonly ship = { nodes: SHIP_NODES, wide: SHIP_WIDE, narrow: SHIP_NARROW };
+  protected readonly decisions = DECISIONS;
+  protected readonly glossary = GLOSSARY;
 }

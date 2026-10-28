@@ -14,32 +14,48 @@ h2 {
   color: var(--text);
 }
 
-/* Decisions: two columns of short statements on wide screens, one on phones. */
+/* Decisions: an icon badge beside each point; two or three columns on wide screens, one on phones. */
 .decisions {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-  gap: 1.25rem 2.5rem;
+  gap: 1.5rem 2.5rem;
   margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.decisions dt {
+.decisions li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+}
+
+.decisions svg {
+  flex: none;
+  box-sizing: border-box;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0.65rem;
+  border-radius: 50%;
+  background: rgb(217 119 87 / 0.12);
+  fill: none;
+  stroke: var(--heading);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.decisions h3 {
+  margin: 0.15rem 0 0.25rem;
+  font-family: inherit;
+  font-size: 1rem;
   font-weight: 700;
+  letter-spacing: 0;
   color: var(--text);
 }
 
-.decisions dt::before {
-  content: '';
-  display: inline-block;
-  width: 0.45rem;
-  height: 0.45rem;
-  margin: 0 0.6rem 0.15rem 0;
-  border-radius: 50%;
-  background: var(--heading);
-}
-
-.decisions dd {
-  margin: 0.25rem 0 0;
-  color: var(--muted);
+.decisions p {
+  margin: 0;
 }
 
 .stack {
@@ -49,8 +65,60 @@ h2 {
   font-size: 0.85rem;
 }
 
+/* Glossary: a plain two-column table at the bottom of the page. */
+.glossary {
+  margin-top: 3rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+thead th {
+  padding: 0 1rem 0.6rem 0;
+  border-bottom: 2px solid var(--border);
+  text-align: left;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+tbody th,
+tbody td {
+  padding: 0.7rem 1rem 0.7rem 0;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+tbody th {
+  width: 30%;
+  font-weight: 700;
+  color: var(--text);
+}
+
+tbody td {
+  color: var(--muted);
+}
+
+.full {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--muted);
+}
+
 @media (max-width: 480px) {
   .decisions {
     grid-template-columns: 1fr;
+  }
+
+  tbody th {
+    width: 38%;
   }
 }

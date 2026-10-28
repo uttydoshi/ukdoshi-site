@@ -15,6 +15,22 @@ describe('HowItsBuilt', () => {
     expect(root.querySelectorAll('svg.narrow').length).toBe(2);
   });
 
+  it('explains every acronym in a glossary table, A to Z', () => {
+    const { root } = render();
+    const terms = Array.from(root.querySelectorAll('.glossary tbody th')).map((th) => th.firstChild?.textContent?.trim());
+    expect(terms).toEqual([...terms].sort((a, b) => a!.localeCompare(b!)));
+    for (const acronym of ['API', 'AWS', 'CDK', 'CDN', 'DNS', 'OIDC', 'S3', 'SES']) {
+      expect(terms).toContain(acronym);
+    }
+  });
+
+  it('gives every decision an icon', () => {
+    const { root } = render();
+    const decisions = root.querySelectorAll('.decisions li');
+    expect(decisions.length).toBe(8);
+    decisions.forEach((li) => expect(li.querySelector('svg path')).not.toBeNull());
+  });
+
   it('explains why a box is there when it is tapped or focused', () => {
     const { fixture, root } = render();
     const explanation = root.querySelector('app-diagram .explanation')!;

@@ -18,44 +18,50 @@
 
   <section>
     <h2>Decisions and trade-offs</h2>
-    <dl class="decisions">
-      <div>
-        <dt>Serverless, pay for what's used</dt>
-        <dd>No servers to patch or keep running, and a quiet personal site costs very little.</dd>
-      </div>
-      <div>
-        <dt>One address for the site and its API</dt>
-        <dd>CloudFront sends /api calls to the API, so the browser never talks to a second domain.</dd>
-      </div>
-      <div>
-        <dt>No passwords</dt>
-        <dd>Google or a one-time email code, so there are no passwords to forget, reuse or leak.</dd>
-      </div>
-      <div>
-        <dt>Signing in isn't access</dt>
-        <dd>The API checks every token itself, then an approved list decides who sees the Inner Circle.</dd>
-      </div>
-      <div>
-        <dt>No cloud keys stored anywhere</dt>
-        <dd>GitHub logs in to AWS with short-lived tokens (OIDC), limited to this repository's branches.</dd>
-      </div>
-      <div>
-        <dt>Infrastructure as code</dt>
-        <dd>The AWS setup is Python (AWS CDK), so staging and live are built from one definition.</dd>
-      </div>
-      <div>
-        <dt>Staging before live</dt>
-        <dd>Every change runs on a full, separate copy of the site first, where it can be shared and tested.</dd>
-      </div>
-      <div>
-        <dt>Private by default</dt>
-        <dd>No analytics or trackers, and personal API answers are never kept in the browser's cache.</dd>
-      </div>
-    </dl>
+    <ul class="decisions">
+      @for (decision of decisions; track decision.title) {
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            @for (d of decision.icon; track $index) {
+              <path [attr.d]="d" />
+            }
+          </svg>
+          <div>
+            <h3>{{ decision.title }}</h3>
+            <p>{{ decision.detail }}</p>
+          </div>
+        </li>
+      }
+    </ul>
   </section>
 
   <p class="stack">
     Angular · Python (FastAPI) · AWS: CloudFront, S3, API Gateway, Lambda, DynamoDB, Cognito, SES, Route 53 ·
     AWS CDK · GitHub Actions · Claude Code
   </p>
+
+  <section class="glossary">
+    <h2>Glossary</h2>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Term</th>
+          <th scope="col">What it means</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of glossary; track item.term) {
+          <tr>
+            <th scope="row">
+              {{ item.term }}
+              @if (item.full) {
+                <span class="full">{{ item.full }}</span>
+              }
+            </th>
+            <td>{{ item.meaning }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
 </article>
