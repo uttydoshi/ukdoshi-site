@@ -21,7 +21,7 @@ LOGIN_ASSETS = Path(__file__).resolve().parents[1] / "assets" / "login"
 
 
 class AuthStack(Stack):
-    """Sign-in for the site: Cognito with Google or an emailed one-time code, on auth.<domain>.
+    """Sign-in for the site: Cognito with Google, on auth.<domain>.
 
     Signing in only proves who someone is. Whether they may see restricted content is decided
     by the API against an approved list.
@@ -98,10 +98,9 @@ class AuthStack(Stack):
                 callback_urls=[f"{url}/auth/callback" for url in site_urls],
                 logout_urls=[f"{url}/" for url in site_urls],
             ),
-            supported_identity_providers=[
-                cognito.UserPoolClientIdentityProvider.COGNITO,
-                cognito.UserPoolClientIdentityProvider.GOOGLE,
-            ],
+            # Google only: no email codes, so no email sending to depend on. The site sends visitors
+            # straight to Google, skipping Cognito's own sign-in page.
+            supported_identity_providers=[cognito.UserPoolClientIdentityProvider.GOOGLE],
             prevent_user_existence_errors=True,
             id_token_validity=Duration.hours(1),
             access_token_validity=Duration.hours(1),

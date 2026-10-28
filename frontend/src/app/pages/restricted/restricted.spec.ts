@@ -35,7 +35,7 @@ describe('Restricted', () => {
 
   it('asks signed-out visitors to sign in, without calling the API', async () => {
     const { root, http } = render();
-    expect(root.textContent).toContain('Sign in with Google or your email address');
+    expect(root.textContent).toContain('Sign in with your Google account');
     root.querySelector<HTMLButtonElement>('.button')!.click();
     expect(auth.signIn).toHaveBeenCalled();
     http.expectNone('/api/me');
@@ -87,7 +87,7 @@ describe('Restricted', () => {
 
     expect(root.querySelector('.tiles')).toBeNull();
     expect(root.textContent).not.toContain('Tile A');
-    expect(root.textContent).toContain('Sign in with Google or your email address');
+    expect(root.textContent).toContain('Sign in with your Google account');
   });
 
   it('offers to sign in again when the API rejects the sign-in', async () => {

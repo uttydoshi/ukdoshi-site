@@ -95,14 +95,13 @@ The first `UkdoshiSite` deploy takes ~5–15 minutes (certificate validation + C
 
 ## Inner Circle access
 
-`/inner-circle` is for approved people only. The API checks each signed-in email against the
-`ukdoshi-approved` DynamoDB table. Nobody can create an account with a password: anyone can sign in
-with Google, but email-code sign-in only works for addresses you've added.
+`/inner-circle` is for approved people only. Sign-in is with Google only (no passwords, no email
+codes); the API then checks each signed-in email against the `ukdoshi-approved` DynamoDB table.
 
 ```bash
 aws sso login --profile ukdoshi
-scripts/approve.sh add someone@example.com "How I know them"   # approve + create their account
-scripts/approve.sh remove someone@example.com                  # take access away
+scripts/approve.sh add someone@gmail.com "How I know them"     # let their Google account in
+scripts/approve.sh remove someone@gmail.com                    # take access away
 scripts/approve.sh list
 scripts/approve.sh --staging add tester@example.com "Testing"  # staging has its own list
 ```

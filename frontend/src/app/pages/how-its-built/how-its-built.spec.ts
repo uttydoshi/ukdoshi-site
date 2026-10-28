@@ -19,7 +19,7 @@ describe('HowItsBuilt', () => {
     const { root } = render();
     const terms = Array.from(root.querySelectorAll('.glossary tbody th')).map((th) => th.firstChild?.textContent?.trim());
     expect(terms).toEqual([...terms].sort((a, b) => a!.localeCompare(b!)));
-    for (const acronym of ['API', 'AWS', 'CDK', 'CDN', 'DNS', 'OIDC', 'S3', 'SES']) {
+    for (const acronym of ['API', 'AWS', 'CDK', 'CDN', 'DNS', 'OIDC', 'S3']) {
       expect(terms).toContain(acronym);
     }
   });

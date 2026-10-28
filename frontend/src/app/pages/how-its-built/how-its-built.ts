@@ -47,15 +47,19 @@ const VISIT_NODES: DiagramNode[] = [
     id: 'cognito',
     label: 'Cognito',
     sub: 'sign-in',
-    why: 'Managed sign-in on auth.ukdoshi.com, with no passwords at all: Google, or a one-time code by email.',
+    why: 'Managed sign-in on auth.ukdoshi.com. It hands sign-in to Google and gives the site a token that proves who you are.',
   },
-  { id: 'google', label: 'Google', sub: 'sign-in', why: 'Sign in with an existing Google account.' },
-  { id: 'ses', label: 'SES', sub: 'email codes', why: 'Sends the one-time sign-in codes, from ukdoshi.com.' },
+  {
+    id: 'google',
+    label: 'Google',
+    sub: 'your account',
+    why: 'You sign in with your own Google account, so this site never handles a password.',
+  },
 ];
 
 const VISIT_WIDE: DiagramLayout = {
   width: 980,
-  height: 455,
+  height: 400,
   boxes: {
     visitor: { x: 10, y: 150 },
     dns: { x: 175, y: 150 },
@@ -66,7 +70,6 @@ const VISIT_WIDE: DiagramLayout = {
     dynamo: { x: 835, y: 150 },
     cognito: { x: 175, y: 290 },
     google: { x: 340, y: 290 },
-    ses: { x: 340, y: 370 },
   },
   edges: [
     { d: 'M145,178 H175' },
@@ -77,18 +80,17 @@ const VISIT_WIDE: DiagramLayout = {
     { d: 'M805,178 H835' },
     { d: 'M77.5,206 V318 H175', label: { text: 'signs in', x: 86, y: 266, anchor: 'start' } },
     { d: 'M310,318 H340' },
-    { d: 'M290,346 V398 H340' },
     {
-      d: 'M737.5,206 V440 H242.5 V346',
+      d: 'M737.5,206 V385 H242.5 V346',
       dashed: true,
-      label: { text: 'checks sign-in tokens', x: 600, y: 432 },
+      label: { text: 'checks sign-in tokens', x: 600, y: 377 },
     },
   ],
 };
 
 const VISIT_NARROW: DiagramLayout = {
   width: 360,
-  height: 630,
+  height: 540,
   boxes: {
     visitor: { x: 112.5, y: 10 },
     dns: { x: 112.5, y: 100 },
@@ -99,7 +101,6 @@ const VISIT_NARROW: DiagramLayout = {
     dynamo: { x: 205, y: 470 },
     cognito: { x: 20, y: 380 },
     google: { x: 20, y: 470 },
-    ses: { x: 20, y: 560 },
   },
   edges: [
     { d: 'M180,66 V100' },
@@ -110,7 +111,6 @@ const VISIT_NARROW: DiagramLayout = {
     { d: 'M272.5,436 V470' },
     { d: 'M112.5,38 H8 V408 H20', label: { text: 'signs in', x: 14, y: 368, anchor: 'start' } },
     { d: 'M87.5,436 V470' },
-    { d: 'M155,422 H174 V588 H155' },
     { d: 'M205,400 H155', dashed: true, label: { text: 'tokens', x: 180, y: 392 } },
   ],
 };
@@ -226,7 +226,7 @@ const DECISIONS: Decision[] = [
   },
   {
     title: 'No passwords',
-    detail: 'Google or a one-time email code, so there are no passwords to forget, reuse or leak.',
+    detail: 'Sign-in is with Google, so this site has no passwords to forget, reuse or leak.',
     icon: ['M4 15a4 4 0 1 0 8 0a4 4 0 1 0-8 0', 'M10.8 12.2 20 3M16 7l3 3M14 9l2 2'], // key
   },
   {
@@ -279,7 +279,7 @@ const GLOSSARY: Term[] = [
   { term: 'Claude Code', meaning: 'Anthropic’s AI coding assistant, which I used to design and build this site.' },
   { term: 'CloudFormation', meaning: 'The AWS service that creates and updates the cloud resources that CDK describes.' },
   { term: 'CloudFront', meaning: 'AWS’s CDN. It’s the site’s front door.' },
-  { term: 'Cognito', meaning: 'AWS’s sign-in service. It handles Google sign-in and one-time email codes.' },
+  { term: 'Cognito', meaning: 'AWS’s sign-in service. It handles signing in with Google.' },
   { term: 'DNS', full: 'Domain Name System', meaning: 'The internet’s address book: it turns a name like ukdoshi.com into the address of a server.' },
   { term: 'DynamoDB', meaning: 'An AWS database. It holds the list of people approved for the Inner Circle.' },
   { term: 'FastAPI', meaning: 'A Python framework for building APIs. The site’s API is written with it.' },
@@ -292,7 +292,6 @@ const GLOSSARY: Term[] = [
   { term: 'Route 53', meaning: 'AWS’s DNS service.' },
   { term: 'S3', full: 'Simple Storage Service', meaning: 'AWS’s file storage. It holds the website’s files.' },
   { term: 'Serverless', meaning: 'Running on cloud services that scale automatically and charge only for what’s used, with no servers to look after.' },
-  { term: 'SES', full: 'Simple Email Service', meaning: 'AWS’s email sending service. It sends the one-time sign-in codes.' },
   { term: 'Staging', meaning: 'A full test copy of the site, where changes are checked before they go live.' },
   { term: 'Token', meaning: 'A signed, short-lived proof of who you are, given to your browser when you sign in.' },
 ];
