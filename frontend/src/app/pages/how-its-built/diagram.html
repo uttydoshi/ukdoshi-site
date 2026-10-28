@@ -1,0 +1,50 @@
+@for (layout of [wide(), narrow()]; track $index; let li = $index) {
+  <svg
+    [class]="li === 0 ? 'wide' : 'narrow'"
+    [attr.viewBox]="'0 0 ' + layout.width + ' ' + layout.height"
+    role="group"
+    [attr.aria-label]="label()"
+  >
+    <defs>
+      <marker [attr.id]="arrowId + '-' + li" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z" class="arrowhead" />
+      </marker>
+    </defs>
+
+    @for (edge of layout.edges; track $index) {
+      <path class="edge" [class.dashed]="edge.dashed" [attr.d]="edge.d" [attr.marker-end]="'url(#' + arrowId + '-' + li + ')'" />
+      @if (edge.label; as label) {
+        <text class="edge-label" [attr.x]="label.x" [attr.y]="label.y" [attr.text-anchor]="label.anchor ?? 'middle'">
+          {{ label.text }}
+        </text>
+      }
+    }
+
+    @for (node of nodes(); track node.id) {
+      @if (layout.boxes[node.id]; as at) {
+        <g
+          class="node"
+          [class.selected]="selected() === node.id"
+          tabindex="0"
+          role="button"
+          [attr.aria-label]="node.label + ': ' + node.why"
+          (mouseenter)="selected.set(node.id)"
+          (focus)="selected.set(node.id)"
+          (click)="selected.set(node.id)"
+        >
+          <rect [attr.x]="at.x" [attr.y]="at.y" [attr.width]="box.width" [attr.height]="box.height" rx="10" />
+          <text class="node-label" [attr.x]="at.x + box.width / 2" [attr.y]="at.y + 24">{{ node.label }}</text>
+          <text class="node-sub" [attr.x]="at.x + box.width / 2" [attr.y]="at.y + 42">{{ node.sub }}</text>
+        </g>
+      }
+    }
+  </svg>
+}
+
+<p class="explanation" aria-live="polite">
+  @if (explanation(); as node) {
+    <strong>{{ node.label }}:</strong> {{ node.why }}
+  } @else {
+    Hover over or tap a box to see why it's there.
+  }
+</p>

@@ -1,0 +1,105 @@
+:host {
+  display: block;
+}
+
+svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* Wide layout on laptops and tablets; the narrow, top-to-bottom one on phones. */
+.narrow {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .wide {
+    display: none;
+  }
+
+  .narrow {
+    display: block;
+    max-width: 24rem;
+    margin: 0 auto;
+  }
+}
+
+.edge {
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.edge.dashed {
+  stroke-dasharray: 5 4;
+}
+
+.arrowhead {
+  fill: var(--muted);
+}
+
+.edge-label {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 11px;
+  fill: var(--muted);
+}
+
+.node {
+  cursor: pointer;
+  outline: none;
+}
+
+.node rect {
+  fill: #fff;
+  stroke: var(--border);
+  stroke-width: 1.5;
+  transition: stroke 0.2s, fill 0.2s;
+}
+
+.node:hover rect,
+.node:focus-visible rect,
+.node.selected rect {
+  fill: rgb(217 119 87 / 0.08);
+  stroke: var(--heading);
+}
+
+.node text {
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.node-label {
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 600;
+  fill: var(--text);
+}
+
+.node-sub {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 11px;
+  fill: var(--muted);
+}
+
+/* The "why" line under the diagram. Keeps its height so the page doesn't jump as it changes. */
+.explanation {
+  min-height: 3.2em;
+  margin: 1rem 0 0 !important;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background: var(--pill);
+  font-size: 0.9rem;
+}
+
+.explanation strong {
+  color: var(--text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .node rect {
+    transition: none;
+  }
+}

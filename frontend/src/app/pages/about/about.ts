@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { WorkHistory } from './work-history';
 
 @Component({
-  imports: [WorkHistory],
+  imports: [RouterLink, WorkHistory],
   selector: 'app-about',
   styleUrl: './about.css',
   templateUrl: './about.html',

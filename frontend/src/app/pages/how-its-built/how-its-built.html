@@ -1,0 +1,61 @@
+<article class="card">
+  <h1>How this site is built</h1>
+  <p class="intro">
+    ukdoshi.com is small, but it's a real system: an Angular site and a Python API running on AWS
+    serverless, with passwordless sign-in, a private members' area, and a pipeline that tests every
+    change on a staging copy before it goes live. I designed and built it with Claude Code.
+  </p>
+
+  <section>
+    <h2>What happens when you visit</h2>
+    <app-diagram label="Architecture of ukdoshi.com" [nodes]="visit.nodes" [wide]="visit.wide" [narrow]="visit.narrow" />
+  </section>
+
+  <section>
+    <h2>How a change gets to live</h2>
+    <app-diagram label="How changes are deployed" [nodes]="ship.nodes" [wide]="ship.wide" [narrow]="ship.narrow" />
+  </section>
+
+  <section>
+    <h2>Decisions and trade-offs</h2>
+    <dl class="decisions">
+      <div>
+        <dt>Serverless, pay for what's used</dt>
+        <dd>No servers to patch or keep running, and a quiet personal site costs very little.</dd>
+      </div>
+      <div>
+        <dt>One address for the site and its API</dt>
+        <dd>CloudFront sends /api calls to the API, so the browser never talks to a second domain.</dd>
+      </div>
+      <div>
+        <dt>No passwords</dt>
+        <dd>Google or a one-time email code, so there are no passwords to forget, reuse or leak.</dd>
+      </div>
+      <div>
+        <dt>Signing in isn't access</dt>
+        <dd>The API checks every token itself, then an approved list decides who sees the Inner Circle.</dd>
+      </div>
+      <div>
+        <dt>No cloud keys stored anywhere</dt>
+        <dd>GitHub logs in to AWS with short-lived tokens (OIDC), limited to this repository's branches.</dd>
+      </div>
+      <div>
+        <dt>Infrastructure as code</dt>
+        <dd>The AWS setup is Python (AWS CDK), so staging and live are built from one definition.</dd>
+      </div>
+      <div>
+        <dt>Staging before live</dt>
+        <dd>Every change runs on a full, separate copy of the site first, where it can be shared and tested.</dd>
+      </div>
+      <div>
+        <dt>Private by default</dt>
+        <dd>No analytics or trackers, and personal API answers are never kept in the browser's cache.</dd>
+      </div>
+    </dl>
+  </section>
+
+  <p class="stack">
+    Angular · Python (FastAPI) · AWS: CloudFront, S3, API Gateway, Lambda, DynamoDB, Cognito, SES, Route 53 ·
+    AWS CDK · GitHub Actions · Claude Code
+  </p>
+</article>

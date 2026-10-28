@@ -203,7 +203,22 @@ h2 svg {
   }
 }
 
-/* "Where I've worked" label; the scrolling logos live in work-history. */
+/* Pointer from the Golden Circle to the page about how this site is built. */
+.built-link {
+  margin-top: 1.75rem !important;
+}
+
+.built-link a {
+  color: var(--heading);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.built-link a:hover {
+  text-decoration: underline;
+}
+
+/* "Where I've worked" label; the logos live in work-history. */
 .worked-label {
   margin: 1.75rem 0 0.9rem;
   font-family: inherit;
