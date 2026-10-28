@@ -1,11 +1,12 @@
-import { Component, inject } from '@angular/core';
-import { httpResource } from '@angular/common/http';
+import { Component, computed, inject, signal } from '@angular/core';
+import { HttpClient, httpResource } from '@angular/common/http';
 import { AuthService } from '../../auth/auth.service';
 
 interface Me {
   email: string;
   name: string | null;
   approved: boolean;
+  asked: boolean; // not approved, but has already clicked "Ask to join"
 }
 
 interface Tile {
@@ -31,6 +32,18 @@ export class Restricted {
   protected readonly welcome = httpResource<Welcome>(() =>
     this.me.value()?.approved ? '/api/restricted/welcome' : undefined,
   );
+  protected readonly firstName = computed(() => this.me.value()?.name?.split(' ')[0] ?? null);
+  protected readonly asking = signal<'idle' | 'sending' | 'sent' | 'failed'>('idle');
+  private readonly http = inject(HttpClient);
+
+  /** Emails me their name and Google address; the API sends at most one email a day per person. */
+  protected askToJoin(): void {
+    this.asking.set('sending');
+    this.http.post('/api/inner-circle/join-requests', {}).subscribe({
+      next: () => this.asking.set('sent'),
+      error: () => this.asking.set('failed'),
+    });
+  }
 
   protected signInAgain(): void {
     this.auth.clear();

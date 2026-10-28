@@ -6,7 +6,7 @@ import pytest
 from cryptography.hazmat.primitives.asymmetric import rsa
 from fastapi.testclient import TestClient
 
-from app import approvals, auth
+from app import approvals, auth, join_requests
 from app.main import app
 
 client = TestClient(app)
@@ -21,6 +21,7 @@ def fake_cognito_and_table(monkeypatch):
     signing_keys = SimpleNamespace(get_signing_key_from_jwt=lambda token: SimpleNamespace(key=_KEY.public_key()))
     monkeypatch.setattr(auth, "_signing_keys", lambda: signing_keys)
     monkeypatch.setattr(approvals, "is_approved", lambda email: email in APPROVED)
+    monkeypatch.setattr(join_requests, "has_asked", lambda email: False)
 
 
 def make_token(**overrides) -> str:
@@ -54,7 +55,13 @@ def test_me_requires_sign_in():
 def test_me_returns_the_user_and_approval():
     response = get("/api/me", make_token())
     assert response.status_code == 200
-    assert response.json() == {"email": "approved@example.com", "name": "Test User", "picture": None, "approved": True}
+    assert response.json() == {
+        "email": "approved@example.com",
+        "name": "Test User",
+        "picture": None,
+        "approved": True,
+        "asked": False,
+    }
 
 
 def test_me_for_someone_not_approved():

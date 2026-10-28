@@ -29,9 +29,19 @@
       }
     } @else {
       <p>
-        You're signed in, but you're not in the Inner Circle yet. To ask to join, email
-        <a href="mailto:utty@ukdoshi.com">utty&#64;ukdoshi.com</a> from the address below.
+        Hi{{ firstName() ? ' ' + firstName() : '' }}, you're signed in, but you're not in the Inner Circle
+        yet.
       </p>
+      @if (me.value().asked || asking() === 'sent') {
+        <p class="asked">Thanks for asking. Utty will get back to you soon.</p>
+      } @else {
+        <button type="button" class="button" [disabled]="asking() === 'sending'" (click)="askToJoin()">
+          {{ asking() === 'sending' ? 'Asking…' : 'Ask to join' }}
+        </button>
+        @if (asking() === 'failed') {
+          <p class="failed">That didn't go through. Please try again in a moment.</p>
+        }
+      }
     }
     <p class="signed-in-as">
       Signed in as <strong>{{ me.value().email }}</strong> ·

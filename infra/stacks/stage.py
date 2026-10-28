@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 ZONE_NAME = "ukdoshi.com"
+OWNER_EMAIL = f"utty@{ZONE_NAME}"  # gets "Ask to join" requests; on the domain, so SES can send to it
 
 
 @dataclass(frozen=True)
@@ -12,6 +13,7 @@ class Stage:
     auth_domain: str
     user_pool_name: str
     approved_table: str
+    join_requests_table: str
     www: bool = False  # also serve www.<site_domain>
     local_dev: bool = False  # accept sign-ins from http://localhost:4200
     protect: bool = True  # guard the user pool and approved list against deletion
@@ -37,6 +39,7 @@ LIVE = Stage(
     auth_domain=f"auth.{ZONE_NAME}",
     user_pool_name="ukdoshi",
     approved_table="ukdoshi-approved",
+    join_requests_table="ukdoshi-join-requests",
     www=True,
     local_dev=True,
 )
@@ -49,6 +52,7 @@ STAGING = Stage(
     auth_domain=f"auth-staging.{ZONE_NAME}",
     user_pool_name="ukdoshi-staging",
     approved_table="ukdoshi-staging-approved",
+    join_requests_table="ukdoshi-staging-join-requests",
     protect=False,
     search_engines=False,
 )
