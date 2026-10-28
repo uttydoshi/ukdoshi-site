@@ -1,7 +1,7 @@
 from fastapi import Depends, FastAPI, Request
 from mangum import Mangum
 
-from app import approvals
+from app import approvals, join_requests
 from app.auth import User, current_user
 
 app = FastAPI(title="ukdoshi.com API")
@@ -29,8 +29,19 @@ def hello():
 
 @app.get("/api/me")
 def me(user: User = Depends(current_user)):
-    """Who is signed in, and whether they may see the Inner Circle."""
-    return {**user.model_dump(), "approved": approvals.is_approved(user.email)}
+    """Who is signed in, whether they may see the Inner Circle, and if not, whether they've asked to."""
+    approved = approvals.is_approved(user.email)
+    asked = not approved and join_requests.has_asked(user.email)
+    return {**user.model_dump(), "approved": approved, "asked": asked}
+
+
+@app.post("/api/inner-circle/join-requests")
+def ask_to_join(user: User = Depends(current_user)):
+    """A signed-in visitor asks to join; the owner gets an email (at most one a day per person)."""
+    if approvals.is_approved(user.email):
+        return {"status": "approved"}
+    join_requests.ask_to_join(user)
+    return {"status": "asked"}
 
 
 @app.get("/api/restricted/welcome")

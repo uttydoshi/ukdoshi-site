@@ -42,15 +42,36 @@ describe('Restricted', () => {
     expect(root.querySelector('.tiles')).toBeNull();
   });
 
-  it('tells signed-in visitors who are not approved how to ask for access', async () => {
+  it('greets signed-in visitors who are not approved, and lets them ask to join with one click', async () => {
     signedIn.set(true);
     const { fixture, root, http } = render();
-    http.expectOne('/api/me').flush({ email: 'stranger@example.com', name: null, approved: false });
+    http.expectOne('/api/me').flush({ email: 'jane@example.com', name: 'Jane Citizen', approved: false, asked: false });
     await settle(fixture);
 
-    expect(root.textContent).toContain("you're not in the Inner Circle yet");
-    expect(root.textContent).toContain('stranger@example.com');
+    expect(root.textContent).toContain("Hi Jane, you're signed in, but you're not in the Inner Circle");
+    expect(root.textContent).toContain('jane@example.com');
     http.expectNone('/api/restricted/welcome');
+
+    root.querySelector<HTMLButtonElement>('.button')!.click();
+    await settle(fixture);
+    const ask = http.expectOne('/api/inner-circle/join-requests');
+    expect(ask.request.method).toBe('POST');
+    ask.flush({ status: 'asked' });
+    await settle(fixture);
+
+    expect(root.querySelector('.asked')?.textContent).toContain('Thanks for asking');
+    expect(root.querySelector('.button')).toBeNull();
+  });
+
+  it('remembers that a visitor has already asked to join', async () => {
+    signedIn.set(true);
+    const { fixture, root, http } = render();
+    http.expectOne('/api/me').flush({ email: 'jane@example.com', name: null, approved: false, asked: true });
+    await settle(fixture);
+
+    expect(root.textContent).toContain("Hi, you're signed in");
+    expect(root.querySelector('.asked')).not.toBeNull();
+    expect(root.querySelector('.button')).toBeNull();
   });
 
   it('shows restricted content to approved visitors', async () => {

@@ -19,6 +19,7 @@ from aws_cdk import aws_certificatemanager as acm
 from aws_cdk import aws_cloudfront as cloudfront
 from aws_cdk import aws_cloudfront_origins as origins
 from aws_cdk import aws_dynamodb as dynamodb
+from aws_cdk import aws_iam as iam
 from aws_cdk import aws_lambda as lambda_
 from aws_cdk import aws_route53 as route53
 from aws_cdk import aws_route53_targets as targets
@@ -26,7 +27,7 @@ from aws_cdk import aws_s3 as s3
 from aws_cdk import aws_s3_deployment as s3deploy
 from constructs import Construct
 
-from stacks.stage import Stage
+from stacks.stage import OWNER_EMAIL, ZONE_NAME, Stage
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 BACKEND_DIR = REPO_ROOT / "backend"
@@ -103,6 +104,16 @@ class SiteStack(Stack):
             removal_policy=RemovalPolicy.RETAIN if stage.protect else RemovalPolicy.DESTROY,
         )
 
+        # --- "Ask to join" requests: who asked and when, so each person emails the owner at most once a day ---
+        join_requests = dynamodb.TableV2(
+            self,
+            "JoinRequestsTable",
+            table_name=stage.join_requests_table,
+            partition_key=dynamodb.Attribute(name="email", type=dynamodb.AttributeType.STRING),
+            time_to_live_attribute="expires_at",  # old requests disappear, so people can ask again later
+            removal_policy=RemovalPolicy.DESTROY,  # nothing here worth keeping
+        )
+
         # --- Backend: FastAPI on Lambda behind an HTTP API ---
         api_fn = lambda_.Function(
             self,
@@ -129,9 +140,21 @@ class SiteStack(Stack):
                 "COGNITO_USER_POOL_ID": user_pool_id,
                 "COGNITO_CLIENT_ID": user_pool_client_id,
                 "APPROVED_TABLE": approved.table_name,
+                "JOIN_REQUESTS_TABLE": join_requests.table_name,
+                "OWNER_EMAIL": OWNER_EMAIL,
+                "FROM_EMAIL": f"no-reply@{ZONE_NAME}",
+                "STAGE": stage.name,
             },
         )
         approved.grant_read_data(api_fn)
+        join_requests.grant_read_write_data(api_fn)
+        # Email only as the site's own domain. SES's sandbox also limits who receives: the owner's inbox.
+        api_fn.add_to_role_policy(
+            iam.PolicyStatement(
+                actions=["ses:SendEmail"],
+                resources=[f"arn:aws:ses:{self.region}:{self.account}:identity/{ZONE_NAME}"],
+            )
+        )
 
         http_api = apigw.HttpApi(
             self,

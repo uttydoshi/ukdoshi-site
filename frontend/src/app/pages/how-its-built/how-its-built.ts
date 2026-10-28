@@ -55,6 +55,14 @@ const VISIT_NODES: DiagramNode[] = [
     sub: 'your account',
     why: 'You sign in with your own Google account, so this site never handles a password.',
   },
+  {
+    id: 'ses',
+    label: 'SES',
+    sub: 'email to me',
+    why:
+      'When a signed-in visitor clicks “Ask to join”, the API emails me their name and address, at most ' +
+      'once a day per person.',
+  },
 ];
 
 const VISIT_WIDE: DiagramLayout = {
@@ -70,6 +78,7 @@ const VISIT_WIDE: DiagramLayout = {
     dynamo: { x: 835, y: 150 },
     cognito: { x: 175, y: 290 },
     google: { x: 340, y: 290 },
+    ses: { x: 835, y: 290 },
   },
   edges: [
     { d: 'M145,178 H175' },
@@ -78,6 +87,7 @@ const VISIT_WIDE: DiagramLayout = {
     { d: 'M475,190 H505', label: { text: '/api', x: 490, y: 228 } },
     { d: 'M640,178 H670' },
     { d: 'M805,178 H835' },
+    { d: 'M805,192 H820 V318 H835', label: { text: 'join requests', x: 826, y: 256, anchor: 'start' } },
     { d: 'M77.5,206 V318 H175', label: { text: 'signs in', x: 86, y: 266, anchor: 'start' } },
     { d: 'M310,318 H340' },
     {
@@ -90,7 +100,7 @@ const VISIT_WIDE: DiagramLayout = {
 
 const VISIT_NARROW: DiagramLayout = {
   width: 360,
-  height: 540,
+  height: 630,
   boxes: {
     visitor: { x: 112.5, y: 10 },
     dns: { x: 112.5, y: 100 },
@@ -101,6 +111,7 @@ const VISIT_NARROW: DiagramLayout = {
     dynamo: { x: 205, y: 470 },
     cognito: { x: 20, y: 380 },
     google: { x: 20, y: 470 },
+    ses: { x: 205, y: 560 },
   },
   edges: [
     { d: 'M180,66 V100' },
@@ -109,6 +120,7 @@ const VISIT_NARROW: DiagramLayout = {
     { d: 'M210,246 V268 H272.5 V290', label: { text: '/api', x: 282, y: 262, anchor: 'start' } },
     { d: 'M272.5,346 V380' },
     { d: 'M272.5,436 V470' },
+    { d: 'M340,422 H350 V588 H340', label: { text: 'join requests', x: 345, y: 552, anchor: 'end' } },
     { d: 'M112.5,38 H8 V408 H20', label: { text: 'signs in', x: 14, y: 368, anchor: 'start' } },
     { d: 'M87.5,436 V470' },
     { d: 'M205,400 H155', dashed: true, label: { text: 'tokens', x: 180, y: 392 } },
@@ -292,6 +304,7 @@ const GLOSSARY: Term[] = [
   { term: 'Route 53', meaning: 'AWS’s DNS service.' },
   { term: 'S3', full: 'Simple Storage Service', meaning: 'AWS’s file storage. It holds the website’s files.' },
   { term: 'Serverless', meaning: 'Running on cloud services that scale automatically and charge only for what’s used, with no servers to look after.' },
+  { term: 'SES', full: 'Simple Email Service', meaning: 'AWS’s email sending service. It tells me when someone asks to join the Inner Circle.' },
   { term: 'Staging', meaning: 'A full test copy of the site, where changes are checked before they go live.' },
   { term: 'Token', meaning: 'A signed, short-lived proof of who you are, given to your browser when you sign in.' },
 ];

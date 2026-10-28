@@ -67,6 +67,21 @@ a {
   opacity: 0.85;
 }
 
+.button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.asked {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.failed {
+  margin-top: 0.75rem;
+  color: var(--error);
+}
+
 .signed-in-as {
   margin: 1.5rem 0 0;
   font-size: 0.85rem;
