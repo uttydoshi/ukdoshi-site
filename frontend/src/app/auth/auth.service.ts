@@ -25,10 +25,10 @@ interface PendingSignIn {
 }
 
 /**
- * Sign-in with Cognito's login page, using the authorization-code flow with PKCE.
+ * Sign-in with Google through Cognito, using the authorization-code flow with PKCE.
  *
- * 1. signIn() sends the browser to auth.ukdoshi.com with a one-time challenge.
- * 2. After Google or the emailed code, Cognito sends it back to /auth/callback with a code.
+ * 1. signIn() sends the browser via auth.ukdoshi.com to Google, with a one-time challenge.
+ * 2. After Google, Cognito sends it back to /auth/callback with a code.
  * 3. completeSignIn() swaps that code (plus the challenge's secret half) for tokens.
  * The ID token is sent to our API, which checks it and decides what the visitor may see.
  */
@@ -50,6 +50,7 @@ export class AuthService {
       state: pending.state,
       code_challenge: await sha256Base64Url(pending.verifier),
       code_challenge_method: 'S256',
+      identity_provider: 'Google', // straight to Google, skipping Cognito's own sign-in page
     });
     location.assign(`${AUTH_DOMAIN}/oauth2/authorize?${params}`);
   }

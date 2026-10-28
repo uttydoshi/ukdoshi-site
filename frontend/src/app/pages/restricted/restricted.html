@@ -5,8 +5,8 @@
   <h1>Inner Circle</h1>
 
   @if (!auth.signedIn()) {
-    <p>A more personal corner of the site, for people who'd like to know me a bit better. Sign in with Google or your email address to continue.</p>
-    <button type="button" class="button" (click)="auth.signIn()">Sign in</button>
+    <p>A more personal corner of the site, for people who'd like to know me a bit better. Sign in with your Google account to continue.</p>
+    <button type="button" class="button" (click)="auth.signIn()">Sign in with Google</button>
   } @else if (me.error()) {
     <p>Your sign-in has expired or something went wrong.</p>
     <button type="button" class="button" (click)="signInAgain()">Sign in again</button>
