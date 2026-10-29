@@ -222,7 +222,9 @@ const SHIP_NODES: DiagramNode[] = [
     icon: 'favicon-staging.svg',
     label: 'Staging',
     sub: 'test copy',
-    why: 'A full, separate copy with its own sign-in and data, for testing changes and sharing them before they go live.',
+    why:
+      'A full, separate copy with its own sign-in and data, for testing changes before they go live. It’s ' +
+      'password-protected, so only people I share it with can see it.',
   },
   {
     id: 'live',
