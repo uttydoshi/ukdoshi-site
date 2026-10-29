@@ -25,7 +25,10 @@
   padding-left: 1.25rem;
   border-left: 3px solid var(--heading);
   font-family: var(--font-heading);
-  font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+  font-size: clamp(1.35rem, 2.5vw, 1.7rem);
+  font-style: italic;
+  font-weight: 400;
+  font-variation-settings: 'opsz' 24;
   line-height: 1.45;
   color: var(--text) !important;
 }

@@ -1,5 +1,6 @@
 /* Headings: Source Serif 4, bundled with the site (no Google requests). */
 @import '@fontsource-variable/source-serif-4/opsz.css';
+@import '@fontsource-variable/source-serif-4/opsz-italic.css';
 /* Handwritten accents, like the "Hey there!" on the landing page. */
 @import '@fontsource/mrs-saint-delafield/400.css';
 
