@@ -509,6 +509,13 @@ const GLOSSARY: Term[] = [
 export class HowItsBuilt {
   protected readonly visit = { nodes: VISIT_NODES, wide: VISIT_WIDE, narrow: VISIT_NARROW };
   protected readonly ship = { nodes: SHIP_NODES, wide: SHIP_WIDE, narrow: SHIP_NARROW };
+  protected readonly builtWith = [
+    { label: 'Frontend', tech: ['Angular', 'TypeScript'] },
+    { label: 'Backend', tech: ['Python', 'FastAPI'] },
+    { label: 'AWS', tech: ['CloudFront', 'S3', 'API Gateway', 'Lambda', 'DynamoDB', 'Cognito', 'SES', 'Route 53'] },
+    { label: 'CI/CD & infra', tech: ['GitHub Actions', 'AWS CDK'] },
+    { label: 'Dev tools', tech: ['VS Code', 'Claude Code'] },
+  ];
   protected readonly decisions = DECISIONS;
   protected readonly glossary = GLOSSARY;
 }

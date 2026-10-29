@@ -78,11 +78,47 @@ h2 svg {
   margin: 0;
 }
 
-.stack {
-  margin: 3rem 0 0 !important;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--border);
-  font-size: 0.85rem;
+/* Built with: each group's technologies as grey outlined pills, like the tech tags on the Work page. */
+.built-with {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0;
+}
+
+.built-with > div {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+}
+
+.built-with dt {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.built-with dd {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+}
+
+.built-with span {
+  padding: 0.15rem 0.6rem;
+  border: 1px solid rgb(26 26 46 / 0.18);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 480px) {
+  .built-with > div {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Glossary: a plain two-column table at the bottom of the page. */

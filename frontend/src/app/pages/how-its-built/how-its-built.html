@@ -63,10 +63,30 @@
     </div>
   </section>
 
-  <p class="stack">
-    Angular · Python (FastAPI) · AWS: CloudFront, S3, API Gateway, Lambda, DynamoDB, Cognito, SES, Route 53 ·
-    AWS CDK · GitHub Actions · Claude Code
-  </p>
+  <section>
+    <h2>
+      <!-- Stacked layers -->
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 3 2.5 8 12 13l9.5-5z" />
+        <path d="M2.5 12 12 17l9.5-5M2.5 16 12 21l9.5-5" />
+      </svg>
+      Built with
+    </h2>
+    <div class="panel">
+      <dl class="built-with">
+        @for (group of builtWith; track group.label) {
+          <div>
+            <dt>{{ group.label }}</dt>
+            <dd>
+              @for (tech of group.tech; track tech) {
+                <span>{{ tech }}</span>
+              }
+            </dd>
+          </div>
+        }
+      </dl>
+    </div>
+  </section>
 
   <section class="glossary">
     <h2>
