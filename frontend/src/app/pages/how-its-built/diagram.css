@@ -1,4 +1,5 @@
 :host {
+  position: relative;
   display: block;
 }
 
@@ -105,22 +106,72 @@ svg {
   fill: var(--muted);
 }
 
-/* The "why" line under the diagram. Keeps its height so the page doesn't jump as it changes. */
-.explanation {
-  min-height: 3.2em;
-  margin: 1rem 0 0 !important;
-  padding: 0.75rem 1rem;
-  border-radius: 0.75rem;
-  background: var(--pill);
-  font-size: 0.9rem;
+/* The card under a chosen icon, with a small pointer up at it (same look as the About me logo cards). */
+.card {
+  position: absolute;
+  z-index: 5;
+  box-sizing: border-box;
+  width: min(20rem, 100%);
+  margin-top: 0.5rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 1px 2px rgb(26 26 46 / 0.06), 0 12px 32px rgb(26 26 46 / 0.16);
+  animation: pop 0.15s ease-out;
 }
 
-.explanation strong {
+.card::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: calc(var(--arrow) - 6px);
+  width: 12px;
+  height: 12px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  background: #fff;
+  transform: rotate(45deg);
+}
+
+/* Slide only, no fade: the card is fully readable from its very first frame. */
+@keyframes pop {
+  from {
+    transform: translateY(-4px);
+  }
+}
+
+.card h4 {
+  margin: 0;
+  font-size: 1.1rem;
   color: var(--text);
+}
+
+.card .sub {
+  margin: 0.1rem 0 0 !important;
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.card .why {
+  margin: 0.5rem 0 0 !important;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.hint {
+  margin: 0.75rem 0 0 !important;
+  text-align: center;
+  font-size: 0.8rem;
+  font-style: italic;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .node .hit {
     transition: none;
+  }
+
+  .card {
+    animation: none;
   }
 }

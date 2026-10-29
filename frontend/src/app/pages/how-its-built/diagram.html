@@ -31,14 +31,16 @@
     @for (node of nodes(); track node.id) {
       @if (layout.boxes[node.id]; as at) {
         <g
+          #slot
           class="node"
-          [class.selected]="selected() === node.id"
+          [class.selected]="open()?.node === node"
           tabindex="0"
           role="button"
           [attr.aria-label]="node.label + ': ' + node.why"
-          (mouseenter)="selected.set(node.id)"
-          (focus)="selected.set(node.id)"
-          (click)="selected.set(node.id)"
+          [attr.aria-expanded]="open()?.node === node"
+          (mouseenter)="show(node, slot)"
+          (focus)="show(node, slot)"
+          (click)="show(node, slot)"
         >
           <rect class="hit" [attr.x]="at.x" [attr.y]="at.y - 6" [attr.width]="box.width" [attr.height]="box.height + 6" rx="10" />
           <image
@@ -56,10 +58,12 @@
   </svg>
 }
 
-<p class="explanation" aria-live="polite">
-  @if (explanation(); as node) {
-    <strong>{{ node.label }}:</strong> {{ node.why }}
-  } @else {
-    Hover over or tap an icon to see why it's there.
-  }
-</p>
+@if (open(); as card) {
+  <div class="card" role="tooltip" [style.top.px]="card.top" [style.left.px]="card.left" [style.--arrow.px]="card.arrow">
+    <h4>{{ card.node.label }}</h4>
+    <p class="sub">{{ card.node.sub }}</p>
+    <p class="why">{{ card.node.why }}</p>
+  </div>
+}
+
+<p class="hint">Hover over or tap an icon for details.</p>

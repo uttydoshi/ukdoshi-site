@@ -31,19 +31,26 @@ describe('HowItsBuilt', () => {
     decisions.forEach((li) => expect(li.querySelector('svg path')).not.toBeNull());
   });
 
-  it('explains why an icon is there when it is tapped or focused', () => {
+  it('opens a card under an icon saying why it is there, and closes it with Escape', () => {
     const { fixture, root } = render();
-    const explanation = root.querySelector('app-diagram .explanation')!;
-    expect(explanation.textContent).toContain('Hover over or tap an icon');
+    const diagram = root.querySelector('app-diagram')!;
+    expect(diagram.querySelector('.hint')?.textContent).toContain('Hover over or tap an icon');
+    expect(diagram.querySelector('.card')).toBeNull();
 
-    const lambda = Array.from(root.querySelectorAll<SVGGElement>('svg.wide g.node')).find((g) =>
+    const lambda = Array.from(diagram.querySelectorAll<SVGGElement>('svg.wide g.node')).find((g) =>
       g.textContent?.includes('Lambda'),
     )!;
     lambda.dispatchEvent(new Event('click'));
     fixture.detectChanges();
 
-    expect(explanation.textContent).toContain('Lambda:');
-    expect(explanation.textContent).toContain('costs nothing while idle');
+    const card = diagram.querySelector('.card')!;
+    expect(card.querySelector('h4')?.textContent).toBe('Lambda');
+    expect(card.textContent).toContain('costs nothing while idle');
     expect(lambda.classList).toContain('selected');
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    fixture.detectChanges();
+    expect(diagram.querySelector('.card')).toBeNull();
   });
+
 });
