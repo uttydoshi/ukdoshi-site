@@ -93,19 +93,26 @@
   background: var(--pill);
 }
 
-/* Inner Circle stands out as the bar's one button, styled like the site's dark buttons. */
-.site-nav a.cta {
-  margin-left: 0.25rem;
-  background: var(--text);
-  color: #fff;
-  font-weight: 700;
-  transition: opacity 0.2s;
-}
+/* Wider screens: Inner Circle stands out as the bar's one button, like the site's dark buttons, and
+   turns orange while you're on it. On phones it's an ordinary link in the menu. */
+@media (min-width: 641px) {
+  .site-nav a.cta {
+    margin-left: 0.25rem;
+    background: var(--text);
+    color: #fff;
+    font-weight: 700;
+    transition: opacity 0.2s, background 0.2s;
+  }
 
-.site-nav a.cta:hover,
-.site-nav a.cta.active {
-  background: var(--text);
-  opacity: 0.85;
+  .site-nav a.cta:hover {
+    background: var(--text);
+    opacity: 0.85;
+  }
+
+  .site-nav a.cta.active {
+    background: var(--heading);
+    opacity: 1;
+  }
 }
 
 /* Its buttons join the bar's own row, so a hidden button leaves no gap behind. */
@@ -230,11 +237,6 @@
   .site-nav a {
     padding: 1rem;
     font-size: 1.05rem;
-  }
-
-  .site-nav a.cta {
-    margin: 0.25rem 0 0;
-    text-align: center;
   }
 }
 
