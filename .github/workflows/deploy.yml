@@ -24,8 +24,14 @@ jobs:
       - uses: actions/checkout@v5
 
       - uses: actions/setup-python@v6
+        id: python
         with:
           python-version: "3.13"
+          # Reuse downloaded Python packages between runs instead of fetching them from PyPI every time.
+          cache: pip
+          cache-dependency-path: |
+            backend/requirements-dev.txt
+            infra/requirements.txt
 
       - uses: actions/setup-node@v5
         with:
@@ -51,12 +57,33 @@ jobs:
         run: |
           npm run build -- --define "BUILD_COMMIT='${GITHUB_SHA::7}'" --define "BUILD_TIME='$(date -u +%Y-%m-%dT%H:%M:%SZ)'"
 
+      # The CDK tools are a big download, and fetching them sometimes took 5-8 minutes. Keep them between
+      # runs: the CLI until its version changes, the Python environment until requirements.txt or Python does.
+      - name: Restore CDK CLI
+        id: cdk-cli
+        uses: actions/cache@v4
+        with:
+          path: ~/.cdk-cli
+          key: cdk-cli-2.1146.1-node24
+
+      - name: Restore CDK Python environment
+        id: cdk-venv
+        uses: actions/cache@v4
+        with:
+          path: infra/.venv
+          key: cdk-venv-${{ runner.os }}-py${{ steps.python.outputs.python-version }}-${{ hashFiles('infra/requirements.txt') }}
+
       - name: Install CDK
         working-directory: infra
         run: |
-          npm install -g aws-cdk@2.1146.1
-          python -m venv .venv
-          .venv/bin/pip install -r requirements.txt
+          if [ "${{ steps.cdk-cli.outputs.cache-hit }}" != "true" ]; then
+            npm install --prefix ~/.cdk-cli aws-cdk@2.1146.1
+          fi
+          echo "$HOME/.cdk-cli/node_modules/.bin" >> "$GITHUB_PATH"
+          if [ "${{ steps.cdk-venv.outputs.cache-hit }}" != "true" ]; then
+            python -m venv .venv
+            .venv/bin/pip install -r requirements.txt
+          fi
 
       - uses: aws-actions/configure-aws-credentials@v6
         with:

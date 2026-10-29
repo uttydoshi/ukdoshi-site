@@ -8,7 +8,6 @@
   gap: 3rem 5rem;
   --pad: clamp(3rem, 7vw, 5.5rem);
   padding-block: var(--pad);
-  overflow: hidden; /* the portrait runs down to the card's bottom edge */
 }
 
 .intro h1 {
@@ -112,10 +111,10 @@
 .art {
   position: relative;
   display: grid;
-  place-items: end center;
-  align-self: end;
+  place-items: center;
+  align-self: center; /* same space above and below the photo */
   width: min(100%, 31rem);
-  margin: 0 auto calc(-1 * var(--pad));
+  margin: 0 auto;
 }
 
 /* Words about me behind the portrait: soft greys in two typefaces and a few sizes. */
