@@ -64,6 +64,11 @@
             <span>{{ tag }}</span>
           }
         </p>
+        <p class="stack" aria-label="Tech stack">
+          @for (tech of item.stack; track tech) {
+            <span>{{ tech }}</span>
+          }
+        </p>
       </li>
     }
   </ul>

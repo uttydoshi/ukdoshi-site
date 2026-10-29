@@ -13,6 +13,7 @@ export class Home {
   // `top` and `x` are % of the photo's box; `left` words end at x (they grow away from me), `right`
   // words start at it. Size in rem (scaled down on phones), tilt in degrees.
   // What I've delivered, most recent first. No numbers on purpose: those stay on my resume.
+  // `tags` are skills (orange); `stack` is the tech, from each role's "Tech stack & tools" on my resume.
   protected readonly delivered = [
     {
       company: 'Culture Amp',
@@ -26,6 +27,7 @@ export class Home {
         'Product teams across the company used it to ship AI features to customers quickly.',
       ],
       tags: ['AI platform', 'Platform teams'],
+      stack: ['AWS', 'GCP', 'Vertex AI', 'Python', 'LiteLLM', 'OpenTelemetry', 'Datadog', 'Langfuse', 'Claude Code'],
     },
     {
       company: 'Coles Group',
@@ -38,6 +40,7 @@ export class Home {
         'Launched Coles’ first cloud-based file transfer service for its suppliers.',
       ],
       tags: ['Team building', 'Cloud'],
+      stack: ['Azure', 'Node.js', 'TypeScript', '.NET', 'IBM stack'],
     },
     {
       company: 'MYOB',
@@ -51,6 +54,7 @@ export class Home {
         'Gave teams a secure, friction-free path to production.',
       ],
       tags: ['DevOps', 'Delivery'],
+      stack: ['AWS', 'Go', 'Bash', 'Kubernetes', 'Buildkite', 'GitHub'],
       scale: 1.15,
     },
   ];

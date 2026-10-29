@@ -236,11 +236,25 @@
   color: var(--heading);
 }
 
-.tags {
+.tags,
+.stack {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
   margin: 0 !important;
+}
+
+/* Tech stack: grey outlined pills under the orange skill tags. */
+.stack {
+  margin-top: 0.5rem !important;
+}
+
+.stack span {
+  padding: 0.15rem 0.55rem;
+  border: 1px solid rgb(26 26 46 / 0.18);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.72rem;
 }
 
 .tags span {
