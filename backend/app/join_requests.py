@@ -14,7 +14,7 @@ from botocore.exceptions import ClientError
 from app.auth import REGION, User
 
 TABLE_NAME = os.environ.get("JOIN_REQUESTS_TABLE", "ukdoshi-join-requests")
-OWNER_EMAIL = os.environ.get("OWNER_EMAIL", "utty@ukdoshi.com")
+OWNER_EMAIL = os.environ.get("OWNER_EMAIL", "hello@ukdoshi.com")
 FROM_EMAIL = os.environ.get("FROM_EMAIL", "no-reply@ukdoshi.com")
 STAGE = os.environ.get("STAGE", "")  # "" for live, "staging" for staging.ukdoshi.com
 

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 ZONE_NAME = "ukdoshi.com"
-OWNER_EMAIL = f"utty@{ZONE_NAME}"  # gets "Ask to join" requests; on the domain, so SES can send to it
+OWNER_EMAIL = f"hello@{ZONE_NAME}"  # gets "Ask to join" requests; on the domain, so SES can send to it
 
 
 @dataclass(frozen=True)
