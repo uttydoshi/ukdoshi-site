@@ -18,6 +18,7 @@ class Stage:
     local_dev: bool = False  # accept sign-ins from http://localhost:4200
     protect: bool = True  # guard the user pool and approved list against deletion
     search_engines: bool = True  # False adds "X-Robots-Tag: noindex" to every response
+    password: bool = False  # pages ask for a username and password (set with scripts/staging-password.sh)
 
     def stack_name(self, part: str) -> str:
         return f"Ukdoshi{self.name.capitalize()}{part}"
@@ -55,4 +56,5 @@ STAGING = Stage(
     join_requests_table="ukdoshi-staging-join-requests",
     protect=False,
     search_engines=False,
+    password=True,
 )

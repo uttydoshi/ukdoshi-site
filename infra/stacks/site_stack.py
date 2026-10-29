@@ -38,6 +38,36 @@ LAMBDA_PYTHON_VERSION = "3.13"
 
 # Rewrites extension-less paths (Angular client-side routes) to index.html.
 # Attached only to the S3 behavior, so /api/* responses are never rewritten.
+# Staging only: the same rewrite, behind a browser password prompt. The expected credentials (base64 of
+# "user:password") live in a CloudFront key-value store, set by scripts/staging-password.sh and never in
+# code. Until they're set, everyone is refused. /api/* isn't covered: it shares the Authorization header
+# with sign-in tokens, and already requires sign-in for anything private.
+PASSWORD_REWRITE_JS = """
+import cf from 'cloudfront';
+
+const store = cf.kvs('KVS_ID');
+
+async function handler(event) {
+  var request = event.request;
+  var expected = null;
+  try {
+    expected = await store.get('basic-auth');
+  } catch (e) {}
+  var given = request.headers.authorization ? request.headers.authorization.value : '';
+  if (!expected || given !== 'Basic ' + expected) {
+    return {
+      statusCode: 401,
+      statusDescription: 'Unauthorized',
+      headers: { 'www-authenticate': { value: 'Basic realm="ukdoshi staging", charset="UTF-8"' } },
+    };
+  }
+  if (!request.uri.includes('.')) {
+    request.uri = '/index.html';
+  }
+  return request;
+}
+"""
+
 SPA_REWRITE_JS = """
 function handler(event) {
   var request = event.request;
@@ -180,12 +210,25 @@ class SiteStack(Stack):
             validation=acm.CertificateValidation.from_dns(zone),
         )
 
-        spa_rewrite = cloudfront.Function(
-            self,
-            "SpaRewrite",
-            runtime=cloudfront.FunctionRuntime.JS_2_0,
-            code=cloudfront.FunctionCode.from_inline(SPA_REWRITE_JS),
-        )
+        if stage.password:
+            password_store = cloudfront.KeyValueStore(self, "PasswordStore")
+            spa_rewrite = cloudfront.Function(
+                self,
+                "SpaRewrite",
+                runtime=cloudfront.FunctionRuntime.JS_2_0,
+                code=cloudfront.FunctionCode.from_inline(
+                    PASSWORD_REWRITE_JS.replace("KVS_ID", password_store.key_value_store_id)
+                ),
+                key_value_store=password_store,
+            )
+            CfnOutput(self, "PasswordStoreArn", value=password_store.key_value_store_arn)
+        else:
+            spa_rewrite = cloudfront.Function(
+                self,
+                "SpaRewrite",
+                runtime=cloudfront.FunctionRuntime.JS_2_0,
+                code=cloudfront.FunctionCode.from_inline(SPA_REWRITE_JS),
+            )
 
         # Staging is public (so others can test it) but asks search engines not to list it.
         hide_from_search = None

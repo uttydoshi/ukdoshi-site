@@ -67,7 +67,8 @@ frontend and deploys it:
 | `main`    | https://ukdoshi.com         | `UkdoshiDns`, `UkdoshiAuth`, `UkdoshiSite` |
 
 Staging is a full, separate copy (own sign-in at auth-staging.ukdoshi.com, own approved list, own API)
-that anyone can open, but search engines are asked not to list it. The usual flow:
+that asks for a password (set it with `scripts/staging-password.sh`) and asks search engines not to
+list it. The usual flow:
 
 ```bash
 git switch staging && git merge main     # start from what's live
