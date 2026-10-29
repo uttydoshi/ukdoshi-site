@@ -2,7 +2,7 @@
 .hero {
   display: grid;
   /* Fixed-width columns, centred together, so the gap between words and photo doesn't grow on wide screens. */
-  grid-template-columns: minmax(0, 37rem) minmax(0, 31rem);
+  grid-template-columns: minmax(0, 40rem) minmax(0, 31rem);
   justify-content: center;
   align-items: center;
   gap: 3rem 5rem;
@@ -37,14 +37,26 @@
 
 .roles {
   margin: 0 0 2.25rem !important;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .roles span {
   white-space: nowrap; /* wrap between roles, never inside one */
+}
+
+/* Wider than phones: shrink the roles a touch so they fit on one line, but never below a readable
+   size; on smaller screens they wrap between roles instead. */
+@media (min-width: 761px) {
+  .intro {
+    container-type: inline-size;
+  }
+
+  .roles {
+    font-size: clamp(0.66rem, 1.95cqi, 0.8rem);
+  }
 }
 
 .links {
