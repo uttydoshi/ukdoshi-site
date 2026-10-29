@@ -11,7 +11,7 @@
 
 .intro h1 {
   margin: 0 0 0.75rem;
-  font-size: clamp(3rem, 7vw, 5.25rem);
+  font-size: clamp(2.4rem, 4.8vw, 3.6rem);
 }
 
 .welcome {
@@ -76,18 +76,18 @@
   outline-offset: 3px;
 }
 
-/* "Hey there!" in handwriting, tilted a little, just above the big hello. */
+/* "Hey there!" in handwriting, tilted a little: the line that pops, with the hello just below it. */
 .hey {
-  margin: 0 0 -0.6rem 0.25rem !important;
+  margin: 0 0 -0.4rem 0.25rem !important;
   font-family: var(--font-script);
-  font-size: clamp(3rem, 6vw, 4.5rem);
+  font-size: clamp(4.25rem, 8.5vw, 6.75rem);
   line-height: 1;
   color: var(--heading) !important;
   transform: rotate(-4deg);
   transform-origin: left bottom;
 }
 
-/* The portrait: a cut-out of me in front of my name, the name in huge pale letters behind (after Pete R.). */
+/* The portrait: a cut-out of me in front of the words below (after Pete R.). */
 .art {
   position: relative;
   display: grid;
@@ -97,20 +97,38 @@
   margin: 0 auto calc(-1 * var(--pad));
 }
 
-.big-name {
+/* Words about me behind the portrait: soft greys in two typefaces and a few sizes. */
+.words {
   position: absolute;
-  top: 12%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--font-heading);
-  font-size: clamp(7rem, 15vw, 13rem);
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.03em;
-  color: var(--text);
-  opacity: 0.13;
-  white-space: nowrap;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
   pointer-events: none;
+}
+
+.words li {
+  position: absolute;
+  font-size: calc(var(--size) * var(--word-scale, 1) * 1rem);
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--text);
+  opacity: 0.16;
+}
+
+.words li.left {
+  left: var(--word-out, -16%);
+}
+
+.words li.right {
+  right: var(--word-out, -14%);
+}
+
+.words li.serif {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  opacity: 0.2;
 }
 
 .art img {
@@ -128,6 +146,8 @@
   }
 
   .art {
+    --word-scale: 0.6;
+    --word-out: -10%;
     order: -1;
     align-self: center;
     width: min(85%, 20rem);

@@ -17,9 +17,15 @@
     </div>
   </div>
 
-  <!-- Gritty black-and-white cut-out of me, standing in front of my name in huge pale letters. -->
+  <!-- Gritty black-and-white cut-out of me, in front of a scatter of words about me in soft grey. -->
   <div class="art">
-    <span class="big-name" aria-hidden="true">UTTY</span>
+    <ul class="words" aria-label="A few words about me">
+      @for (word of words; track word.text) {
+        <li [class]="word.side" [class.serif]="word.serif" [style.top.%]="word.top" [style.--size]="word.size">
+          {{ word.text }}
+        </li>
+      }
+    </ul>
     <img src="photos/utty-cutout.webp" alt="Utty smiling, in glasses and a black leather jacket" />
   </div>
 </section>
