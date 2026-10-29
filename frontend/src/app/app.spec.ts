@@ -51,6 +51,7 @@ describe('App', () => {
     const links = Array.from(panel.querySelectorAll('a')).map((a) => [a.textContent?.trim(), a.getAttribute('href')]);
     expect(links).toEqual([
       ['Home', '/'],
+      ['Work', '/work'],
       ["How it's built", '/how-its-built'],
       ['About me', '/about'],
       ['Inner Circle', '/inner-circle'],

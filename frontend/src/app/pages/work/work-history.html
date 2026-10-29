@@ -1,4 +1,4 @@
-<ul class="logos">
+<ol class="timeline">
   @for (company of companies; track company.name) {
     <li [style.--logo-scale]="company.scale ?? 1">
       <button
@@ -12,10 +12,12 @@
         (focus)="show(company, logo)"
       >
         <span class="mark"><img [src]="company.logo" [alt]="company.name" loading="lazy" /></span>
+        <span class="dot" aria-hidden="true"></span>
+        <span class="years">{{ company.years }}</span>
       </button>
     </li>
   }
-</ul>
+</ol>
 
 @if (open(); as card) {
   <div id="work-card" class="card" role="region" [attr.aria-label]="card.company.name" [style.top.px]="card.top" [style.left.px]="card.left" [style.--arrow.px]="card.arrow">
@@ -28,8 +30,5 @@
         <li><strong>{{ role.title }}</strong> <span>{{ role.dates }}</span></li>
       }
     </ul>
-    @if (card.company.highlight) {
-      <p class="highlight">{{ card.company.highlight }}</p>
-    }
   </div>
 }

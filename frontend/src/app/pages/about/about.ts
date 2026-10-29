@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { WorkHistory } from './work-history';
 
+/** The person behind the work: family, what I do off the clock, and a few photos. */
 @Component({
-  imports: [RouterLink, WorkHistory],
   selector: 'app-about',
   styleUrl: './about.css',
   templateUrl: './about.html',

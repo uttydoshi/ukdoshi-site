@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { Home } from './pages/home/home';
 import { About } from './pages/about/about';
+import { Work } from './pages/work/work';
 import { Restricted } from './pages/restricted/restricted';
 import { Privacy } from './pages/privacy/privacy';
 import { AuthCallback } from './pages/auth-callback/auth-callback';
@@ -9,6 +10,7 @@ import { HowItsBuilt } from './pages/how-its-built/how-its-built';
 
 export const routes: Routes = [
   { path: '', component: Home, title: 'Utty Doshi · ukdoshi.com' },
+  { path: 'work', component: Work, title: 'Work with me · ukdoshi.com' },
   { path: 'about', component: About, title: 'About me · ukdoshi.com' },
   { path: 'inner-circle', component: Restricted, title: 'Inner Circle · ukdoshi.com' },
   { path: 'restricted', redirectTo: 'inner-circle' }, // the page's old address

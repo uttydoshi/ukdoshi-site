@@ -8,10 +8,30 @@ section + section,
   margin-top: 3rem;
 }
 
+/* Section headings: icon in a soft orange badge first, like the Work and About me pages. */
 h2 {
-  margin: 0 0 1rem;
-  font-size: clamp(1.4rem, 4vw, 1.8rem);
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 0 0 1.5rem;
+  font-size: clamp(1.6rem, 4.5vw, 2.1rem);
+  line-height: 1.15;
   color: var(--text);
+}
+
+h2 svg {
+  flex: none;
+  box-sizing: border-box;
+  width: 3rem;
+  height: 3rem;
+  padding: 0.7rem;
+  border-radius: 50%;
+  background: rgb(217 119 87 / 0.12);
+  fill: none;
+  stroke: var(--heading);
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 /* Decisions: an icon badge beside each point; two or three columns on wide screens, one on phones. */

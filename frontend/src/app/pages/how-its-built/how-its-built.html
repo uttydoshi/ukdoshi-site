@@ -7,32 +7,60 @@
   </p>
 
   <section>
-    <h2>What happens when you visit</h2>
-    <app-diagram label="Architecture of ukdoshi.com" [nodes]="visit.nodes" [wide]="visit.wide" [narrow]="visit.narrow" />
+    <h2>
+      <!-- Globe -->
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0" />
+        <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+      </svg>
+      What happens when you visit
+    </h2>
+    <div class="panel">
+      <app-diagram label="Architecture of ukdoshi.com" [nodes]="visit.nodes" [wide]="visit.wide" [narrow]="visit.narrow" />
+    </div>
   </section>
 
   <section>
-    <h2>How a change gets to live</h2>
-    <app-diagram label="How changes are deployed" [nodes]="ship.nodes" [wide]="ship.wide" [narrow]="ship.narrow" />
+    <h2>
+      <!-- Rocket -->
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 15l-3-3c1.5-4.5 4.5-8 9.5-8.5C18 8.5 14.5 11.5 12 15z" />
+        <path d="M9 12H5.5L8 9h3.5M12 15v3.5L15 16v-3.5" />
+        <path d="M7 17c-1.5.5-2.5 2-2.5 3.5C6 20.5 7.5 19.5 8 18" />
+      </svg>
+      How a change gets to live
+    </h2>
+    <div class="panel">
+      <app-diagram label="How changes are deployed" [nodes]="ship.nodes" [wide]="ship.wide" [narrow]="ship.narrow" />
+    </div>
   </section>
 
   <section>
-    <h2>Decisions and trade-offs</h2>
-    <ul class="decisions">
-      @for (decision of decisions; track decision.title) {
-        <li>
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            @for (d of decision.icon; track $index) {
-              <path [attr.d]="d" />
-            }
-          </svg>
-          <div>
-            <h3>{{ decision.title }}</h3>
-            <p>{{ decision.detail }}</p>
-          </div>
-        </li>
-      }
-    </ul>
+    <h2>
+      <!-- Balance scale -->
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 4v16M8 20h8M5 7h14" />
+        <path d="M5 7l-2.5 6a2.5 2.5 0 0 0 5 0zM19 7l-2.5 6a2.5 2.5 0 0 0 5 0z" />
+      </svg>
+      Decisions and trade-offs
+    </h2>
+    <div class="panel">
+      <ul class="decisions">
+        @for (decision of decisions; track decision.title) {
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              @for (d of decision.icon; track $index) {
+                <path [attr.d]="d" />
+              }
+            </svg>
+            <div>
+              <h3>{{ decision.title }}</h3>
+              <p>{{ decision.detail }}</p>
+            </div>
+          </li>
+        }
+      </ul>
+    </div>
   </section>
 
   <p class="stack">
@@ -41,27 +69,36 @@
   </p>
 
   <section class="glossary">
-    <h2>Glossary</h2>
-    <table>
-      <thead>
-        <tr>
-          <th scope="col">Term</th>
-          <th scope="col">What it means</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (item of glossary; track item.term) {
+    <h2>
+      <!-- Open book -->
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 5.5c3-1 6-1 9 1 3-2 6-2 9-1V19c-3-1-6-1-9 1-3-2-6-2-9-1z" />
+        <path d="M12 6.5V20" />
+      </svg>
+      Glossary
+    </h2>
+    <div class="panel">
+      <table>
+        <thead>
           <tr>
-            <th scope="row">
-              {{ item.term }}
-              @if (item.full) {
-                <span class="full">{{ item.full }}</span>
-              }
-            </th>
-            <td>{{ item.meaning }}</td>
+            <th scope="col">Term</th>
+            <th scope="col">What it means</th>
           </tr>
-        }
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          @for (item of glossary; track item.term) {
+            <tr>
+              <th scope="row">
+                {{ item.term }}
+                @if (item.full) {
+                  <span class="full">{{ item.full }}</span>
+                }
+              </th>
+              <td>{{ item.meaning }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
   </section>
 </article>

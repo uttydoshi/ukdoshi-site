@@ -1,0 +1,325 @@
+/* Sections stack at the card's full width, split by a thin line. */
+.section + .section {
+  margin-top: 3rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--border);
+}
+
+/* Icon first, in a soft orange badge, then a big title: clearly above everything in the section. */
+h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 0 0 1.5rem;
+  font-size: clamp(1.6rem, 4.5vw, 2.1rem);
+  line-height: 1.15;
+  color: var(--text);
+}
+
+h2 svg {
+  flex: none;
+  box-sizing: border-box;
+  width: 3rem;
+  height: 3rem;
+  padding: 0.7rem;
+  border-radius: 50%;
+  background: rgb(217 119 87 / 0.12);
+  fill: none;
+  stroke: var(--heading);
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.section p {
+  margin: 0;
+}
+
+/* What I've delivered: three outcome cards. */
+/* Stacked full width, one company per card. */
+.outcomes {
+  display: grid;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.outcome-head {
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  display: block;
+  width: auto;
+  margin-bottom: 1rem;
+}
+
+.role {
+  margin: 0 0 0.4rem !important;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.role span {
+  white-space: nowrap; /* wrap between a role and the years, never inside one */
+}
+
+.outcomes h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.3rem;
+  line-height: 1.25;
+  color: var(--text);
+}
+
+/* The points flow into two columns on wide screens. */
+.points {
+  columns: 2 22rem;
+  column-gap: 3rem;
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.points li {
+  break-inside: avoid;
+  margin-bottom: 0.5rem;
+}
+
+/* Companies with more than one role: a small title above each role's points. */
+.role-title {
+  margin: 1.25rem 0 0.6rem;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.role-title:first-of-type {
+  margin-top: 0;
+}
+
+
+.points li::marker {
+  color: var(--heading);
+}
+
+.tags,
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 !important;
+}
+
+/* Tech stack: grey outlined pills under the orange skill tags. */
+.stack {
+  margin-top: 0.5rem !important;
+}
+
+.stack span {
+  padding: 0.15rem 0.55rem;
+  border: 1px solid rgb(26 26 46 / 0.18);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.tags span {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: rgb(217 119 87 / 0.1);
+  color: var(--text);
+  font-size: 0.75rem;
+}
+
+/* Golden Circle: rings on the left, WHY/HOW/WHAT beside them; stacked on phones. */
+.golden-circle {
+  display: grid;
+  grid-template-columns: minmax(12rem, 18rem) 1fr;
+  align-items: center;
+  gap: 1.5rem 3.5rem;
+}
+
+.circles {
+  width: 100%;
+  height: auto;
+}
+
+.circles circle {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 1.75;
+}
+
+.circles .why {
+  fill: rgb(217 119 87 / 0.1);
+  stroke: var(--heading);
+}
+
+.circles text {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-anchor: middle;
+  dominant-baseline: central;
+  fill: var(--text);
+}
+
+.circles text.why-label {
+  font-size: 24px;
+  fill: var(--heading);
+}
+
+.layers {
+  display: grid;
+  gap: 1.5rem;
+  margin: 0;
+}
+
+.layers dt {
+  margin-bottom: 0.3rem;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.layers dt.why-label {
+  color: var(--heading);
+}
+
+.layers dd {
+  margin: 0;
+  color: var(--muted);
+}
+
+.layers dd p {
+  margin: 0 0 0.5rem;
+}
+
+.layers ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.layers li + li {
+  margin-top: 0.25rem;
+}
+
+.layers li::marker {
+  color: var(--heading);
+}
+
+.circles-figure {
+  margin: 0;
+}
+
+.credit {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--muted);
+}
+
+/* Pointer to the page about how this site is built. */
+.built-link {
+  margin-top: 1.75rem !important;
+}
+
+.built-link a {
+  color: var(--heading);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.built-link a:hover {
+  text-decoration: underline;
+}
+
+.lead {
+  max-width: 44rem;
+  margin: -0.75rem 0 2.5rem !important;
+  font-size: 1.1rem;
+}
+
+/* Closing call to action: a soft orange panel. */
+.talk {
+  margin-top: 2.5rem;
+  padding: 2rem;
+  border-radius: 1rem;
+  background: rgb(217 119 87 / 0.08);
+  border: 1px solid rgb(217 119 87 / 0.25);
+}
+
+.talk-title {
+  display: block;
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+  color: var(--heading);
+}
+
+.talk p {
+  margin: 0 0 1.25rem !important;
+}
+
+.talk-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.75rem;
+}
+
+.button {
+  display: inline-block;
+  padding: 0.8rem 1.6rem;
+  border-radius: 0.6rem;
+  background: var(--text);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.button:hover {
+  opacity: 0.85;
+}
+
+.quiet {
+  color: var(--text);
+  font-weight: 700;
+  text-underline-offset: 0.25em;
+}
+
+.quiet:hover {
+  color: var(--heading);
+}
+
+.button:focus-visible,
+.quiet:focus-visible {
+  outline: 2px solid var(--heading);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .golden-circle {
+    grid-template-columns: 1fr;
+  }
+
+  .circles-figure {
+    max-width: 15rem;
+    margin: 0 auto;
+  }
+}

@@ -8,10 +8,11 @@ describe('WorkHistory', () => {
     return { fixture, root: fixture.nativeElement as HTMLElement };
   }
 
-  it('shows each company once, oldest last', () => {
+  it('shows a timeline of each company once, oldest first, with its years', () => {
     const { root } = render();
     const names = Array.from(root.querySelectorAll('img')).map((img) => img.alt);
-    expect(names).toEqual(['Culture Amp', 'Coles Group', 'MYOB', 'JB Hi-Fi', 'UHG', 'Racing Australia']);
+    expect(names).toEqual(['Racing Australia', 'UHG', 'JB Hi-Fi', 'MYOB', 'Coles Group', 'Culture Amp']);
+    expect(root.querySelector('.timeline li:last-child .years')?.textContent).toBe('2021 – 2026');
   });
 
   it('opens a card with the roles at a company, and closes it with Escape', () => {
@@ -23,6 +24,7 @@ describe('WorkHistory', () => {
     const card = root.querySelector('#work-card');
     expect(card?.querySelector('h4')?.textContent).toBe('MYOB');
     expect(card?.querySelectorAll('.roles li').length).toBe(3);
+    expect(card?.querySelector('.highlight')).toBeNull(); // roles and dates only; the detail lives in the cards above
     expect(myob.getAttribute('aria-expanded')).toBe('true');
 
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));

@@ -1,0 +1,215 @@
+:host {
+  position: relative;
+  display: block;
+}
+
+/* The timeline: a line with a dot per company, the logo above it and the years below.
+   Wide screens run left to right (oldest first); phones run top to bottom. */
+.timeline {
+  --dot: 0.8rem;
+  --line-at: calc(0.35rem + 2rem + 0.6rem + var(--dot) / 2); /* button padding + logo slot + gap + half a dot */
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--line-at) - 1px);
+  left: calc(100% / 12);
+  right: calc(100% / 12);
+  height: 2px;
+  background: rgb(26 26 46 / 0.12);
+}
+
+.timeline button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.35rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.timeline button:focus-visible {
+  outline: 2px solid var(--heading);
+  outline-offset: 2px;
+}
+
+/* Same height for every logo's slot, so the dots and years line up whatever each logo's size. */
+.mark {
+  display: flex;
+  align-items: center;
+  height: 2rem;
+}
+
+.timeline img {
+  display: block;
+  height: calc(1.75rem * var(--logo-scale));
+  width: auto;
+  max-width: 100%;
+  filter: grayscale(1);
+  opacity: 0.55;
+  transition: filter 0.25s, opacity 0.25s;
+}
+
+.dot {
+  position: relative; /* above the line */
+  box-sizing: border-box;
+  width: var(--dot);
+  height: var(--dot);
+  border: 2px solid rgb(26 26 46 / 0.3);
+  border-radius: 50%;
+  background: #fff;
+  transition: background 0.25s, border-color 0.25s;
+}
+
+.years {
+  font-size: 0.75rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.timeline button:hover img,
+.timeline button.active img {
+  filter: none;
+  opacity: 1;
+}
+
+.timeline button:hover .dot,
+.timeline button.active .dot {
+  border-color: var(--heading);
+  background: var(--heading);
+}
+
+.timeline button:hover .years,
+.timeline button.active .years {
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* The card just under the chosen logo, with a small pointer up at it. */
+.card {
+  position: absolute;
+  margin-top: 0.6rem;
+  z-index: 5;
+  box-sizing: border-box;
+  width: min(22rem, 100%);
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 1px 2px rgb(26 26 46 / 0.06), 0 12px 32px rgb(26 26 46 / 0.16);
+  animation: pop 0.15s ease-out;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: calc(var(--arrow) - 6px);
+  width: 12px;
+  height: 12px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  background: #fff;
+  transform: rotate(45deg);
+}
+
+/* Slide only, no fade: the card is fully readable from its very first frame. */
+@keyframes pop {
+  from {
+    transform: translateY(-4px);
+  }
+}
+
+.card h4 {
+  margin: 0;
+  font-size: 1.15rem;
+  color: var(--text);
+}
+
+.card .note {
+  margin: 0.1rem 0 0;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--muted);
+}
+
+.roles {
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.85rem;
+}
+
+.roles li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0 0.75rem;
+  color: var(--text);
+}
+
+.roles li + li {
+  margin-top: 0.2rem;
+}
+
+.roles span {
+  color: var(--muted);
+}
+
+/* Phones: the line runs down the left, with the dot, logo and years side by side on each row. */
+@media (max-width: 640px) {
+  .timeline {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+
+  .timeline::before {
+    top: 1.25rem;
+    bottom: 1.25rem;
+    left: calc(0.35rem + var(--dot) / 2 - 1px);
+    right: auto;
+    width: 2px;
+    height: auto;
+  }
+
+  .timeline button {
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .dot {
+    order: -1;
+  }
+
+  .mark {
+    width: 8.5rem;
+    height: 1.75rem;
+  }
+
+  .timeline img {
+    height: calc(1.4rem * var(--logo-scale));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    animation: none;
+  }
+
+  .timeline img,
+  .dot {
+    transition: none;
+  }
+}
