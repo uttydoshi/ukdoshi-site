@@ -1,9 +1,11 @@
 /* Words on the left, the portrait on the right; on phones the portrait goes on top. */
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  /* Fixed-width columns, centred together, so the gap between words and photo doesn't grow on wide screens. */
+  grid-template-columns: minmax(0, 37rem) minmax(0, 31rem);
+  justify-content: center;
   align-items: center;
-  gap: 3rem 4rem;
+  gap: 3rem 5rem;
   --pad: clamp(3rem, 7vw, 5.5rem);
   padding-block: var(--pad);
   overflow: hidden; /* the portrait runs down to the card's bottom edge */
