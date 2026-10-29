@@ -194,8 +194,10 @@ const SHIP_NODES: DiagramNode[] = [
     id: 'actions',
     icon: 'diagram-icons/github-actions.svg',
     label: 'GitHub Actions',
-    sub: 'test & build',
-    why: 'Runs on every push: the backend tests first, then builds the Angular site. A failing test stops the deploy.',
+    sub: 'CI/CD pipeline',
+    why:
+      'The CI/CD pipeline. On every push it runs the backend and frontend tests, builds the site, then ' +
+      'deploys it to AWS. A failing test stops the deploy.',
   },
   {
     id: 'oidc',

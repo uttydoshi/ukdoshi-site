@@ -1,6 +1,6 @@
 name: Deploy
 
-# Every push tests, builds and deploys: staging -> staging.ukdoshi.com, main -> ukdoshi.com.
+# Every push tests (backend and frontend), builds and deploys: staging -> staging.ukdoshi.com, main -> ukdoshi.com.
 # "Run workflow" on the Actions tab redeploys a branch by hand.
 on:
   push:
@@ -39,11 +39,16 @@ jobs:
           pip install -r requirements-dev.txt
           python -m pytest
 
+      - name: Test frontend
+        working-directory: frontend
+        run: |
+          npm ci
+          npm test -- --watch=false
+
       - name: Build frontend
         working-directory: frontend
         # The commit and time show in the staging footer, so testers can say which version they saw.
         run: |
-          npm ci
           npm run build -- --define "BUILD_COMMIT='${GITHUB_SHA::7}'" --define "BUILD_TIME='$(date -u +%Y-%m-%dT%H:%M:%SZ)'"
 
       - name: Install CDK
