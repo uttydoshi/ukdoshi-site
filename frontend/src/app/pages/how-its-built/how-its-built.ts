@@ -221,14 +221,14 @@ const SHIP_NODES: DiagramNode[] = [
     id: 'staging',
     icon: 'favicon-staging.svg',
     label: 'Staging',
-    sub: 'staging.ukdoshi.com',
+    sub: 'test copy',
     why: 'A full, separate copy with its own sign-in and data, for testing changes and sharing them before they go live.',
   },
   {
     id: 'live',
     icon: 'favicon.svg',
     label: 'Live',
-    sub: 'ukdoshi.com',
+    sub: 'the real site',
     why: 'The real site. It only gets changes after they have been checked on staging.',
   },
 ];

@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { AuthService } from '../../auth/auth.service';
-import { Restricted } from './restricted';
+import { Restricted, SIGN_IN_OPEN } from './restricted';
 
 describe('Restricted', () => {
   const signedIn = signal(false);
@@ -33,7 +33,7 @@ describe('Restricted', () => {
     fixture.detectChanges();
   }
 
-  it('asks signed-out visitors to sign in, without calling the API', async () => {
+  it.skipIf(!SIGN_IN_OPEN)('asks signed-out visitors to sign in, without calling the API', async () => {
     const { root, http } = render();
     expect(root.textContent).toContain('Sign in with your Google account');
     expect(root.querySelector('.wip')?.textContent).toContain('Still being built.');
@@ -41,6 +41,14 @@ describe('Restricted', () => {
     expect(auth.signIn).toHaveBeenCalled();
     http.expectNone('/api/me');
     expect(root.querySelector('.tiles')).toBeNull();
+  });
+
+  it.skipIf(SIGN_IN_OPEN)('shows signed-out visitors only the note while sign-in is hidden', async () => {
+    const { root, http } = render();
+    expect(root.querySelector('.wip')?.textContent).toContain('Still being built.');
+    expect(root.querySelector('.button')).toBeNull();
+    expect(root.textContent).not.toContain('Sign in with your Google account');
+    http.expectNone('/api/me');
   });
 
   it('greets signed-in visitors who are not approved, and lets them ask to join with one click', async () => {
@@ -109,7 +117,7 @@ describe('Restricted', () => {
 
     expect(root.querySelector('.tiles')).toBeNull();
     expect(root.textContent).not.toContain('Tile A');
-    expect(root.textContent).toContain('Sign in with your Google account');
+    expect(root.querySelector('.wip')).not.toBeNull();
   });
 
   it('offers to sign in again when the API rejects the sign-in', async () => {

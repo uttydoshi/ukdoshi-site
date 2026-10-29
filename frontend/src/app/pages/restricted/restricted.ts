@@ -20,6 +20,10 @@ interface Welcome {
   tiles: Tile[];
 }
 
+// Sign-in is hidden from visitors until there's something to show inside. To bring it back, set this to
+// true. (Anyone already signed in still sees the page as before.)
+export const SIGN_IN_OPEN = false;
+
 // Signing in only proves who the visitor is; the API decides whether they're approved.
 @Component({
   selector: 'app-restricted',
@@ -28,6 +32,7 @@ interface Welcome {
 })
 export class Restricted {
   protected readonly auth = inject(AuthService);
+  protected readonly signInOpen = SIGN_IN_OPEN;
   protected readonly me = httpResource<Me>(() => (this.auth.signedIn() ? '/api/me' : undefined));
   protected readonly welcome = httpResource<Welcome>(() =>
     this.me.value()?.approved ? '/api/restricted/welcome' : undefined,
