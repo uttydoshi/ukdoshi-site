@@ -65,7 +65,7 @@ export class Work {
           points: [
             'Led AI engineers and data scientists building and running Culture Amp’s centralised AI Platform, which product teams used to ship AI-powered features to customers',
             'Cut AI feature development time from weeks to days with a LiteLLM-based LLM gateway with cost tracking, rate limiting and fallbacks',
-            'Removed observability setup for product teams with an OpenTelemetry collector that routes all AI feature traces to the data lake, Datadog and Langfuse from day one',
+            'Gave product teams observability out of the box, with an OpenTelemetry collector that routes all AI feature traces to the data lake, Datadog and Langfuse from day one',
             'Built a control center that alerts months before in-use LLM models retire, catching a mid-flight date change in time to migrate',
             'Owned engineering execution (solution previews, RFCs, DACIs, risks, dependencies), people management and delivery',
             'Built a de-identification service that anonymises personal data in production data and Langfuse traces, enabling research, model evaluation and production monitoring on real customer data',
