@@ -37,16 +37,20 @@
             </p>
           </header>
 
+          @let open = expanded().has(item.company);
           @for (role of item.roles; track role.title) {
             @if (item.roles.length > 1) {
               <h4 class="role-title">{{ role.title }}</h4>
             }
             <ul class="points">
-              @for (point of role.points; track point) {
+              @for (point of open ? role.points : role.points.slice(0, role.shown); track point) {
                 <li>{{ point }}</li>
               }
             </ul>
           }
+          <button type="button" class="show-more" [attr.aria-expanded]="open" (click)="toggle(item.company)">
+            {{ open ? 'Show fewer' : 'Show all ' + total(item) + ' points' }}
+          </button>
         </li>
       }
     </ul>
@@ -106,12 +110,6 @@
               </p>
               <ul>
                 <li>Manage and grow the people in my teams</li>
-                <li>Own delivery end to end, from roadmap to production</li>
-                <li>Own the technical direction: solution design and key decisions</li>
-                <li>
-                  Make work visible with dashboards I build myself, covering delivery stats, roadmaps, LLM
-                  usage and AI model deprecations
-                </li>
                 <li>Ask good questions and play devil’s advocate, so we land on solid decisions where everyone feels heard</li>
                 <li>Stay hands-on, coding with Claude Code when the work needs it</li>
               </ul>

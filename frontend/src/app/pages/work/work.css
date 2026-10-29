@@ -92,6 +92,26 @@ h2 svg {
   margin-bottom: 0.5rem;
 }
 
+/* "Show all N points" under each card's points. */
+.show-more {
+  margin-top: 0.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--heading);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.show-more:focus-visible {
+  outline: 2px solid var(--heading);
+  outline-offset: 3px;
+}
+
 /* Companies with more than one role: a small title above each role's points. */
 .role-title {
   margin: 1.25rem 0 0.6rem;

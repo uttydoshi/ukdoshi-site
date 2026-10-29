@@ -19,4 +19,19 @@ describe('Work', () => {
     expect(root.querySelector('.talk a[href^="https://www.linkedin.com"]')).not.toBeNull();
     expect(root.querySelector('.talk a[href^="mailto:"]')).toBeNull(); // LinkedIn only, by choice
   });
+
+  it('shows the strongest points first, and every point after "Show all"', async () => {
+    await TestBed.configureTestingModule({ imports: [Work], providers: [provideRouter([])] }).compileComponents();
+    const fixture = TestBed.createComponent(Work);
+    fixture.detectChanges();
+    const card = (fixture.nativeElement as HTMLElement).querySelector('.outcomes > li')!;
+    expect(card.querySelectorAll('.points li').length).toBe(4);
+
+    const button = card.querySelector<HTMLButtonElement>('.show-more')!;
+    expect(button.textContent).toContain('Show all 9 points');
+    button.click();
+    fixture.detectChanges();
+    expect(card.querySelectorAll('.points li').length).toBe(9);
+    expect(button.textContent).toContain('Show fewer');
+  });
 });
