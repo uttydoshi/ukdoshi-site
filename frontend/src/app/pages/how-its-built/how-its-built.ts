@@ -346,7 +346,8 @@ const DECISIONS: Decision[] = [
   {
     title: 'Private by default',
     detail:
-      'No analytics or trackers, and personal API answers are never kept in the browser’s cache.',
+      'No analytics or tracking. And private content isn’t stored by your browser, so once you sign out, ' +
+      'nobody using the same device can bring it back.',
     icon: [
       'M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8',
       'M9.9 5.1A9.7 9.7 0 0 1 12 5c6 0 9.5 7 9.5 7a17 17 0 0 1-2.9 3.9',
