@@ -73,7 +73,7 @@ h2 svg {
 /* A strip of photos: side by side on wide screens, stacked on phones. */
 .photos {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
   gap: 1rem;
   margin: 2.5rem 0 0;
   padding: 0;
