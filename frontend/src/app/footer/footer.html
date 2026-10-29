@@ -1,0 +1,56 @@
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <p class="tagline">People first,<br />in the age of AI.</p>
+
+      <nav class="footer-links" aria-label="Footer">
+        <div>
+          <h2>Explore</h2>
+          <ul>
+            <li><a routerLink="/">About me</a></li>
+            <li><a routerLink="/inner-circle">Inner Circle</a></li>
+            <li><a routerLink="/how-its-built">How this site is built</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Get in touch</h2>
+          <ul>
+            <li><a href="mailto:utty@ukdoshi.com">Email</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Site</h2>
+          <ul>
+            <li><a routerLink="/privacy">Privacy policy</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <a class="footer-brand" routerLink="/" aria-label="ukdoshi.com home">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <path d="M100 10 L177.94 55 V145 L100 190 L22.06 145 V55 Z" stroke-width="14" />
+          <g transform="translate(100 100) scale(0.68) translate(-100 -100)" stroke-width="20">
+            <path d="M40 40 V130 A30 30 0 0 0 100 130 V40" />
+            <path d="M100 40 V160 A60 60 0 0 0 100 40 Z" />
+          </g>
+        </svg>
+        ukdoshi.com
+      </a>
+      <p class="copyright">© {{ year }} Utkarsh Doshi</p>
+    </div>
+
+    @if (isStaging) {
+      <!-- Lets testers say exactly which version they saw. -->
+      <p class="build">
+        Staging ·
+        @if (build) {
+          built from {{ build.commit }} · {{ build.time | date: 'd MMM, HH:mm' }}
+        } @else {
+          local build
+        }
+      </p>
+    }
+  </div>
+</footer>

@@ -1,9 +1,9 @@
-import { DatePipe } from '@angular/common';
 import { Component, DestroyRef, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
-import { BUILD, IS_STAGING } from './staging';
+import { Footer } from './footer/footer';
+import { IS_STAGING } from './staging';
 
 type Theme = 'light' | 'dark';
 
@@ -14,7 +14,7 @@ const THEME_KEY = 'theme';
 export const DARK_MODE_ENABLED = false;
 
 @Component({
-  imports: [DatePipe, RouterLink, RouterLinkActive, RouterOutlet],
+  imports: [Footer, RouterLink, RouterLinkActive, RouterOutlet],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',
@@ -26,7 +26,6 @@ export const DARK_MODE_ENABLED = false;
 export class App {
   protected readonly darkModeEnabled = DARK_MODE_ENABLED;
   protected readonly isStaging = IS_STAGING;
-  protected readonly build = BUILD;
   protected readonly menuOpen = signal(false);
   private readonly menu = viewChild.required<ElementRef<HTMLElement>>('menu');
 
