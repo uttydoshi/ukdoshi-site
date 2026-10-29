@@ -41,6 +41,10 @@
   text-transform: uppercase;
 }
 
+.roles span {
+  white-space: nowrap; /* wrap between roles, never inside one */
+}
+
 .links {
   display: flex;
   flex-wrap: wrap;

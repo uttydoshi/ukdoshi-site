@@ -84,13 +84,16 @@
   transition: background 0.2s;
 }
 
-.site-nav a:hover {
-  background: var(--pill);
+/* Plain text links: underlined on hover and while you're on that page. */
+.site-nav a:hover,
+.site-nav a.active {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.35em;
 }
 
 .site-nav a.active {
   font-weight: 700;
-  background: var(--pill);
 }
 
 /* Wider screens: Inner Circle stands out as the bar's one button, like the site's dark buttons, and
@@ -107,11 +110,13 @@
   .site-nav a.cta:hover {
     background: var(--text);
     opacity: 0.85;
+    text-decoration: none;
   }
 
   .site-nav a.cta.active {
     background: var(--heading);
     opacity: 1;
+    text-decoration: none;
   }
 }
 
