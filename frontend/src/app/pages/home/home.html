@@ -1,7 +1,7 @@
 <section class="card hero">
   <div class="intro">
     <p class="hey" aria-hidden="true">Hey there!</p>
-    <h1>Hi, I'm Utty.</h1>
+    <h1>It's Utty.</h1>
     <p class="welcome">Welcome, I'm really glad you stopped by.</p>
 
     <p class="philosophy">
@@ -21,7 +21,14 @@
   <div class="art">
     <ul class="words" aria-label="A few words about me">
       @for (word of words; track word.text) {
-        <li [class]="word.side" [class.serif]="word.serif" [style.top.%]="word.top" [style.--size]="word.size">
+        <li
+          [class]="word.side"
+          [class.serif]="word.serif"
+          [style.top.%]="word.top"
+          [style.left.%]="word.x"
+          [style.--size]="word.size"
+          [style.--tilt.deg]="word.tilt ?? 0"
+        >
           {{ word.text }}
         </li>
       }

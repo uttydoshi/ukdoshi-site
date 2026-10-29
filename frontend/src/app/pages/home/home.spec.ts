@@ -14,7 +14,8 @@ describe('Home', () => {
     const fixture = TestBed.createComponent(Home);
     fixture.detectChanges();
     const root = fixture.nativeElement as HTMLElement;
-    expect(root.querySelector('h1')?.textContent).toContain("Hi, I'm Utty.");
+    expect(root.querySelector('.hey')?.textContent).toContain('Hey there!');
+    expect(root.querySelector('h1')?.textContent).toContain("It's Utty.");
     expect(root.querySelector('.philosophy')?.textContent).toContain('leading with care, building with clarity');
     expect(root.querySelector('.button')?.getAttribute('href')).toBe('/about');
   });

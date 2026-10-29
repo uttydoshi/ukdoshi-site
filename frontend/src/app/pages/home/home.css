@@ -117,12 +117,15 @@
   opacity: 0.16;
 }
 
+/* Left-hand words end at their x, so they grow away from me; right-hand words start at it. */
 .words li.left {
-  left: var(--word-out, -16%);
+  transform: translateX(-100%) rotate(var(--tilt));
+  transform-origin: right center;
 }
 
 .words li.right {
-  right: var(--word-out, -14%);
+  transform: rotate(var(--tilt));
+  transform-origin: left center;
 }
 
 .words li.serif {
@@ -140,6 +143,13 @@
   mask-image: linear-gradient(to bottom, #000 88%, transparent);
 }
 
+/* Mid-size screens: a slightly smaller photo, so the words shrink with it to stay inside the card. */
+@media (max-width: 1200px) {
+  .art {
+    --word-scale: 0.82;
+  }
+}
+
 @media (max-width: 760px) {
   .hero {
     grid-template-columns: 1fr;
@@ -147,7 +157,6 @@
 
   .art {
     --word-scale: 0.6;
-    --word-out: -10%;
     order: -1;
     align-self: center;
     width: min(85%, 20rem);
