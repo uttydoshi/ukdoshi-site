@@ -5,7 +5,8 @@
 }
 
 /* --- Header: a floating bar with the brand on the left and the page links on the right --- */
-/* Centered and capped at 60rem, so on wide screens the brand and links don't drift to the far edges. */
+/* Centered and capped, so on wide screens the brand and links don't drift to the far edges.
+   Dark navy like the footer, with everything on it in light colours. */
 .site-header {
   position: fixed;
   top: 0.75rem;
@@ -21,11 +22,10 @@
   gap: 1rem;
   padding: 0.6rem 0.75rem 0.6rem 1rem;
   border-radius: 1rem;
-  background: var(--bar);
+  background: var(--text);
   box-shadow:
-    0 1px 2px rgb(26 26 46 / 0.04),
-    0 6px 20px rgb(26 26 46 / 0.08);
-  backdrop-filter: blur(12px);
+    0 1px 2px rgb(26 26 46 / 0.1),
+    0 8px 24px rgb(26 26 46 / 0.22);
 }
 
 .brand {
@@ -36,12 +36,12 @@
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: rgb(255 255 255 / 0.8);
   text-decoration: none;
 }
 
 .brand:hover {
-  color: var(--text);
+  color: #fff;
 }
 
 .brand-mark {
@@ -77,7 +77,7 @@
 .site-nav a {
   padding: 0.5rem 0.9rem;
   border-radius: 0.6rem;
-  color: var(--text);
+  color: #fff;
   font-size: 0.95rem;
   text-decoration: none;
   white-space: nowrap;
@@ -96,25 +96,26 @@
   font-weight: 700;
 }
 
-/* Wider screens: Inner Circle stands out as the bar's one button, like the site's dark buttons, and
-   turns orange while you're on it. On phones it's an ordinary link in the menu. */
+/* Wider screens: Inner Circle stands out as the bar's one button, white on the dark bar, and turns
+   orange while you're on it. On phones it's an ordinary link in the menu. */
 @media (min-width: 641px) {
   .site-nav a.cta {
     margin-left: 0.25rem;
-    background: var(--text);
-    color: #fff;
+    background: #fff;
+    color: var(--text);
     font-weight: 700;
     transition: opacity 0.2s, background 0.2s;
   }
 
   .site-nav a.cta:hover {
-    background: var(--text);
+    background: #fff;
     opacity: 0.85;
     text-decoration: none;
   }
 
   .site-nav a.cta.active {
     background: var(--heading);
+    color: #fff;
     opacity: 1;
     text-decoration: none;
   }
@@ -134,7 +135,7 @@
   border: 0;
   border-radius: 0.6rem;
   background: transparent;
-  color: var(--muted);
+  color: rgb(255 255 255 / 0.85);
   cursor: pointer;
   transition:
     color 0.2s,
@@ -143,14 +144,14 @@
 }
 
 .icon-button:hover {
-  color: var(--text);
-  background: var(--pill);
+  color: #fff;
+  background: rgb(255 255 255 / 0.1);
 }
 
 .brand:focus-visible,
 .icon-button:focus-visible,
 .site-nav a:focus-visible {
-  outline: 2px solid var(--accent-2);
+  outline: 2px solid var(--heading);
   outline-offset: 2px;
 }
 
@@ -219,11 +220,10 @@
     margin: 0;
     padding: 0.5rem;
     border-radius: 1rem;
-    background: var(--bar);
+    background: var(--text);
     box-shadow:
-      0 1px 2px rgb(26 26 46 / 0.04),
-      0 6px 20px rgb(26 26 46 / 0.08);
-    backdrop-filter: blur(16px);
+      0 1px 2px rgb(26 26 46 / 0.1),
+      0 8px 24px rgb(26 26 46 / 0.22);
     opacity: 0;
     visibility: hidden;
     transform: translateY(-0.5rem);
