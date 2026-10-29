@@ -40,7 +40,7 @@ export class Home {
         'Launched Coles’ first cloud-based file transfer service for its suppliers.',
       ],
       tags: ['Team building', 'Cloud'],
-      stack: ['Azure', 'Node.js', 'TypeScript', '.NET', 'IBM stack'],
+      stack: ['Azure', 'Node.js', 'TypeScript', '.NET'],
     },
     {
       company: 'MYOB',
