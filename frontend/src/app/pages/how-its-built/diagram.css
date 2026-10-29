@@ -52,17 +52,38 @@ svg {
   outline: none;
 }
 
-.node rect {
-  fill: #fff;
-  stroke: var(--border);
+/* Group boundaries: AWS's own style for "AWS Cloud" (dark navy line), dashed grey for the rest. */
+.group rect {
+  fill: rgb(255 255 255 / 0.55);
+  stroke: #8c959f;
+  stroke-width: 1.25;
+  stroke-dasharray: 6 4;
+}
+
+.group.aws rect {
+  stroke: #232f3e;
+  stroke-dasharray: none;
+}
+
+.group text {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  fill: var(--text);
+}
+
+/* The area you hover or tap: invisible until then, then a soft orange highlight. */
+.node .hit {
+  fill: transparent;
+  stroke: transparent;
   stroke-width: 1.5;
   transition: stroke 0.2s, fill 0.2s;
 }
 
-.node:hover rect,
-.node:focus-visible rect,
-.node.selected rect {
-  fill: rgb(217 119 87 / 0.08);
+.node:hover .hit,
+.node:focus-visible .hit,
+.node.selected .hit {
+  fill: rgb(217 119 87 / 0.1);
   stroke: var(--heading);
 }
 
@@ -99,7 +120,7 @@ svg {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .node rect {
+  .node .hit {
     transition: none;
   }
 }

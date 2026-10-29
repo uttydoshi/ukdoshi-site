@@ -31,10 +31,10 @@ describe('HowItsBuilt', () => {
     decisions.forEach((li) => expect(li.querySelector('svg path')).not.toBeNull());
   });
 
-  it('explains why a box is there when it is tapped or focused', () => {
+  it('explains why an icon is there when it is tapped or focused', () => {
     const { fixture, root } = render();
     const explanation = root.querySelector('app-diagram .explanation')!;
-    expect(explanation.textContent).toContain('Hover over or tap a box');
+    expect(explanation.textContent).toContain('Hover over or tap an icon');
 
     const lambda = Array.from(root.querySelectorAll<SVGGElement>('svg.wide g.node')).find((g) =>
       g.textContent?.includes('Lambda'),
