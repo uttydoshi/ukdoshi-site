@@ -18,5 +18,8 @@ describe('Home', () => {
     expect(root.querySelector('h1')?.textContent).toContain("I'm Utty.");
     expect(root.querySelector('.philosophy')?.textContent).toContain('leading with care, building with clarity');
     expect(root.querySelector('.button')?.getAttribute('href')).toBe('/about');
+    const companies = Array.from(root.querySelectorAll('.outcomes .logo')).map((img) => img.getAttribute('alt'));
+    expect(companies).toEqual(['Culture Amp', 'Coles Group', 'MYOB']);
+    expect(root.querySelector('.delivered')?.textContent).not.toMatch(/\d+\s*%|\$\d/); // no numbers, by choice
   });
 });

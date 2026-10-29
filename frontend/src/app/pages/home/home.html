@@ -39,3 +39,33 @@
     <img src="photos/utty-cutout.webp" alt="Utty smiling, in glasses and a black leather jacket" />
   </div>
 </section>
+
+<!-- Outcomes from my EM and DM roles. Deliberately no numbers: those stay on my resume. -->
+<section class="card delivered">
+  <h2>What I've delivered</h2>
+  <ul class="outcomes">
+    @for (item of delivered; track item.company) {
+      <li>
+        <img class="logo" [src]="item.logo" [alt]="item.company" [style.height.rem]="1.6 * (item.scale ?? 1)" />
+        <p class="role">
+          @for (part of item.role.split(' · '); track part) {
+            <span>{{ part }}</span> ·
+          }
+          <span>{{ item.years }}</span>
+        </p>
+        <h3>{{ item.headline }}</h3>
+        <ul class="points">
+          @for (point of item.points; track point) {
+            <li>{{ point }}</li>
+          }
+        </ul>
+        <p class="tags">
+          @for (tag of item.tags; track tag) {
+            <span>{{ tag }}</span>
+          }
+        </p>
+      </li>
+    }
+  </ul>
+  <a class="more" routerLink="/about">More about my work <span aria-hidden="true">→</span></a>
+</section>
