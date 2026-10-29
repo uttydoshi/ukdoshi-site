@@ -1,12 +1,3 @@
-/* Looks like a page title, but it's an h2: on the home page, "Hi, I'm Utty" is the h1. */
-.page-title {
-  display: block;
-  margin: 0 0 1.75rem;
-  font-size: clamp(2.5rem, 9vw, 4rem);
-  line-height: 1.05;
-  color: var(--heading);
-}
-
 /* Sections stack at the card's full width, split by a thin line. */
 .section + .section {
   margin-top: 3rem;

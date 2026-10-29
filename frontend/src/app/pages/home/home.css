@@ -1,50 +1,116 @@
-/* Photo beside the greeting on wide screens. On phones: photo centred on top, text left-aligned like the rest of the page. */
+/* Words on the left, the portrait on the right; on phones the portrait goes on top. */
 .hero {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
   align-items: center;
-  gap: 2.5rem;
-}
-
-.portrait {
-  flex: none;
-  width: 11rem;
-  height: 11rem;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 0 0 6px rgb(217 119 87 / 0.15), 0 10px 30px rgb(26 26 46 / 0.15);
+  gap: 3rem 4rem;
+  padding-block: clamp(3rem, 7vw, 5.5rem);
 }
 
 .intro h1 {
-  margin-bottom: 0.5rem;
+  margin: 0 0 0.75rem;
+  font-size: clamp(3rem, 7vw, 5.25rem);
 }
 
-.full-name {
-  margin: 0 0 0.25rem !important;
-  color: var(--text) !important;
+.welcome {
+  margin: 0 0 2rem !important;
+  font-size: 1.2rem;
+}
+
+.philosophy {
+  max-width: 36rem;
+  margin: 0 0 1.75rem !important;
+  padding-left: 1.25rem;
+  border-left: 3px solid var(--heading);
   font-family: var(--font-heading);
-  font-size: 1.35rem;
+  font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+  line-height: 1.45;
+  color: var(--text) !important;
 }
 
-.tagline {
-  margin: 0 !important;
-  letter-spacing: 0.02em;
+.roles {
+  margin: 0 0 2.25rem !important;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
-app-about {
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.75rem;
+}
+
+.button {
+  display: inline-block;
+  padding: 0.85rem 1.75rem;
+  border-radius: 0.6rem;
+  background: var(--text);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.button:hover {
+  opacity: 0.85;
+}
+
+.quiet {
+  color: var(--text);
+  font-weight: 700;
+  text-underline-offset: 0.25em;
+}
+
+.quiet:hover {
+  color: var(--heading);
+}
+
+.button:focus-visible,
+.quiet:focus-visible {
+  outline: 2px solid var(--heading);
+  outline-offset: 3px;
+}
+
+/* The portrait: black and white, in a soft blob, with the orange shape peeking out behind. */
+.art {
+  position: relative;
+  width: min(100%, 26rem);
+  aspect-ratio: 1;
+  margin-inline: auto;
+}
+
+.art::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 58% 42% 46% 54% / 46% 58% 42% 54%;
+  background: var(--heading);
+  transform: translate(7%, 6%) rotate(8deg);
+}
+
+.art img {
+  position: relative;
   display: block;
-  margin-top: 1.5rem;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 20%;
+  border-radius: 46% 54% 58% 42% / 54% 42% 58% 46%;
+  filter: grayscale(1) contrast(1.08);
+  box-shadow: 0 20px 40px rgb(26 26 46 / 0.18);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 760px) {
   .hero {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5rem;
+    grid-template-columns: 1fr;
   }
 
-  .portrait {
-    align-self: center;
-    width: 9rem;
-    height: 9rem;
+  .art {
+    order: -1;
+    width: min(80%, 18rem);
+    margin-bottom: 0.5rem;
   }
 }
