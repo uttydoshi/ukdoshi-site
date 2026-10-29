@@ -4,7 +4,9 @@
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
   align-items: center;
   gap: 3rem 4rem;
-  padding-block: clamp(3rem, 7vw, 5.5rem);
+  --pad: clamp(3rem, 7vw, 5.5rem);
+  padding-block: var(--pad);
+  overflow: hidden; /* the portrait runs down to the card's bottom edge */
 }
 
 .intro h1 {
@@ -74,33 +76,50 @@
   outline-offset: 3px;
 }
 
-/* The portrait: black and white, in a soft blob, with the orange shape peeking out behind. */
-.art {
-  position: relative;
-  width: min(100%, 26rem);
-  aspect-ratio: 1;
-  margin-inline: auto;
+/* "Hey there!" in handwriting, tilted a little, just above the big hello. */
+.hey {
+  margin: 0 0 -0.6rem 0.25rem !important;
+  font-family: var(--font-script);
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  line-height: 1;
+  color: var(--heading) !important;
+  transform: rotate(-4deg);
+  transform-origin: left bottom;
 }
 
-.art::before {
-  content: '';
+/* The portrait: a cut-out of me in front of my name, the name in huge pale letters behind (after Pete R.). */
+.art {
+  position: relative;
+  display: grid;
+  place-items: end center;
+  align-self: end;
+  width: min(100%, 31rem);
+  margin: 0 auto calc(-1 * var(--pad));
+}
+
+.big-name {
   position: absolute;
-  inset: 0;
-  border-radius: 58% 42% 46% 54% / 46% 58% 42% 54%;
-  background: var(--heading);
-  transform: translate(7%, 6%) rotate(8deg);
+  top: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-heading);
+  font-size: clamp(7rem, 15vw, 13rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  opacity: 0.13;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 .art img {
   position: relative;
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 20%;
-  border-radius: 46% 54% 58% 42% / 54% 42% 58% 46%;
-  filter: grayscale(1) contrast(1.08);
-  box-shadow: 0 20px 40px rgb(26 26 46 / 0.18);
+  height: auto;
+  /* fade out at the bottom, so I rise out of the card rather than being cut off */
+  mask-image: linear-gradient(to bottom, #000 88%, transparent);
 }
 
 @media (max-width: 760px) {
@@ -110,7 +129,8 @@
 
   .art {
     order: -1;
-    width: min(80%, 18rem);
-    margin-bottom: 0.5rem;
+    align-self: center;
+    width: min(85%, 20rem);
+    margin-bottom: 0;
   }
 }

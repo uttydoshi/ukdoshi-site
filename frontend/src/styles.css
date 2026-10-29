@@ -1,5 +1,7 @@
 /* Headings: Source Serif 4, bundled with the site (no Google requests). */
 @import '@fontsource-variable/source-serif-4/opsz.css';
+/* Handwritten accents, like the "Hey there!" on the landing page. */
+@import '@fontsource/mrs-saint-delafield/400.css';
 
 /* <html data-theme="light|dark"> is set before first paint by index.html and toggled by app.ts. */
 :root {
@@ -12,6 +14,7 @@
   --bar: #fff;
   --heading: #d97757; /* Claude-logo orange */
   --font-heading: 'Source Serif 4 Variable', Georgia, serif;
+  --font-script: 'Mrs Saint Delafield', cursive;
   --page-width: 90rem; /* header bar and page cards share this cap */
   --accent-1: #6d28d9;
   --accent-2: #0ea5e9;
