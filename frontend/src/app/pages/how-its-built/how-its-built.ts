@@ -380,7 +380,8 @@ const GLOSSARY: Term[] = [
   {
     term: 'API Gateway',
     meaning:
-      'An AWS service that receives API requests and passes them on to the code that answers them.',
+      'The front desk for the site’s API: an AWS service that receives each request and passes it to the code ' +
+      'that answers it.',
   },
   {
     term: 'AWS',
@@ -390,7 +391,9 @@ const GLOSSARY: Term[] = [
   {
     term: 'CDK',
     full: 'Cloud Development Kit',
-    meaning: 'An AWS tool for describing cloud resources in code. Here it’s written in Python.',
+    meaning:
+      'An AWS tool for writing down the whole cloud setup as code, like a blueprint. Here the blueprint is ' +
+      'written in Python.',
   },
   {
     term: 'CDN',
@@ -409,9 +412,16 @@ const GLOSSARY: Term[] = [
   },
   {
     term: 'CloudFormation',
-    meaning: 'The AWS service that creates and updates the cloud resources that CDK describes.',
+    meaning:
+      'The AWS service that builds what the CDK blueprint describes, and updates it whenever the blueprint ' +
+      'changes.',
   },
-  { term: 'CloudFront', meaning: 'AWS’s CDN. It’s the site’s front door.' },
+  {
+    term: 'CloudFront',
+    meaning:
+      'AWS’s CDN: it keeps copies of the site on servers around the world, so pages load quickly wherever ' +
+      'you are. Every visit comes in through it, like the site’s front door.',
+  },
   { term: 'Cognito', meaning: 'AWS’s sign-in service. It handles signing in with Google.' },
   {
     term: 'DNS',
@@ -430,7 +440,9 @@ const GLOSSARY: Term[] = [
   { term: 'GitHub', meaning: 'Where the site’s code and its full history are stored.' },
   {
     term: 'GitHub Actions',
-    meaning: 'GitHub’s automation. It tests, builds and deploys every change.',
+    meaning:
+      'GitHub’s automation, used here as the CI/CD pipeline: every change is tested, built and released ' +
+      'without anyone doing it by hand.',
   },
   {
     term: 'HTTPS',
@@ -444,7 +456,9 @@ const GLOSSARY: Term[] = [
   },
   {
     term: 'Lambda',
-    meaning: 'An AWS service that runs code only when it’s needed, with no servers to manage.',
+    meaning:
+      'An AWS service that runs code only at the moment it’s needed, so there’s no computer to keep switched ' +
+      'on and nothing to pay while nobody is using the site.',
   },
   {
     term: 'OIDC',
@@ -452,7 +466,12 @@ const GLOSSARY: Term[] = [
     meaning:
       'A standard way for one system to prove who it is to another, using short-lived tokens instead of passwords or keys.',
   },
-  { term: 'Route 53', meaning: 'AWS’s DNS service.' },
+  {
+    term: 'Route 53',
+    meaning:
+      'AWS’s DNS service, the address book for ukdoshi.com: when you type the address, it tells your browser ' +
+      'where to find the site.',
+  },
   {
     term: 'S3',
     full: 'Simple Storage Service',
