@@ -3,7 +3,7 @@ import { Diagram, DiagramGroup, DiagramLayout, DiagramNode } from './diagram';
 
 // Icons (public/diagram-icons): AWS services from the official AWS Architecture Icons package (AWS allows
 // them in architecture diagrams); GitHub, GitHub Actions and Claude from Simple Icons (CC0), in each brand's
-// colour; Google's four-colour "G" from its sign-in branding. Staging and Live use this site's own logo.
+// colour (Claude as a small badge on a person for "Me"); Google's four-colour "G" from its sign-in branding. Staging and Live use this site's own logo.
 const AWS_CLOUD = {
   label: 'AWS Cloud',
   icon: 'diagram-icons/aws-cloud.svg',
@@ -178,10 +178,10 @@ const VISIT_NARROW: DiagramLayout = {
 const SHIP_NODES: DiagramNode[] = [
   {
     id: 'dev',
-    icon: 'diagram-icons/claude.svg',
+    icon: 'diagram-icons/me-with-claude.svg',
     label: 'Me',
-    sub: 'with Claude Code',
-    why: 'Writing and testing changes on my laptop, with Claude Code.',
+    sub: '+ Claude Code',
+    why: 'I design and build each change, with Claude Code as my coding partner, and try it on my laptop first.',
   },
   {
     id: 'github',
