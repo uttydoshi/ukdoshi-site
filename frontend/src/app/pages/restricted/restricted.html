@@ -4,6 +4,17 @@
   </svg>
   <h1>Inner Circle</h1>
 
+  <!-- Honest about where this is at: built to learn sign-in, with more to come. -->
+  <p class="wip">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z" />
+    </svg>
+    <span>
+      <strong>Still being built.</strong> I made the Inner Circle to learn how secure sign-in works, so for
+      now there isn't much inside. More is coming.
+    </span>
+  </p>
+
   @if (!auth.signedIn()) {
     <p>A more personal corner of the site, for people who'd like to know me a bit better. Sign in with your Google account to continue.</p>
     <button type="button" class="button" (click)="auth.signIn()">Sign in with Google</button>

@@ -36,6 +36,7 @@ describe('Restricted', () => {
   it('asks signed-out visitors to sign in, without calling the API', async () => {
     const { root, http } = render();
     expect(root.textContent).toContain('Sign in with your Google account');
+    expect(root.querySelector('.wip')?.textContent).toContain('Still being built.');
     root.querySelector<HTMLButtonElement>('.button')!.click();
     expect(auth.signIn).toHaveBeenCalled();
     http.expectNone('/api/me');

@@ -13,6 +13,38 @@
   stroke-linejoin: round;
 }
 
+/* "Still being built" note: a soft orange-tinted box under the title. */
+.wip {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  max-width: 34rem;
+  margin: 0 auto 1.75rem !important;
+  padding: 0.85rem 1.1rem;
+  border: 1px solid rgb(217 119 87 / 0.25);
+  border-radius: 0.75rem;
+  background: rgb(217 119 87 / 0.08);
+  text-align: left;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.wip svg {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.1rem;
+  fill: none;
+  stroke: var(--heading);
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.wip strong {
+  color: var(--text);
+}
+
 .welcome {
   color: var(--text);
   font-size: 1.1rem;
