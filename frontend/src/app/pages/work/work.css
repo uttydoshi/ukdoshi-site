@@ -257,6 +257,10 @@ h2 svg {
   margin-top: 1.75rem !important;
 }
 
+.built-link a + a {
+  margin-left: 1rem;
+}
+
 .built-link a {
   color: var(--heading);
   font-weight: 700;

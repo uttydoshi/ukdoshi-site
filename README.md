@@ -22,24 +22,15 @@ architecture, the decisions behind it and a glossary of terms, see
 
 ## How it fits together
 
-```mermaid
-flowchart LR
-  visitor([Visitor]) --> dns[Route 53] --> cdn[CloudFront]
-  cdn -- pages --> s3[(S3: Angular site)]
-  cdn -- /api --> api[API Gateway] --> fn[Lambda: FastAPI]
-  fn --> db[(DynamoDB: approved list)]
-  fn --> ses[SES: join requests]
-  visitor -- signs in --> cognito[Cognito] --> google([Google])
-  fn -. checks sign-in tokens .-> cognito
-```
+What happens when someone visits:
 
-```mermaid
-flowchart LR
-  dev([Code change]) -- git push --> gh[GitHub] --> actions[GitHub Actions:<br/>test and build]
-  actions -- OIDC --> aws[AWS CDK deploy]
-  aws -- staging branch --> staging[Staging copy]
-  aws -- main branch --> live[ukdoshi.com]
-```
+[![Architecture of ukdoshi.com: Route 53, CloudFront, S3, API Gateway, Lambda, DynamoDB, SES and Cognito with Google sign-in, inside AWS](docs/images/architecture.png)](https://ukdoshi.com/how-its-built)
+
+How a change gets to live:
+
+[![How changes are deployed: a git push to GitHub runs GitHub Actions, which logs in to AWS with OIDC and deploys with the AWS CDK to staging or live](docs/images/deploy-pipeline.png)](https://ukdoshi.com/how-its-built)
+
+These are the same diagrams as on the website; there, you can hover over each icon to see why it's there.
 
 ## What's in the repo
 
@@ -50,6 +41,7 @@ flowchart LR
 | [`infra/`](infra) | The AWS CDK app: DNS, plus a sign-in stack and a site stack for each of live and staging |
 | [`scripts/`](scripts) | Owner tools: approve Inner Circle members, set the staging password |
 | [`.github/workflows/`](.github/workflows) | The deploy pipeline |
+| [`docs/images/`](docs/images) | The diagrams in this README, captured from the website |
 
 No secrets live in this repo. The IDs you'll come across (the AWS account, Cognito and the Google sign-in
 client) are public by design; the Google client secret and the staging password are stored in AWS.
