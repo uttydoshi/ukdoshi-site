@@ -5,7 +5,7 @@
   border-top: 1px solid var(--border);
 }
 
-/* Icon first, in a soft orange badge, then a big title: clearly above everything in the section. */
+/* Icon first, in a soft magenta badge, then a big title: clearly above everything in the section. */
 h2 {
   display: flex;
   align-items: center;
@@ -23,9 +23,9 @@ h2 svg {
   height: 3rem;
   padding: 0.7rem;
   border-radius: 50%;
-  background: rgb(217 119 87 / 0.12);
+  background: var(--accent-12);
   fill: none;
-  stroke: var(--heading);
+  stroke: var(--accent);
   stroke-width: 1.75;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -96,7 +96,7 @@ h2 svg {
   padding: 0;
   border: 0;
   background: none;
-  color: var(--heading);
+  color: var(--accent);
   font: inherit;
   font-size: 0.85rem;
   font-weight: 700;
@@ -106,7 +106,7 @@ h2 svg {
 }
 
 .show-more:focus-visible {
-  outline: 2px solid var(--heading);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 
@@ -127,7 +127,7 @@ h2 svg {
 
 
 .points li::marker {
-  color: var(--heading);
+  color: var(--accent);
 }
 
 .tags,
@@ -138,7 +138,7 @@ h2 svg {
   margin: 0 !important;
 }
 
-/* Tech stack: grey outlined pills under the orange skill tags. */
+/* Tech stack: grey outlined pills under the magenta skill tags. */
 .stack {
   margin-top: 0.5rem !important;
 }
@@ -154,7 +154,7 @@ h2 svg {
 .tags span {
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
-  background: rgb(217 119 87 / 0.1);
+  background: var(--accent-10);
   color: var(--text);
   font-size: 0.75rem;
 }
@@ -179,8 +179,8 @@ h2 svg {
 }
 
 .circles .why {
-  fill: rgb(217 119 87 / 0.1);
-  stroke: var(--heading);
+  fill: var(--accent-10);
+  stroke: var(--accent);
 }
 
 .circles text {
@@ -195,7 +195,7 @@ h2 svg {
 
 .circles text.why-label {
   font-size: 24px;
-  fill: var(--heading);
+  fill: var(--accent);
 }
 
 .layers {
@@ -215,7 +215,7 @@ h2 svg {
 }
 
 .layers dt.why-label {
-  color: var(--heading);
+  color: var(--accent);
 }
 
 .layers dd {
@@ -237,7 +237,7 @@ h2 svg {
 }
 
 .layers li::marker {
-  color: var(--heading);
+  color: var(--accent);
 }
 
 .circles-figure {
@@ -262,7 +262,7 @@ h2 svg {
 }
 
 .built-link a {
-  color: var(--heading);
+  color: var(--accent);
   font-weight: 700;
   text-decoration: none;
 }
@@ -277,20 +277,20 @@ h2 svg {
   font-size: 1.1rem;
 }
 
-/* Closing call to action: a soft orange panel. */
+/* Closing call to action: a soft magenta panel. */
 .talk {
   margin-top: 2.5rem;
   padding: 2rem;
   border-radius: 1rem;
-  background: rgb(217 119 87 / 0.08);
-  border: 1px solid rgb(217 119 87 / 0.25);
+  background: var(--accent-08);
+  border: 1px solid var(--accent-25);
 }
 
 .talk-title {
   display: block;
   margin: 0 0 0.5rem;
   font-size: clamp(1.6rem, 4vw, 2.1rem);
-  color: var(--heading);
+  color: var(--accent);
 }
 
 .talk p {
@@ -326,12 +326,12 @@ h2 svg {
 }
 
 .quiet:hover {
-  color: var(--heading);
+  color: var(--accent);
 }
 
 .button:focus-visible,
 .quiet:focus-visible {
-  outline: 2px solid var(--heading);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 

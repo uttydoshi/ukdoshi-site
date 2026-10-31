@@ -28,7 +28,7 @@ interface Delivered {
 export class Work {
   // What I've delivered, most recent first, with the points from my resume. No dates here: the
   // timeline in "Where I've worked" has them. No numbers on purpose:
-  // those stay on my resume. `tags` are skills (orange); `stack` is the tech, from each role's
+  // those stay on my resume. `tags` are skills (magenta); `stack` is the tech, from each role's
   // "Tech stack & tools". A company can have more than one role, each with its own points.
   // Companies whose cards are showing every point.
   protected readonly expanded = signal(new Set<string>());

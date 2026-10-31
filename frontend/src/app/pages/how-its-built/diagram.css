@@ -73,7 +73,7 @@ svg {
   fill: var(--text);
 }
 
-/* The area you hover or tap: invisible until then, then a soft orange highlight. */
+/* The area you hover or tap: invisible until then, then a soft magenta highlight. */
 .node .hit {
   fill: transparent;
   stroke: transparent;
@@ -84,8 +84,8 @@ svg {
 .node:hover .hit,
 .node:focus-visible .hit,
 .node.selected .hit {
-  fill: rgb(217 119 87 / 0.1);
-  stroke: var(--heading);
+  fill: var(--accent-10);
+  stroke: var(--accent);
 }
 
 .node text {

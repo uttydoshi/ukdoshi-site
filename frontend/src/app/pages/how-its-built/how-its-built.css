@@ -8,7 +8,7 @@ section + section,
   margin-top: 3rem;
 }
 
-/* Section headings: icon in a soft orange badge first, like the Work and About me pages. */
+/* Section headings: icon in a soft magenta badge first, like the Work and About me pages. */
 h2 {
   display: flex;
   align-items: center;
@@ -26,9 +26,9 @@ h2 svg {
   height: 3rem;
   padding: 0.7rem;
   border-radius: 50%;
-  background: rgb(217 119 87 / 0.12);
+  background: var(--accent-12);
   fill: none;
-  stroke: var(--heading);
+  stroke: var(--accent);
   stroke-width: 1.75;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -57,9 +57,9 @@ h2 svg {
   height: 2.75rem;
   padding: 0.65rem;
   border-radius: 50%;
-  background: rgb(217 119 87 / 0.12);
+  background: var(--accent-12);
   fill: none;
-  stroke: var(--heading);
+  stroke: var(--accent);
   stroke-width: 1.6;
   stroke-linecap: round;
   stroke-linejoin: round;

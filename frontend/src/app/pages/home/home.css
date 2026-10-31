@@ -24,7 +24,7 @@
   max-width: 36rem;
   margin: 0 0 1.75rem !important;
   padding-left: 1.25rem;
-  border-left: 3px solid var(--heading);
+  border-left: 3px solid var(--accent);
   font-family: var(--font-heading);
   font-size: clamp(1.35rem, 2.5vw, 1.7rem);
   font-style: italic;
@@ -34,16 +34,16 @@
   color: var(--text) !important;
 }
 
-/* Key words in the philosophy: orange and a little bolder, so a quick skim still catches them. */
+/* Key words in the philosophy: magenta and a little bolder, so a quick skim still catches them. */
 .philosophy em {
   font-style: inherit;
   font-weight: 600;
-  color: var(--heading);
+  color: var(--accent);
 }
 
-/* What people need, underlined in the text colour; what I do about it, in orange (above). */
+/* What people need, underlined in the text colour; what I do about it, in magenta (above). */
 .philosophy u {
-  text-decoration-color: var(--heading);
+  text-decoration-color: var(--accent);
   text-decoration-thickness: 2px;
   text-underline-offset: 0.2em;
 }
@@ -105,12 +105,12 @@
 }
 
 .quiet:hover {
-  color: var(--heading);
+  color: var(--accent);
 }
 
 .button:focus-visible,
 .quiet:focus-visible {
-  outline: 2px solid var(--heading);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 
@@ -120,7 +120,7 @@
   font-family: var(--font-script);
   font-size: clamp(4.25rem, 8.5vw, 6.75rem);
   line-height: 1;
-  color: var(--heading) !important;
+  color: var(--accent) !important;
   transform: rotate(-4deg);
   transform-origin: left bottom;
 }

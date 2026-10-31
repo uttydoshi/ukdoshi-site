@@ -41,7 +41,7 @@
 }
 
 .timeline button:focus-visible {
-  outline: 2px solid var(--heading);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -87,8 +87,8 @@
 
 .timeline button:hover .dot,
 .timeline button.active .dot {
-  border-color: var(--heading);
-  background: var(--heading);
+  border-color: var(--accent);
+  background: var(--accent);
 }
 
 .timeline button:hover .years,

@@ -13,12 +13,15 @@
   --shadow: rgb(60 50 120 / 0.35);
   --pill: rgb(26 26 46 / 0.05);
   --bar: #fff;
-  --heading: #d97757; /* Claude-logo orange */
+  --accent: #b5186f; /* magenta: the site's accent colour; the tints below are mixed from it */
+  /* Soft tints of the accent, for badges, highlights and panels. */
+  --accent-08: color-mix(in srgb, var(--accent) 8%, transparent);
+  --accent-10: color-mix(in srgb, var(--accent) 10%, transparent);
+  --accent-12: color-mix(in srgb, var(--accent) 12%, transparent);
+  --accent-25: color-mix(in srgb, var(--accent) 25%, transparent);
   --font-heading: 'Source Serif 4 Variable', Georgia, serif;
   --font-script: 'Mrs Saint Delafield', cursive;
   --page-width: 90rem; /* header bar and page cards share this cap */
-  --accent-1: #6d28d9;
-  --accent-2: #0ea5e9;
   --ok: #16a34a;
   --pending: #d97706;
   --error: #b91c1c;
@@ -35,9 +38,7 @@
   --shadow: rgb(0 0 0 / 0.6);
   --pill: rgb(255 255 255 / 0.06);
   --bar: #16162a;
-  --heading: #d97757;
-  --accent-1: #a78bfa;
-  --accent-2: #38bdf8;
+  --accent: #b5186f;
   --ok: #4ade80;
   --pending: #fbbf24;
   --error: #f87171;
@@ -74,7 +75,7 @@ main > :not(router-outlet) {
   width: 100%;
 }
 
-/* Shared by every page: content sits in a frosted card under an orange heading. */
+/* Shared by every page: content sits in a frosted card under a magenta heading. */
 .card {
   width: 100%;
   margin: 0 auto;
@@ -111,7 +112,7 @@ main > :not(router-outlet) {
   margin: 0 0 1.75rem;
   font-size: clamp(2.5rem, 9vw, 4rem);
   line-height: 1.05;
-  color: var(--heading);
+  color: var(--accent);
 }
 
 .card p {

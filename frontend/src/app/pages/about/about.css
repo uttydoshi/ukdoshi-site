@@ -5,7 +5,7 @@
   border-top: 1px solid var(--border);
 }
 
-/* Icon first, in a soft orange badge, then a big title: clearly above the WHY/HOW/WHAT labels. */
+/* Icon first, in a soft magenta badge, then a big title: clearly above the WHY/HOW/WHAT labels. */
 h2 {
   display: flex;
   align-items: center;
@@ -23,9 +23,9 @@ h2 svg {
   height: 3rem;
   padding: 0.7rem;
   border-radius: 50%;
-  background: rgb(217 119 87 / 0.12);
+  background: var(--accent-12);
   fill: none;
-  stroke: var(--heading);
+  stroke: var(--accent);
   stroke-width: 1.75;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -62,9 +62,9 @@ h2 svg {
   height: 2.75rem;
   padding: 0.65rem;
   border-radius: 50%;
-  background: rgb(217 119 87 / 0.12);
+  background: var(--accent-12);
   fill: none;
-  stroke: var(--heading);
+  stroke: var(--accent);
   stroke-width: 1.6;
   stroke-linecap: round;
   stroke-linejoin: round;
