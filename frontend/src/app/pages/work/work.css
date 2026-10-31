@@ -273,8 +273,7 @@ h2 svg {
 
 .lead {
   max-width: 44rem;
-  margin: -0.75rem 0 2.5rem !important;
-  font-size: 1.1rem;
+  margin: -0.75rem 0 2.5rem !important; /* same 16px size as the rest of the page's text */
 }
 
 /* Closing call to action: a soft magenta panel. */

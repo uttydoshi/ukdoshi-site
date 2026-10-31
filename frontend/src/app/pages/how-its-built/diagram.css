@@ -43,7 +43,7 @@ svg {
 }
 
 .edge-label {
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: var(--font-body);
   font-size: 11px;
   fill: var(--muted);
 }
@@ -67,7 +67,7 @@ svg {
 }
 
 .group text {
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: var(--font-body);
   font-size: 12px;
   font-weight: 700;
   fill: var(--text);
@@ -101,7 +101,7 @@ svg {
 }
 
 .node-sub {
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: var(--font-body);
   font-size: 11px;
   fill: var(--muted);
 }

@@ -3,6 +3,9 @@
 @import '@fontsource-variable/source-serif-4/opsz-italic.css';
 /* Handwritten accents, like the "Hey there!" on the landing page. */
 @import '@fontsource/mrs-saint-delafield/400.css';
+/* Body text: Figtree, bundled with the site. */
+@import '@fontsource-variable/figtree/index.css';
+@import '@fontsource-variable/figtree/wght-italic.css';
 
 /* <html data-theme="light|dark"> is set before first paint by index.html and toggled by app.ts. */
 :root {
@@ -21,6 +24,7 @@
   --accent-12: color-mix(in srgb, var(--accent) 12%, transparent);
   --accent-25: color-mix(in srgb, var(--accent) 25%, transparent);
   --font-heading: 'Source Serif 4 Variable', Georgia, serif;
+  --font-body: 'Figtree Variable', Helvetica, Arial, sans-serif;
   --font-script: 'Mrs Saint Delafield', cursive;
   --page-width: 90rem; /* header bar and page cards share this cap */
   --ok: #16a34a;
@@ -55,11 +59,11 @@ body {
   background: var(--bg);
   background-attachment: fixed;
   color: var(--text);
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
 }
 
-/* Every heading, present and future, uses the serif; body text stays Verdana. */
+/* Every heading, present and future, uses the serif; body text is Figtree. */
 h1,
 h2,
 h3,
