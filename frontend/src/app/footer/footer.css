@@ -5,7 +5,7 @@
 /* --- Footer: a dark band across the full width, with a tagline, link columns and the brand --- */
 .site-footer {
   margin-top: 2.5rem;
-  background: var(--text);
+  background: var(--dark);
   color: rgb(255 255 255 / 0.6);
   font-size: 0.9rem;
 }

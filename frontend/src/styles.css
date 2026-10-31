@@ -7,6 +7,7 @@
 /* <html data-theme="light|dark"> is set before first paint by index.html and toggled by app.ts. */
 :root {
   --text: #1a1a2e;
+  --dark: #1a1a2e; /* top bar, footer, phone menu and dark buttons; separate from --text so either can change alone */
   --muted: #5b5f77;
   --card: rgb(255 255 255 / 0.7);
   --border: rgb(26 26 46 / 0.08);
@@ -32,6 +33,7 @@
 
 :root[data-theme='dark'] {
   --text: #f1f5f9;
+  --dark: #16162a;
   --muted: #a3a8c3;
   --card: rgb(22 22 40 / 0.7);
   --border: rgb(255 255 255 / 0.08);
