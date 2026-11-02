@@ -191,6 +191,11 @@ class SiteStack(Stack):
             "HttpApi",
             default_integration=integrations.HttpLambdaIntegration("ApiIntegration", api_fn),
         )
+        # A ceiling on requests, so a flood of calls can't run up the bill or overwhelm the API.
+        api_stage = http_api.default_stage.node.default_child
+        api_stage.default_route_settings = apigw.CfnStage.RouteSettingsProperty(
+            throttling_rate_limit=10, throttling_burst_limit=20
+        )
 
         # --- Frontend: private S3 bucket, only CloudFront can read it ---
         bucket = s3.Bucket(
@@ -230,18 +235,32 @@ class SiteStack(Stack):
                 code=cloudfront.FunctionCode.from_inline(SPA_REWRITE_JS),
             )
 
-        # Staging is public (so others can test it) but asks search engines not to list it.
-        hide_from_search = None
-        if not stage.search_engines:
-            hide_from_search = cloudfront.ResponseHeadersPolicy(
-                self,
-                "NoIndex",
-                custom_headers_behavior=cloudfront.ResponseCustomHeadersBehavior(
-                    custom_headers=[
-                        cloudfront.ResponseCustomHeader(header="X-Robots-Tag", value="noindex", override=True),
-                    ]
+        # Every response carries the standard browser security headers. Staging also asks search
+        # engines not to list it (it's password-protected, but its address isn't secret).
+        headers = cloudfront.ResponseHeadersPolicy(
+            self,
+            "SecurityHeaders",
+            security_headers_behavior=cloudfront.ResponseSecurityHeadersBehavior(
+                strict_transport_security=cloudfront.ResponseHeadersStrictTransportSecurity(
+                    access_control_max_age=Duration.days(365), include_subdomains=True, override=True
                 ),
-            )
+                content_type_options=cloudfront.ResponseHeadersContentTypeOptions(override=True),
+                frame_options=cloudfront.ResponseHeadersFrameOptions(
+                    frame_option=cloudfront.HeadersFrameOption.DENY, override=True
+                ),
+                referrer_policy=cloudfront.ResponseHeadersReferrerPolicy(
+                    referrer_policy=cloudfront.HeadersReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN,
+                    override=True,
+                ),
+            ),
+            custom_headers_behavior=None
+            if stage.search_engines
+            else cloudfront.ResponseCustomHeadersBehavior(
+                custom_headers=[
+                    cloudfront.ResponseCustomHeader(header="X-Robots-Tag", value="noindex", override=True),
+                ]
+            ),
+        )
 
         distribution = cloudfront.Distribution(
             self,
@@ -252,7 +271,7 @@ class SiteStack(Stack):
             default_behavior=cloudfront.BehaviorOptions(
                 origin=origins.S3BucketOrigin.with_origin_access_control(bucket),
                 viewer_protocol_policy=cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-                response_headers_policy=hide_from_search,
+                response_headers_policy=headers,
                 function_associations=[
                     cloudfront.FunctionAssociation(
                         function=spa_rewrite,
@@ -266,7 +285,7 @@ class SiteStack(Stack):
                         f"{http_api.api_id}.execute-api.{self.region}.amazonaws.com"
                     ),
                     viewer_protocol_policy=cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-                    response_headers_policy=hide_from_search,
+                    response_headers_policy=headers,
                     allowed_methods=cloudfront.AllowedMethods.ALLOW_ALL,
                     cache_policy=cloudfront.CachePolicy.CACHING_DISABLED,
                     origin_request_policy=cloudfront.OriginRequestPolicy.ALL_VIEWER_EXCEPT_HOST_HEADER,

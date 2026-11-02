@@ -27,7 +27,7 @@ describe('HowItsBuilt', () => {
   it('gives every decision an icon', () => {
     const { root } = render();
     const decisions = root.querySelectorAll('.decisions li');
-    expect(decisions.length).toBe(8);
+    expect(decisions.length).toBe(10);
     decisions.forEach((li) => expect(li.querySelector('svg path')).not.toBeNull());
   });
 

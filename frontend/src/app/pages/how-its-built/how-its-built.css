@@ -2,8 +2,31 @@
   max-width: 52rem;
 }
 
+/* Why a personal site has all this: a magenta-edged note under the intro. */
+.why {
+  max-width: 52rem;
+  box-sizing: border-box;
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 0.75rem 0.75rem 0;
+  background: var(--accent-08);
+}
+
+.why p {
+  margin: 0;
+}
+
+.why p + p {
+  margin-top: 0.4rem;
+}
+
+.why strong {
+  color: var(--accent);
+}
+
 section + section,
-.intro + section {
+.why + section {
   margin-top: 3rem;
 }
 

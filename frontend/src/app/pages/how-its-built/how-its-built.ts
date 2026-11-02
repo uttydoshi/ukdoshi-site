@@ -348,6 +348,18 @@ const DECISIONS: Decision[] = [
     icon: ['M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3', 'M7.5 15h9'], // test flask
   },
   {
+    title: 'Browser safety switched on',
+    detail:
+      'Every response tells browsers to use HTTPS only, never show the site inside another site, ' +
+      'and never guess what a file is.',
+    icon: ['M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z', 'M3 9h18M6 7h.01M8.5 7h.01'], // browser window
+  },
+  {
+    title: 'A ceiling on traffic',
+    detail: 'The API is rate-limited, so a flood of requests can’t overwhelm it or run up the bill.',
+    icon: ['M4.5 17a8 8 0 1 1 15 0', 'M12 13l4-4', 'M12 13h.01'], // gauge
+  },
+  {
     title: 'Private by default',
     detail:
       'No analytics or tracking. And private content isn’t stored by your browser, so once you sign out, ' +
